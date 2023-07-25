@@ -16,7 +16,7 @@ export default function SingleRegister() {
 
   const getData = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/guidelist');
+      const response = await axios.get('https://gpaserver2.onrender.com/guidelist');
       setGuideDict(response.data);
     } catch (err) {
       console.warn(err);

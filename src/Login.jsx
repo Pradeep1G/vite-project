@@ -53,9 +53,9 @@ const Login=()=> {
     e.preventDefault();
 
     if(!verifyOTP){
-      console.warn('http://localhost:5000/api/check/'+formData['email'])
+      console.warn('https://gpaserver2.onrender.com/api/check/'+formData['email'])
       try{
-        const response = await axios.get('http://localhost:5000/api/check/'+formData['email']+"/"+formData['password']);
+        const response = await axios.get('https://gpaserver2.onrender.com/api/check/'+formData['email']+"/"+formData['password']);
         console.warn(response.data);
 
 

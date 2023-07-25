@@ -64,7 +64,7 @@ export default function SingleRegisterForm() {
 
   const getData = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/checkVacancies/'+guideMailId);
+      const response = await axios.get('https://gpaserver2.onrender.com/checkVacancies/'+guideMailId);
       setgetvacancies(response.data);
     //   console.warn(getvacancies)
     } catch (err) {
@@ -100,7 +100,7 @@ export default function SingleRegisterForm() {
       };
   
       // Send the data to the Flask route using Axios
-      axios.post('http://localhost:5000/create_collection', data, {
+      axios.post('https://gpaserver2.onrender.com/create_collection', data, {
         headers: {
           'Content-Type': 'application/json',
         },
@@ -125,7 +125,7 @@ export default function SingleRegisterForm() {
           };
       
           // Send the data to the Flask update route using Axios
-          axios.put('http://localhost:5000/update_data', data2, {
+          axios.put('https://gpaserver2.onrender.com/update_data', data2, {
             headers: {
               'Content-Type': 'application/json',
             },
