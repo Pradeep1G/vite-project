@@ -12,6 +12,12 @@ import { useLocation } from 'react-router-dom';
 const Login=()=> {
 
 
+
+  const serverPath1 = "http://127.0.0.1:5000"
+  // const serverPath1 = "https://gpaserver2.onrender.com"
+
+
+
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -53,9 +59,9 @@ const Login=()=> {
     e.preventDefault();
 
     if(!verifyOTP){
-      console.warn('https://gpaserver2.onrender.com/api/check/'+formData['email'])
+      console.warn(+serverPath1+'/api/check/'+formData['email'])
       try{
-        const response = await axios.get('https://gpaserver2.onrender.com/api/check/'+formData['email']+"/"+formData['password']);
+        const response = await axios.get(serverPath1+'/api/check/'+formData['email']+"/"+formData['password']);
         console.warn(response.data);
 
 

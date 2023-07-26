@@ -4,7 +4,7 @@ import ErrorBoundary from './ErrorBoundary';
 import Login from './Login';
 import SelectTeam from './SelectTeam';
 import SingleRegister from './SingleRegister';
-import DuoRegister from './DuoRegister';
+import DuoRegisterForm from './DuoRegisterForm';
 import SingleRegisterForm from './SingleRegisterForm';
 import Success from './Success';
 
@@ -22,10 +22,14 @@ function App() {
           <Route path="/login/selectteam" element={<SelectTeam />}></Route>
 
           <Route path="/login/selectteam/1" element={<SingleRegister />}></Route>
-          <Route path="/login/selectteam/2" element={<DuoRegister />}></Route>
+          <Route path="/login/selectteam/2" element={<SingleRegister />}></Route>
           
           <Route path='/login/selectteam/1/:id' element={<SingleRegisterForm />}></Route>
+          <Route path='/login/selectteam/2/:id' element={<DuoRegisterForm />}></Route>
+
           <Route path='/login/selectteam/1/:id/success' element={<Success />}></Route>
+          <Route path='/login/selectteam/2/:id/success' element={<Success />}></Route>
+
 
 
     </Routes>

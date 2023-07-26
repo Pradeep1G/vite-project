@@ -7,6 +7,14 @@ import DisplayGuide from "./DisplayGuide";
 
 
 export default function SingleRegister() {
+
+
+  const serverPath1 = "http://127.0.0.1:5000"
+  // const serverPath1 = "https://gpaserver2.onrender.com"
+
+
+
+
   const [guideDict, setGuideDict] = useState([]);
 
   const location = useLocation();
@@ -16,7 +24,7 @@ export default function SingleRegister() {
 
   const getData = async () => {
     try {
-      const response = await axios.get('https://gpaserver2.onrender.com/guidelist');
+      const response = await axios.get(serverPath1+'/guidelist');
       setGuideDict(response.data);
     } catch (err) {
       console.warn(err);

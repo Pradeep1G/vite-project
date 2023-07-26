@@ -9,6 +9,10 @@ import { useLocation } from "react-router-dom";
 
 export default function SingleRegisterForm() {
 
+  const serverPath1 = "http://127.0.0.1:5000"
+  // const serverPath1 = "https://gpaserver2.onrender.com"
+
+
     const navigate = useNavigate()
     const currentPath = location.pathname;
 
@@ -64,7 +68,7 @@ export default function SingleRegisterForm() {
 
   const getData = async () => {
     try {
-      const response = await axios.get('https://gpaserver2.onrender.com/checkVacancies/'+guideMailId);
+      const response = await axios.get(serverPath1+'/checkVacancies/'+guideMailId);
       setgetvacancies(response.data);
     //   console.warn(getvacancies)
     } catch (err) {
@@ -87,6 +91,7 @@ export default function SingleRegisterForm() {
     const data = {
         collection_name: userRegNo, // Replace 'my_collection' with the desired collection name
         data: {
+          team: false,
           name: userName,
           regNo: userRegNo,
           phoneNo: userPhone,
@@ -100,7 +105,7 @@ export default function SingleRegisterForm() {
       };
   
       // Send the data to the Flask route using Axios
-      axios.post('https://gpaserver2.onrender.com/create_collection', data, {
+      axios.post(serverPath1+'/create_collection', data, {
         headers: {
           'Content-Type': 'application/json',
         },
@@ -125,7 +130,7 @@ export default function SingleRegisterForm() {
           };
       
           // Send the data to the Flask update route using Axios
-          axios.put('https://gpaserver2.onrender.com/update_data', data2, {
+          axios.put(serverPath1+'/update_data', data2, {
             headers: {
               'Content-Type': 'application/json',
             },
@@ -136,6 +141,29 @@ export default function SingleRegisterForm() {
             .catch((error) => {
               console.error('Error:', error);
             });
+
+
+            const data3 = {
+              collection_name: 'facultylist', // Replace 'my_collection' with the desired collection name
+              filter_data: { "University EMAIL ID": guideMailId }, // Replace with the filter to identify the data you want to update
+              updated_data: {
+                "TOTAL BATCHES": parseInt(getvacancies['vacancies'])-1
+              },
+            };
+        
+            // Send the data to the Flask update route using Axios
+            axios.put(serverPath1+'/update_vacancies_data', data3, {
+              headers: {
+                'Content-Type': 'application/json',
+              },
+            })
+              .then((response) => {
+                console.log(response.data);
+              })
+              .catch((error) => {
+                console.error('Error:', error);
+              });
+        
 
         // alert("Success")
         navigate(currentPath+"/success")
