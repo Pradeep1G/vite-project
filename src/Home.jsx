@@ -14,7 +14,7 @@ export default function Home(){
         <>
             <p>If you are logging in for first time :</p><br></br>
             <li>Try any your mail as password and login.</li>
-            <li>You will recieve otp to your mail. Enter and submit.</li>
+            <li>You will recieve otp to your mail. Enter and submit. Kindly check in your spam mails.</li>
             <li>Enter new password for future login and submit.</li>
             <li>Select Team or Single.</li>
             <li>Select a guide who have vacancies.</li>
