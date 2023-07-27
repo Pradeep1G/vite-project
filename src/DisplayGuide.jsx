@@ -23,9 +23,9 @@ export default function DisplayGuide(props) {
     <>
       <div className="flex space-x-2 border-2 m-2">
         <h1>{props.name}</h1>
-        {/* <img src={props.img+""} height={100} width={100}></img>
+        <img src={props.img+""} height={100} width={100}></img>
                 <p>No of Vacancies = {props.vacancies}</p>
-                <p>Designation : {props.designation}</p>
+                {/* <p>Designation : {props.designation}</p>
                 <li>
                     <ul>{props.dm1}</ul>
                     <ul>{props.dm2}</ul>
