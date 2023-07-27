@@ -7,6 +7,7 @@ import SingleRegister from './SingleRegister';
 import DuoRegisterForm from './DuoRegisterForm';
 import SingleRegisterForm from './SingleRegisterForm';
 import Success from './Success';
+import Home from './Home';
 
 // import Login from './Login';
 // import Footer from './shared/Footer'
@@ -16,6 +17,9 @@ function App() {
     <div>
     <Router>
     <Routes>
+
+          <Route path="/" element={<Home />} ></Route>
+
           <Route path="/login" element={<Login />}></Route>
           <Route path="/dashboard" element={<Dashboard />}></Route>
 
