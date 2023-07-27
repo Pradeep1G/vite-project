@@ -34,6 +34,7 @@ export default function SingleRegisterForm() {
 
 
   const [getvacancies, setgetvacancies] = useState("")
+  const [isnotRegisterd, setisnotRegisterd]  = useState("")
 
 
 
@@ -63,7 +64,8 @@ export default function SingleRegisterForm() {
   useEffect(() => {
     // Call getData() when the component mounts or when guideMailId changes
     getData();
-  }, [guideMailId,getvacancies]);
+    checkRegistered();
+  }, [userEmail,guideMailId,getvacancies]);
   
 
   const getData = async () => {
@@ -77,6 +79,18 @@ export default function SingleRegisterForm() {
   };
 
 
+  const checkRegistered = async () => {
+    try{
+      const response = await axios.get(serverPath1+"/api/check/"+userEmail)
+      console.warn(response.data)
+      setisnotRegisterd(response.data.first_time)
+
+    }catch (err){
+      console.warn(err)
+    }
+  }
+
+
 
   
 
@@ -86,7 +100,7 @@ export default function SingleRegisterForm() {
 
 
 
-    if (parseInt(getvacancies['vacancies'])>0)
+    if (parseInt(getvacancies['vacancies'])>0 && isnotRegisterd)
     {
     const data = {
         collection_name: userRegNo, // Replace 'my_collection' with the desired collection name
@@ -170,10 +184,13 @@ export default function SingleRegisterForm() {
 
         }
         
-        else
+        else if(!isnotRegisterd)
         {
-            alert("No Vacancy Select Another Staff")
+            alert("Account is already registered")
         } 
+        else{
+          alert("No Vacancy Select Another Staff")
+        }
 
     
 
