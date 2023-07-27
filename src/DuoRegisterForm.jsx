@@ -9,8 +9,8 @@ import { useLocation } from "react-router-dom";
 
 export default function DuoRegisterForm() {
 
-//   const serverPath1 = "http://127.0.0.1:5000"
-  const serverPath1 = "https://gpaserver2.onrender.com"
+  const serverPath1 = "http://127.0.0.1:5000"
+//   const serverPath1 = "https://gpaserver2.onrender.com"
 
 
     const navigate = useNavigate()
@@ -41,7 +41,7 @@ const [recievedOTP, setrecievedOTP] = useState("")
 
   const [seconduserName, setseconduserName] = useState("");
   const [seconduserRegNo, setseconduserRegNo] = useState("");
-  const [seconduserEmail, setseconduserEmail] = useState("");
+  const [seconduserEmail, setseconduserEmail] = useState("1232gmail.com");
   const [seconduserPhone, setseconduserPhone] = useState("");
 
   const [guideName, setguideName] = useState(localStorage.getItem("GuideName"));
@@ -51,6 +51,9 @@ const [recievedOTP, setrecievedOTP] = useState("")
 
 
   const [getvacancies, setgetvacancies] = useState("")
+  const [ispersononenotRegisterd, setispersononenotRegisterd]  = useState("")
+  const [ispersontwonotRegisterd, setispersontwonotRegisterd]  = useState("")
+
 
 
 
@@ -80,7 +83,9 @@ const [recievedOTP, setrecievedOTP] = useState("")
   useEffect(() => {
     // Call getData() when the component mounts or when guideMailId changes
     getData();
-  }, [guideMailId,getvacancies]);
+    checkpersononeRegistered();
+    checkpersontwoRegistered()
+  }, [userEmail,seconduserEmail,guideMailId,getvacancies]);
   
 
   const getData = async () => {
@@ -120,8 +125,35 @@ const [recievedOTP, setrecievedOTP] = useState("")
     }
 
     }
-
 }
+
+
+
+const checkpersononeRegistered = async () => {
+    try{
+      const response = await axios.get(serverPath1+"/api/check/"+userEmail)
+      console.warn(response.data)
+      setispersononenotRegisterd(response.data.first_time)
+
+    }catch (err){
+      console.warn("not found")
+    }
+  }
+
+  const checkpersontwoRegistered = async () => {
+    try{
+      const response = await axios.get(serverPath1+"/api/check/"+seconduserEmail)
+      console.warn(response.data)
+      setispersontwonotRegisterd(response.data.first_time)
+
+    }catch (err){
+      console.warn(err)
+    }
+  }
+
+
+
+
 
 const checkSecondOtp = (e)=>{
     e.preventDefault()
@@ -147,7 +179,7 @@ const checkSecondOtp = (e)=>{
 
 
 
-        if (parseInt(getvacancies['vacancies']) > 0 && isSecondMailVerified) {
+        if (parseInt(getvacancies['vacancies']) > 0 && isSecondMailVerified && ispersontwonotRegisterd && ispersononenotRegisterd) {
             const data = {
                 collection_name: userRegNo,
                 data: {
@@ -260,6 +292,10 @@ const checkSecondOtp = (e)=>{
 
         else if (!isSecondMailVerified) {
             alert("verify second member email");
+        }else if (!ispersononenotRegisterd){
+            alert("Team member 1 has already registered")
+        }else if (!ispersontwonotRegisterd){
+            alert("Team member 2 has already registered")
         }
         else{
             alert("No Vacancy Select Another Staff");
