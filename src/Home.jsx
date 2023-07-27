@@ -28,7 +28,7 @@ export default function Home(){
             <li>It will reject if the second member mailid is already registered.</li>
             <li>while you click on submit, if any register in any device with the any team member mail is noticed, then the request is rejected.</li>
             <br></br>
-            <p>If you had already logged in before:</p>
+            <p>If you had already logged in before:</p><br></br>
             <li>Use the password that you setup in your first login.</li>
             <li>You are redirected to your dashboard.</li>
             <li>If second member of a team want to access the dashboard, login with the first member mailid and password.</li>
