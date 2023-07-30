@@ -296,7 +296,7 @@ export default function SingleRegisterForm() {
             readOnly
           />
         </div>
-        <button type="submit" className="">SUBMIT</button>
+        <button type="submit" className="h-10 p-2 bg-red-600 text-black">SUBMIT</button>
       </form>
     </>
   );
