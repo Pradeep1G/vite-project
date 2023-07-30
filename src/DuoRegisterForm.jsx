@@ -41,7 +41,7 @@ const [recievedOTP, setrecievedOTP] = useState("")
 
   const [seconduserName, setseconduserName] = useState("");
   const [seconduserRegNo, setseconduserRegNo] = useState("");
-  const [seconduserEmail, setseconduserEmail] = useState("1232gmail.com");
+  const [seconduserEmail, setseconduserEmail] = useState("123@gmail.com");
   const [seconduserPhone, setseconduserPhone] = useState("");
 
   const [guideName, setguideName] = useState(localStorage.getItem("GuideName"));
