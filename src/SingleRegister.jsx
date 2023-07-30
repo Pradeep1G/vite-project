@@ -13,7 +13,8 @@ export default function SingleRegister() {
   const serverPath1 = "https://gpaserver2.onrender.com"
 
 
-
+  const [searchQuery, setSearchQuery] = useState("");
+  const [filteredGuides, setFilteredGuides] = useState([]);
 
   const [guideDict, setGuideDict] = useState([]);
 
@@ -56,12 +57,40 @@ export default function SingleRegister() {
     getData();
   }, [navigate]);
 
+
+
+
+  useEffect(() => {
+    // Filter guides based on the search query
+    const filteredGuides = guideDict.filter((guide) =>
+      guide["NAME"].toLowerCase().includes(searchQuery.toLowerCase())
+    );
+    setFilteredGuides(filteredGuides);
+  }, [searchQuery, guideDict]);
+
+
+
+
+
   return (
     <>
       {console.warn("dict" + guideDict)}
 
       <h1>Single Registration Form</h1>
-      {guideDict.map((item)=>{
+
+
+
+      <input
+        type="text"
+        placeholder="Search guide..."
+        className="border-2"
+        value={searchQuery}
+        onChange={(e) => setSearchQuery(e.target.value)}
+      />
+
+
+
+      {filteredGuides.map((item)=>{
         return <DisplayGuide key={item['id']} empid={item['EMPID']} name={item['NAME']} img = {item["IMAGE"]} vacancies={item['VACANCIES']} designation={item['DESIGNATION']} dm1={item["DOMAIN1"]} dm2={item["DOMAIN2"]} dm3={item["DOMAIN3"]} mailid={item["UniversityEMAILID"]} im="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTb3m_AEpNzWsxMYF_W3DiheGuLfRH9hTb4SA&usqp=CAU"/>
       })}
     </>
