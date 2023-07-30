@@ -32,8 +32,8 @@ export default function DisplayGuide(props) {
                     <ul>{props.dm3}</ul>
                 </li>
                 <p>Mail ID : {props.mailid}</p> */}
-        <p>{props.empid}</p>
-        <button key={props.empid} onClick={() => handleButtonClick(props.empid, props.name, props.mailid, props.vacancies, props.empid)}>
+        {/* <p>{props.empid}</p> */}
+        <button className="h-10 p-2 bg-red-600 text-black" key={props.empid} onClick={() => handleButtonClick(props.empid, props.name, props.mailid, props.vacancies, props.empid)}>
           SELECT
         </button>
       </div>
