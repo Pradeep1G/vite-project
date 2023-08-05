@@ -180,6 +180,41 @@ const checkSecondOtp = (e)=>{
 
 
         if (parseInt(getvacancies['vacancies']) > 0 && isSecondMailVerified && ispersontwonotRegisterd && ispersononenotRegisterd) {
+
+
+
+
+          const data4 = {
+            email : userEmail,
+            password : localStorage.getItem('newpassword')
+          }
+          axios.put(serverPath1+"/add_registered_data",data4)
+          .then((response)=>{
+            console.log(response.data)
+            if(response.data['error']=='Email already registered'){
+              setisnotRegisterd(false)
+              alert("Account already Registered")
+              console.warn(isnotRegisterd)
+            }
+            else{
+
+              const data5 = {
+                email : seconduserEmail,
+                password : localStorage.getItem('newpassword')
+              }
+              axios.put(serverPath1+"/add_registered_data",data5)
+              .then((response)=>{
+                console.log(response.data)
+                if(response.data['error']=='Email already registered'){
+                  setisnotRegisterd(false)
+                  alert("Second Member Account already Registered")
+                  console.warn(isnotRegisterd)
+                }
+                else{
+
+
+
+
             const data = {
                 collection_name: userRegNo,
                 data: {
@@ -288,6 +323,12 @@ const checkSecondOtp = (e)=>{
             navigate(currentPath + "/success");
 
         }
+      }
+      )
+    }
+  }
+          )
+    }
 
 
         else if (!isSecondMailVerified) {
