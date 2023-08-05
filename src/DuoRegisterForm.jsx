@@ -261,6 +261,7 @@ const checkSecondOtp = (e)=>{
                 if(response.data['error']=='Email already registered'){
                   setispersontwonotRegisterd(false)
                   alert("Second Member Account already Registered")
+                  axios.post(serverPath1+"/rollback_registered_data",{email: userEmail})
                   navigate("/")
                   console.warn(isnotRegisterd)
                 }
