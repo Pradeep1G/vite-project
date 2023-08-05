@@ -47,8 +47,8 @@ function LoadingScreen() {
 
 export default function DuoRegisterForm() {
 
-  const serverPath1 = "http://127.0.0.1:5000"
-  // const serverPath1 = "https://gpaserver2.onrender.com"
+  // const serverPath1 = "http://127.0.0.1:5000"
+  const serverPath1 = "https://gpaserver2.onrender.com"
 
 
     const navigate = useNavigate()
