@@ -9,6 +9,43 @@ import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 
 
+
+
+function LoadingScreen() {
+  return (
+    <div
+      style={{
+        position: "fixed",
+        top: 0,
+        left: 0,
+        width: "100vw",
+        height: "100vh",
+        backdropFilter: "blur(1px)",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        zIndex: 9999,
+        flexDirection: "column"
+      }}
+    >
+      <div
+        style={{
+          width: "100px",
+          height: "100px",
+          border: "15px solid #D8D9DA",
+          borderTopColor: "grey",
+          borderRadius: "50%",
+          animation: "spin 1s linear infinite",
+        }}
+      ></div>
+      <p>Please Wait</p>
+    </div>
+  );
+}
+
+
+
+
 const Login=()=> {
 
 
@@ -35,6 +72,9 @@ const Login=()=> {
   const [newConfirmPassword, setnewConfirmPassword] = useState("");
 
 
+  const [isLoading, setIsLoading] = useState(false);
+
+
   useEffect(() => {
     const token = localStorage.getItem('token_for_first_time');
     if (location.pathname === '/login' && token) {
@@ -58,6 +98,8 @@ const Login=()=> {
   const handleFirstLogin = async(e)=>{
     e.preventDefault();
 
+    setIsLoading(true)
+
     if(!verifyOTP){
       console.warn(+serverPath1+'/api/check/'+formData['email'])
       try{
@@ -68,15 +110,18 @@ const Login=()=> {
         if(response.data.is_account_available=="false")
         {
             console.warn("enter valid user account");
+            setIsLoading(false)
             alert("enter valid user account");
         } 
         else if(response.data.first_time=="false" && response.data.is_account_available=="true" && response.data.is_password_correct=="false")
         {
+          setIsLoading(false)
           console.warn("password incorrect");
-          // alert("password incorrect");
+          alert("password incorrect");
         }
         else if(response.data.first_time=="false" && response.data.is_account_available=="true" && response.data.is_password_correct=="true")
         {
+          setIsLoading(false)
           console.warn("Login Success")
           // alert("Login Success");
           setusertoken(response.data.token)
@@ -88,7 +133,7 @@ const Login=()=> {
         
         else if(response.data.first_time==="true" && response.data.is_account_available=="true")
         {
-
+          setIsLoading(false)
           console.warn("I am  called")
           const o ={_id:response.data._id}
 
@@ -108,11 +153,13 @@ const Login=()=> {
                 console.warn("Email not sent")
             }
 
-        }
-        else;
-        {
+        }else{
           console.warn("cannot processed")
         }
+        // else;
+        // {
+        //   console.warn("cannot processed")
+        // }
        
       } catch(error)
       {
@@ -204,6 +251,9 @@ const Login=()=> {
   return (
     
     <>
+
+      {isLoading &&  <LoadingScreen />}
+
       <h1>geddadavenkatapradeep@gmail.com</h1>
       <h1>govinduraju3288@gmail.com</h1>
 
@@ -226,7 +276,7 @@ const Login=()=> {
           required
           onChange={(e) => setFormData({ ...formData, password: e.target.value })}
         />
-        <button className={verifyOTP ? 'hidden p-3':'visible p-5'} type="submit">Submit</button>
+        <button className={verifyOTP ? 'hidden p-3':'h-10 p-2 bg-red-600 text-black'} type="submit">Submit</button>
       </form>
 <p className='font-semibold'>sdfgh</p>
 
@@ -241,7 +291,7 @@ const Login=()=> {
           value={formData.otp}
           onChange={(e) => setuserOTP(e.target.value )}
         />
-          <button onClick={checkOTP} className='border-4' type="submit">Submit</button>
+          <button onClick={checkOTP} className="h-10 p-2 bg-red-600 text-black" type="submit">Submit</button>
 
       </form>
       </div>
@@ -269,7 +319,7 @@ const Login=()=> {
           onChange={(e) => setnewConfirmPassword(e.target.value )}
         />
 
-        <button onClick={continueRegister} className='border-4' type="submit">Submit</button>
+        <button onClick={continueRegister} className='h-10 p-2 bg-red-600 text-black' type="submit">Submit</button>
 
 
         </form>

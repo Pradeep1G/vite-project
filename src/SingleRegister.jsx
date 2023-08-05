@@ -6,6 +6,42 @@ import axios from "axios";
 import DisplayGuide from "./DisplayGuide";
 
 
+
+function LoadingScreen() {
+  return (
+    <div
+      style={{
+        position: "fixed",
+        top: 0,
+        left: 0,
+        width: "100vw",
+        height: "100vh",
+        backdropFilter: "blur(1px)",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        zIndex: 9999,
+        flexDirection: "column"
+      }}
+    >
+      <div
+        style={{
+          width: "100px",
+          height: "100px",
+          border: "15px solid #D8D9DA",
+          borderTopColor: "grey",
+          borderRadius: "50%",
+          animation: "spin 1s linear infinite",
+        }}
+      ></div>
+      <p>Please Wait</p>
+    </div>
+  );
+}
+
+
+
+
 export default function SingleRegister() {
 
 
@@ -18,18 +54,25 @@ export default function SingleRegister() {
 
   const [guideDict, setGuideDict] = useState([]);
 
+
+  const [isLoading, setIsLoading] = useState(false);
+
+
+
   const location = useLocation();
   const currentPath = location.pathname;
 
   const navigate = useNavigate();
 
   const getData = async () => {
+    setIsLoading(true)
     try {
       const response = await axios.get(serverPath1+'/guidelist');
       setGuideDict(response.data);
     } catch (err) {
       console.warn(err);
     }
+    setIsLoading(false)
   };
 
   useEffect(() => {
@@ -74,7 +117,9 @@ export default function SingleRegister() {
 
   return (
     <>
-      {console.warn("dict" + guideDict)}
+      {/* {console.warn("dict" + guideDict)} */}
+      {isLoading &&  <LoadingScreen />}
+
 
       <h1>Single Registration Form</h1>
 

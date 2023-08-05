@@ -239,7 +239,7 @@ const checkSecondOtp = (e)=>{
               setispersononenotRegisterd(false);
               alert("Account already Registered");
               navigate("/");
-              console.warn(isnotRegisterd);
+              console.warn(ispersononenotRegisterd);
             } else if (
               response1.data["error"] === "An error occurred during registration"
             ) {
