@@ -7,10 +7,48 @@ import { useLocation } from "react-router-dom";
 
 
 
+
+function LoadingScreen() {
+  return (
+    <div
+      style={{
+        position: "fixed",
+        top: 0,
+        left: 0,
+        width: "100vw",
+        height: "100vh",
+        backdropFilter: "blur(1px)",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        zIndex: 9999,
+        flexDirection: "column"
+      }}
+    >
+      <div
+        style={{
+          width: "100px",
+          height: "100px",
+          border: "15px solid #D8D9DA",
+          borderTopColor: "grey",
+          borderRadius: "50%",
+          animation: "spin 1s linear infinite",
+        }}
+      ></div>
+      <p>Please Wait</p>
+    </div>
+  );
+}
+
+
+
+
+
+
 export default function DuoRegisterForm() {
 
-  // const serverPath1 = "http://127.0.0.1:5000"
-  const serverPath1 = "https://gpaserver2.onrender.com"
+  const serverPath1 = "http://127.0.0.1:5000"
+  // const serverPath1 = "https://gpaserver2.onrender.com"
 
 
     const navigate = useNavigate()
@@ -54,6 +92,9 @@ const [recievedOTP, setrecievedOTP] = useState("")
   const [ispersononenotRegisterd, setispersononenotRegisterd]  = useState("")
   const [ispersontwonotRegisterd, setispersontwonotRegisterd]  = useState("")
 
+
+
+  const [isLoading, setIsLoading] = useState(false);
 
 
 
@@ -105,6 +146,7 @@ const [recievedOTP, setrecievedOTP] = useState("")
 
 
   const checkSecondMailId = async() => {
+    setIsLoading(true)
     if (seconduserEmail){
     try{
         setIsVerifying(true);
@@ -116,15 +158,18 @@ const [recievedOTP, setrecievedOTP] = useState("")
             setisSecondMailVerified(true)
         }
         else if(response.data.data=="mail not found"){
+            setIsLoading(false)
             alert("Mail not found")
             setIsVerifying(false)
         }
     }catch(err){
+        setIsLoading(false)
         console.warn(err)
         setIsVerifying(false)
     }
 
     }
+    setIsLoading(false)
 }
 
 
@@ -177,32 +222,35 @@ const checkSecondOtp = (e)=>{
   async function Submit(e) {
         e.preventDefault();
 
-
+      setIsLoading(true)
 
         if (parseInt(getvacancies['vacancies']) > 0 && isSecondMailVerified && ispersontwonotRegisterd && ispersononenotRegisterd) {
 
 
 
 
-          const data4 = {
-            email : userEmail,
-            password : localStorage.getItem('newpassword')
-          }
-          axios.put(serverPath1+"/add_registered_data",data4)
-          .then((response)=>{
-            console.log(response.data)
-            if(response.data['error']=='Email already registered'){
-              setisnotRegisterd(false)
-              alert("Account already Registered")
-              navigate("/")
-              console.warn(isnotRegisterd)
-            }
-            else if(response.data['error']=='An error occurred during registration'){
-              alert("You have done something wrong!")
-              navigate("/")
-            }
-            else if(response.data['message']=='User registered successfully'){
+          try {
+            const response1 = await axios.put(serverPath1 + "/add_registered_data", {
+              email: userEmail,
+              password: localStorage.getItem("newpassword"),
+            });
+            console.warn(response1.data)
+            if (response1.data["error"] === "Email already registered") {
+              setispersononenotRegisterd(false);
+              alert("Account already Registered");
+              navigate("/");
+              console.warn(isnotRegisterd);
+            } else if (
+              response1.data["error"] === "An error occurred during registration"
+            ) {
+              alert("You have done something wrong!");
+              navigate("/");
+            } else if (
+              response1.data["message"] === "User registered successfully"
+            ) {
 
+
+              
               const data5 = {
                 email : seconduserEmail,
                 password : localStorage.getItem('newpassword')
@@ -211,7 +259,7 @@ const checkSecondOtp = (e)=>{
               .then((response)=>{
                 console.log(response.data)
                 if(response.data['error']=='Email already registered'){
-                  setisnotRegisterd(false)
+                  setispersontwonotRegisterd(false)
                   alert("Second Member Account already Registered")
                   navigate("/")
                   console.warn(isnotRegisterd)
@@ -330,14 +378,22 @@ const checkSecondOtp = (e)=>{
 
 
             // alert("Success")
+            setIsLoading(false);
             navigate(currentPath + "/success");
 
+        }else{
+          alert("Something done wrong")
         }
       }
       )
+            }else{
+              alert("something done wrong")
             }
           }
-          )
+          catch(error){
+            console.error(error);
+            setIsLoading(false);
+          }
         }
 
 
@@ -363,6 +419,8 @@ const checkSecondOtp = (e)=>{
 
   return (
     <>
+
+    {isLoading && <LoadingScreen/>}
       <h1>REGISTRATION FORM</h1>
 
       <form onSubmit={Submit}>

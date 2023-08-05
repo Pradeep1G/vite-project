@@ -17,23 +17,25 @@ function LoadingScreen() {
         left: 0,
         width: "100vw",
         height: "100vh",
-        background: "#888",
+        backdropFilter: "blur(1px)",
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
         zIndex: 9999,
+        flexDirection: "column"
       }}
     >
       <div
         style={{
           width: "100px",
           height: "100px",
-          border: "5px solid transparent",
-          borderTopColor: "black",
+          border: "15px solid #D8D9DA",
+          borderTopColor: "grey",
           borderRadius: "50%",
           animation: "spin 1s linear infinite",
         }}
       ></div>
+      <p>Please Wait</p>
     </div>
   );
 }
@@ -134,33 +136,25 @@ export default function SingleRegisterForm() {
   
 
 
-  const Submit =async (e)=>{
-    e.preventDefault()
-
+  const Submit = async (e) => {
+    e.preventDefault();
+  
     setIsLoading(true);
-
-
-
-
-    if (parseInt(getvacancies['vacancies'])>0 && isnotRegisterd)
-    {
-
-
-
+  
+    if (parseInt(getvacancies['vacancies']) > 0 && isnotRegisterd) {
       const data4 = {
-        email : userEmail,
-        password : localStorage.getItem('newpassword')
-      }
-      axios.put(serverPath1+"/add_registered_data",data4)
-      .then((response)=>{
-        console.log(response.data)
-        if(response.data['error']=='Email already registered'){
-          setisnotRegisterd(false)
-          alert("Account already Registered")
-          console.warn(isnotRegisterd)
-        }
-        else if(response.data['message']=='User registered successfully'){
-
+        email: userEmail,
+        password: localStorage.getItem('newpassword')
+      };
+  
+      try {
+        const response = await axios.put(serverPath1 + "/add_registered_data", data4);
+        console.log(response.data);
+        if (response.data['error'] === 'Email already registered') {
+          setisnotRegisterd(false);
+          alert("Account already Registered");
+        } else if (response.data['message'] === 'User registered successfully') {
+  
 
           
 
@@ -246,37 +240,21 @@ export default function SingleRegisterForm() {
                 
         
                 // alert("Success")
-                navigate(currentPath+"/success")
+                navigate(currentPath + "/success");
+              }
+            } catch (error) {
+              console.warn(error, "Account Already Registered");
+              setisnotRegisterd(false);
+              alert("Account already Registered");
+            }
+          } else if (!isnotRegisterd) {
+            alert("Account is already registered");
+          } else {
+            alert("No Vacancy Select Another Staff");
+          }
         
-                
-
-
-
-
-        }
-      })
-      .catch((error)=>{
-        console.warn(error,"Account Already Registered")
-        setisnotRegisterd(false)
-        alert("Account already Registered")
-      })
-
-
-
-    }
-        else if(!isnotRegisterd)
-        {
-            alert("Account is already registered")
-        } 
-        else{
-          alert("No Vacancy Select Another Staff")
-        }
-    
-
-        setIsLoading(false)
-
-  }
-
+          setIsLoading(false);
+        };
 
 
 
@@ -286,7 +264,7 @@ export default function SingleRegisterForm() {
     <>
 
 
-      {isLoading && <LoadingScreen />}
+      {isLoading &&  <LoadingScreen />}
 
 
       <h1>REGISTRATION FORM</h1>
