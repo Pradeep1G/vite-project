@@ -102,88 +102,126 @@ export default function SingleRegisterForm() {
 
     if (parseInt(getvacancies['vacancies'])>0 && isnotRegisterd)
     {
-    const data = {
-        collection_name: userRegNo, // Replace 'my_collection' with the desired collection name
-        data: {
-          team: false,
-          name: userName,
-          regNo: userRegNo,
-          phoneNo: userPhone,
-          mailId: userEmail,
-          projectTitle: projTitle,
-          projectDesc: projDesc,
-          projectDomain: projDomain,
-          selectedGuide: guideName,
-          selectedGuideMailId: guideMailId
-        },
-      };
-  
-      // Send the data to the Flask route using Axios
-      axios.post(serverPath1+'/create_collection', data, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
-        .then((response) => {
-          console.log(response.data);
-        })
-        .catch((error) => {
-          console.error('Error:', error);
-        });
 
 
 
-        const data2 = {
-            collection_name: 'users', // Replace 'my_collection' with the desired collection name
-            filter_data: { email: userEmail }, // Replace with the filter to identify the data you want to update
-            updated_data: {
-              password: localStorage.getItem('newpassword'),
-              firstTime: false,
-              regNo: userRegNo
-            },
-          };
-      
-          // Send the data to the Flask update route using Axios
-          axios.put(serverPath1+'/update_data', data2, {
-            headers: {
-              'Content-Type': 'application/json',
-            },
-          })
-            .then((response) => {
-              console.log(response.data);
-            })
-            .catch((error) => {
-              console.error('Error:', error);
-            });
+      const data4 = {
+        email : userEmail,
+        password : localStorage.getItem('newpassword')
+      }
+      axios.put(serverPath1+"/add_registered_data",data4)
+      .then((response)=>{
+        console.log(response.data)
+        if(response.data['error']=='Email already registered'){
+          setisnotRegisterd(false)
+          alert("Account already Registered")
+          console.warn(isnotRegisterd)
+        }
+        else{
 
 
-            const data3 = {
-              collection_name: 'facultylist', // Replace 'my_collection' with the desired collection name
-              filter_data: { "University EMAIL ID": guideMailId }, // Replace with the filter to identify the data you want to update
-              updated_data: {
-                "TOTAL BATCHES": parseInt(getvacancies['vacancies'])-1
-              },
-            };
-        
-            // Send the data to the Flask update route using Axios
-            axios.put(serverPath1+'/update_vacancies_data', data3, {
-              headers: {
-                'Content-Type': 'application/json',
-              },
-            })
-              .then((response) => {
-                console.log(response.data);
+          
+
+
+
+            const data = {
+                collection_name: userRegNo, // Replace 'my_collection' with the desired collection name
+                data: {
+                  team: false,
+                  name: userName,
+                  regNo: userRegNo,
+                  phoneNo: userPhone,
+                  mailId: userEmail,
+                  projectTitle: projTitle,
+                  projectDesc: projDesc,
+                  projectDomain: projDomain,
+                  selectedGuide: guideName,
+                  selectedGuideMailId: guideMailId
+                },
+              };
+          
+              // Send the data to the Flask route using Axios
+              axios.post(serverPath1+'/create_collection', data, {
+                headers: {
+                  'Content-Type': 'application/json',
+                },
               })
-              .catch((error) => {
-                console.error('Error:', error);
-              });
+                .then((response) => {
+                  console.log(response.data);
+                })
+                .catch((error) => {
+                  console.error('Error:', error);
+                });
         
+        
+        
+                const data2 = {
+                    collection_name: 'users', // Replace 'my_collection' with the desired collection name
+                    filter_data: { email: userEmail }, // Replace with the filter to identify the data you want to update
+                    updated_data: {
+                      password: localStorage.getItem('newpassword'),
+                      firstTime: false,
+                      regNo: userRegNo
+                    },
+                  };
+              
+                  // Send the data to the Flask update route using Axios
+                  axios.put(serverPath1+'/update_data', data2, {
+                    headers: {
+                      'Content-Type': 'application/json',
+                    },
+                  })
+                    .then((response) => {
+                      console.log(response.data);
+                    })
+                    .catch((error) => {
+                      console.error('Error:', error);
+                    });
+        
+                  
+        
+        
+                    const data3 = {
+                      collection_name: 'facultylist', // Replace 'my_collection' with the desired collection name
+                      filter_data: { "University EMAIL ID": guideMailId }, // Replace with the filter to identify the data you want to update
+                      updated_data: {
+                        "TOTAL BATCHES": parseInt(getvacancies['vacancies'])-1
+                      },
+                    };
+                
+                    // Send the data to the Flask update route using Axios
+                    axios.put(serverPath1+'/update_vacancies_data', data3, {
+                      headers: {
+                        'Content-Type': 'application/json',
+                      },
+                    })
+                      .then((response) => {
+                        console.log(response.data);
+                      })
+                      .catch((error) => {
+                        console.error('Error:', error);
+                      });
+                
+        
+                // alert("Success")
+                navigate(currentPath+"/success")
+        
+                
 
-        // alert("Success")
-        navigate(currentPath+"/success")
+
+
 
         }
-        
+      })
+      .catch((error)=>{
+        console.warn(error,"Account Already Registered")
+        setisnotRegisterd(false)
+        alert("Account already Registered")
+      })
+
+
+
+    }
         else if(!isnotRegisterd)
         {
             alert("Account is already registered")
@@ -191,7 +229,7 @@ export default function SingleRegisterForm() {
         else{
           alert("No Vacancy Select Another Staff")
         }
-
+    
     
 
   }
