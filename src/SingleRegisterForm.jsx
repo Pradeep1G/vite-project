@@ -7,6 +7,42 @@ import { useLocation } from "react-router-dom";
 
 
 
+
+function LoadingScreen() {
+  return (
+    <div
+      style={{
+        position: "fixed",
+        top: 0,
+        left: 0,
+        width: "100vw",
+        height: "100vh",
+        background: "rgba(0, 0, 0, 0.5)",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        zIndex: 9999,
+      }}
+    >
+      <div
+        style={{
+          width: "100px",
+          height: "100px",
+          border: "5px solid transparent",
+          borderTopColor: "#fff",
+          borderRadius: "50%",
+          animation: "spin 1s linear infinite",
+        }}
+      ></div>
+    </div>
+  );
+}
+
+
+
+
+
+
 export default function SingleRegisterForm() {
 
   // const serverPath1 = "http://127.0.0.1:5000"
@@ -36,6 +72,9 @@ export default function SingleRegisterForm() {
   const [getvacancies, setgetvacancies] = useState("")
   const [isnotRegisterd, setisnotRegisterd]  = useState("")
 
+
+
+  const [isLoading, setIsLoading] = useState(false);
 
 
 
@@ -97,6 +136,9 @@ export default function SingleRegisterForm() {
 
   const Submit =async (e)=>{
     e.preventDefault()
+
+    setIsLoading(true);
+
 
 
 
@@ -230,7 +272,8 @@ export default function SingleRegisterForm() {
           alert("No Vacancy Select Another Staff")
         }
     
-    
+
+        setIsLoading(false)
 
   }
 
@@ -241,6 +284,11 @@ export default function SingleRegisterForm() {
 
   return (
     <>
+
+
+      {isLoading && <LoadingScreen />}
+
+
       <h1>REGISTRATION FORM</h1>
 
       <form onSubmit={Submit}>
@@ -334,7 +382,9 @@ export default function SingleRegisterForm() {
             readOnly
           />
         </div>
-        <button type="submit" className="h-10 p-2 bg-red-600 text-black">SUBMIT</button>
+        <button type="submit" className="h-10 p-2 bg-red-600 text-black">
+        {isLoading ? "Loading..." : "SUBMIT"}
+        </button>
       </form>
     </>
   );
