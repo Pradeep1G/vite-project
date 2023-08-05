@@ -194,9 +194,14 @@ const checkSecondOtp = (e)=>{
             if(response.data['error']=='Email already registered'){
               setisnotRegisterd(false)
               alert("Account already Registered")
+              navigate("/")
               console.warn(isnotRegisterd)
             }
-            else{
+            else if(response.data['error']=='An error occurred during registration'){
+              alert("You have done something wrong!")
+              navigate("/")
+            }
+            else if(response.data['message']=='User registered successfully'){
 
               const data5 = {
                 email : seconduserEmail,
@@ -208,9 +213,14 @@ const checkSecondOtp = (e)=>{
                 if(response.data['error']=='Email already registered'){
                   setisnotRegisterd(false)
                   alert("Second Member Account already Registered")
+                  navigate("/")
                   console.warn(isnotRegisterd)
                 }
-                else{
+                else if(response.data['error']=='An error occurred during registration'){
+                  alert("You have done something wrong!")
+                  navigate("/")
+                }
+                else if(response.data['message']=='User registered successfully'){
 
 
 
@@ -325,10 +335,10 @@ const checkSecondOtp = (e)=>{
         }
       }
       )
-    }
-  }
+            }
+          }
           )
-    }
+        }
 
 
         else if (!isSecondMailVerified) {
