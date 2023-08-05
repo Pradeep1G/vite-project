@@ -117,7 +117,7 @@ export default function SingleRegisterForm() {
           alert("Account already Registered")
           console.warn(isnotRegisterd)
         }
-        else{
+        else if(response.data['message']=='User registered successfully'){
 
 
           
