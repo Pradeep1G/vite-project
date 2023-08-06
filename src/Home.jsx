@@ -1,5 +1,6 @@
 
 import { useNavigate } from "react-router-dom"
+import Loginnavbar from "./shared/Loginnavbar"
 
 export default function Home(){
 
@@ -12,6 +13,8 @@ export default function Home(){
 
     return(
         <>
+            <Loginnavbar />
+
             <p>If you are logging in for first time :</p><br></br>
             <li>Try any your mail as password and login.</li>
             <li>You will recieve otp to your mail. Enter and submit. Kindly check in your spam mails.</li>

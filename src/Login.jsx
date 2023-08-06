@@ -7,6 +7,7 @@ import ObjectID from 'bson-objectid';
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
+import Loginnavbar from './shared/Loginnavbar';
 
 
 
@@ -251,6 +252,7 @@ const Login=()=> {
   return (
     
     <>
+    <Loginnavbar />
 
       {isLoading &&  <LoadingScreen />}
 
