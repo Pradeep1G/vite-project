@@ -5,7 +5,7 @@ import Linkedin from "../assets/linkedin.png"
 import Insta from "../assets/instagram.png"
 const Footer = () => {
   return (
-    <footer className="bg-red-900 text-gray-200">
+    <footer className="bg-[#9e1c3f] text-gray-200">
       <div className="container mx-auto py-4 px-8 flex items-center justify-between">
         <div className="flex items-center">
           <img src={foorlogo} alt="University Logo" className="object-scale-down h-40 w-80 mr-2" />

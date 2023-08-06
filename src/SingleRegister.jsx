@@ -4,6 +4,8 @@ import { useLocation, useNavigate } from "react-router-dom";
 import jwtDecode from "jwt-decode";
 import axios from "axios";
 import DisplayGuide from "./DisplayGuide";
+import Loginnavbar from "./shared/Loginnavbar";
+import Footer from "./shared/Footer";
 
 
 
@@ -117,27 +119,33 @@ export default function SingleRegister() {
 
   return (
     <>
+    <Loginnavbar />
       {/* {console.warn("dict" + guideDict)} */}
       {isLoading &&  <LoadingScreen />}
 
 
-      <h1>Single Registration Form</h1>
+      {/* <h1>Single Registration Form</h1> */}
 
 
 
+      <div className="bg-[#9e1c3f] flex flex-col items-end relative bottom-5">
       <input
         type="text"
         placeholder="Search guide..."
-        className="border-2"
+        className="border-2 border-solid border-black rounded-lg px-2 h-12 my-4 mr-10 w-fit"
         value={searchQuery}
         onChange={(e) => setSearchQuery(e.target.value)}
       />
+      </div>
 
 
 
       {filteredGuides.map((item)=>{
         return <DisplayGuide key={item['id']} empid={item['EMPID']} name={item['NAME']} img = {item["IMAGE"]} vacancies={item['VACANCIES']} designation={item['DESIGNATION']} dm1={item["DOMAIN1"]} dm2={item["DOMAIN2"]} dm3={item["DOMAIN3"]} mailid={item["UniversityEMAILID"]} im="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTb3m_AEpNzWsxMYF_W3DiheGuLfRH9hTb4SA&usqp=CAU"/>
       })}
+
+
+      <Footer />
     </>
   );
 }
