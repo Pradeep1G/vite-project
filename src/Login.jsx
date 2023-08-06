@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import Loginnavbar from './shared/Loginnavbar';
+import Footer from './shared/Footer';
 
 
 
@@ -215,28 +216,29 @@ const Login=()=> {
 
   const checkOTP=(e)=>{
     e.preventDefault();
-    setverifyOTP(false);
-    setopenNewPasswordContainer(true);
 
     if (userOTP){
-
-    
+      
 
     if(userOTP==recievedOTP)
       {
-        console.warn("Login Success")
-        // localStorage.setItem('token', token)
-        // navigate('/dashboard');
+        console.warn("Lcorrect otp entered")
+
+        setverifyOTP(false);
+
         setopenNewPasswordContainer(true);
       }
     else
     {
-      alert("Wrong OTP")
+      console.warn(openNewPasswordContainer)
+      alert("You have entered wrong OTP")
       console.warn("Wrong OTP")
     }
   }else{
-    alert("Enter correct OTP")
-  }
+      alert("Enter correct OTP")
+    }
+  
+  
   }
 
 
@@ -264,29 +266,27 @@ const Login=()=> {
     <Loginnavbar />
 
 
+    {isLoading &&  <LoadingScreen />}
 
 
 
 
 
+    <div className='loginbg px-20 xs:px-10'>
 
-
-
-    <div id='loginbg' className='px-20'>
-
-    <div className='lg:w-1/4 md:w-2/4 s:w-2/4 xs:w-3/4 border p-4 bg-white bg-opacity-50 backdrop-filter p-6 rounded-lg shadow-lg'>
+    <div className='lg:w-1/4 md:w-2/4 s:w-2/4 xs:w-3/4 border p-4 bg-white bg-opacity-40 backdrop-filter p-6 rounded-lg shadow-lg'>
 
 
       <div className={openlogin ? 'block':'hidden'}>
           <div className={openlogin ? ' flex justify-center':'hidden'}>
-            <h1 className='p-4 font-semibold text-lg'>LOGIN</h1>
+            <h1 className='p-4 font-semibold text-2xl'>LOGIN</h1>
           </div>
 
         <div className='justify-center'>
 
           <form onSubmit={handleFirstLogin}>
             <input
-            className='border-2 px-2 h-10 my-4 w-full'
+            className='border-2 border-solid border-black rounded-lg px-2 h-12 my-4 w-full'
               type="email"
               placeholder="Email"
               value={formData.email}
@@ -294,7 +294,7 @@ const Login=()=> {
               onChange={(e) => setFormData({ ...formData, email: e.target.value })}
             />
             <input
-            className='border-2 h-10 px-2 my-4 w-full'
+            className='border-2 border-solid border-black rounded-lg h-12 px-2 my-4 w-full'
               type="text"
               placeholder="Password"
               value={formData.password}
@@ -313,12 +313,12 @@ const Login=()=> {
 
       <div className={verifyOTP ? 'visible':'hidden'}>
       <div className={true ? ' flex justify-center':'hidden'}>
-            <h1 className='p-4 font-semibold text-lg'>Verify OTP</h1>
+            <h1 className='p-4 font-semibold text-2xl'>Verify OTP</h1>
           </div>
       <form >
       <div className=' flex justify-center'>
       <input
-        className='border-2 h-10 px-2 my-4 w-fit tracking-widest'
+        className='border-2 border-solid border-black rounded-lg px-2 h-12 my-4 w-fit tracking-widest'
           type="number"
           placeholder="o  t  p"
           maxLength="6"
@@ -342,14 +342,14 @@ const Login=()=> {
         
 
       <div className={true ? ' flex justify-center':'hidden'}>
-            <h1 className='p-4 font-semibold text-lg'>Set Password</h1>
+            <h1 className='p-4 font-semibold text-2xl'>Set Password</h1>
           </div>
         
         
         <form>
 
         <input
-        className='border-2 h-10 px-2 my-4 w-full'
+        className='border-2  border-solid border-black rounded-lg px-2 h-12 my-4 w-full'
           type="text"
           placeholder="new password"
           value={newPassword}
@@ -358,7 +358,7 @@ const Login=()=> {
         />
 
         <input
-        className='border-2 h-10 px-2 my-4 w-full'
+        className='border-2  border-solid border-black rounded-lg px-2 h-12 my-4 w-full'
           type="text"
           placeholder="confirm password"
           value={newConfirmPassword}
@@ -395,10 +395,9 @@ const Login=()=> {
 
 
 
-      {isLoading &&  <LoadingScreen />}
 
-      <h1>geddadavenkatapradeep@gmail.com</h1>
-      <h1>govinduraju3288@gmail.com</h1>
+      {/* <h1>geddadavenkatapradeep@gmail.com</h1> */}
+      {/* <h1>govinduraju3288@gmail.com</h1> */}
 
       {/* <form onSubmit={handleFirstLogin}>
     
@@ -472,7 +471,7 @@ const Login=()=> {
 
 
 
-
+      <Footer/>
 
     </>
   )
