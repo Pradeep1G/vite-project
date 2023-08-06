@@ -8,12 +8,12 @@ const Footer = () => {
     <footer className="bg-red-900 text-gray-200">
       <div className="container mx-auto py-4 px-8 flex items-center justify-between">
         <div className="flex items-center">
-          <img src={foorlogo} alt="University Logo" className="h-20 w-48 mr-2" />
+          <img src={foorlogo} alt="University Logo" className="object-scale-down h-40 w-80 mr-2" />
          
         </div>
         <div >
           <div>
-            <p class="text-lg font-semibold pb-3.5">INFO:</p>
+            <p class="text-lg font-semibold pb-3.5">Visit us at:</p>
           </div>
        <div class='flex py-1'>
        <img src={Email} alt="" /> &nbsp;
