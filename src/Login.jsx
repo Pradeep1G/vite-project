@@ -54,8 +54,6 @@ const Login=()=> {
   // const serverPath1 = "http://127.0.0.1:5000"
   const serverPath1 = "https://gpaserver2.onrender.com"
 
-
-
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -74,6 +72,11 @@ const Login=()=> {
 
 
   const [isLoading, setIsLoading] = useState(false);
+
+
+  // FRONTEND
+
+  const [openlogin, setopenlogin] = useState(true);
 
 
   useEffect(() => {
@@ -140,6 +143,7 @@ const Login=()=> {
 
             if(response.data.Is_Email_sent=="true");
             {
+                setopenlogin(false);
                 setverifyOTP(true);
                 setrecievedOTP(response.data.OTP)
                 setusertoken(response.data.token)
@@ -211,6 +215,12 @@ const Login=()=> {
 
   const checkOTP=(e)=>{
     e.preventDefault();
+    setverifyOTP(false);
+    setopenNewPasswordContainer(true);
+
+    if (userOTP){
+
+    
 
     if(userOTP==recievedOTP)
       {
@@ -221,14 +231,13 @@ const Login=()=> {
       }
     else
     {
+      alert("Wrong OTP")
       console.warn("Wrong OTP")
     }
+  }else{
+    alert("Enter correct OTP")
   }
-
-
-
-
-
+  }
 
 
   const continueRegister=(e)=>{
@@ -254,13 +263,145 @@ const Login=()=> {
     <>
     <Loginnavbar />
 
+
+
+
+
+
+
+
+
+
+    <div id='loginbg' className='px-20'>
+
+    <div className='lg:w-1/4 md:w-2/4 s:w-2/4 xs:w-3/4 border p-4 bg-white bg-opacity-50 backdrop-filter p-6 rounded-lg shadow-lg'>
+
+
+      <div className={openlogin ? 'block':'hidden'}>
+          <div className={openlogin ? ' flex justify-center':'hidden'}>
+            <h1 className='p-4 font-semibold text-lg'>LOGIN</h1>
+          </div>
+
+        <div className='justify-center'>
+
+          <form onSubmit={handleFirstLogin}>
+            <input
+            className='border-2 px-2 h-10 my-4 w-full'
+              type="email"
+              placeholder="Email"
+              value={formData.email}
+              required
+              onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+            />
+            <input
+            className='border-2 h-10 px-2 my-4 w-full'
+              type="text"
+              placeholder="Password"
+              value={formData.password}
+              required
+              onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+            />
+
+          <div className=' flex justify-center'>
+
+            <button className={verifyOTP ? 'hidden p-3':'bg-red-900 text-white px-6 py-2 rounded-md my-2'} type="submit">Submit</button>
+          </div>
+          </form>
+      </div>
+      </div>
+
+
+      <div className={verifyOTP ? 'visible':'hidden'}>
+      <div className={true ? ' flex justify-center':'hidden'}>
+            <h1 className='p-4 font-semibold text-lg'>Verify OTP</h1>
+          </div>
+      <form >
+      <div className=' flex justify-center'>
+      <input
+        className='border-2 h-10 px-2 my-4 w-fit tracking-widest'
+          type="number"
+          placeholder="o  t  p"
+          maxLength="6"
+          value={formData.otp}
+          onChange={(e) => setuserOTP(e.target.value )}
+        />
+        </div>
+
+          <div className=' flex justify-center'>
+          <button onClick={checkOTP} className="bg-red-900 text-white px-6 py-2 rounded-md my-2" type="submit">Submit</button>
+          </div>
+      </form>
+      </div>
+
+
+
+
+
+
+      <div className={openNewPasswordContainer ? "visible":"hidden"}>
+        
+
+      <div className={true ? ' flex justify-center':'hidden'}>
+            <h1 className='p-4 font-semibold text-lg'>Set Password</h1>
+          </div>
+        
+        
+        <form>
+
+        <input
+        className='border-2 h-10 px-2 my-4 w-full'
+          type="text"
+          placeholder="new password"
+          value={newPassword}
+          required
+          onChange={(e) => setnewPassword(e.target.value )}
+        />
+
+        <input
+        className='border-2 h-10 px-2 my-4 w-full'
+          type="text"
+          placeholder="confirm password"
+          value={newConfirmPassword}
+          required
+          onChange={(e) => setnewConfirmPassword(e.target.value )}
+        />
+
+        <div className=' flex justify-center'>
+        <button onClick={continueRegister} className='bg-red-900 text-white px-6 py-2 rounded-md my-2' type="submit">Submit</button>
+        </div>
+
+        </form>
+      </div>
+
+
+
+
+
+
+
+</div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
       {isLoading &&  <LoadingScreen />}
 
       <h1>geddadavenkatapradeep@gmail.com</h1>
       <h1>govinduraju3288@gmail.com</h1>
 
-      <form onSubmit={handleFirstLogin}>
-    {/* {      localStorage.removeItem('token_for_first_time')} */}
+      {/* <form onSubmit={handleFirstLogin}>
+    
 
         <input
         className='border-2'
@@ -279,11 +420,10 @@ const Login=()=> {
           onChange={(e) => setFormData({ ...formData, password: e.target.value })}
         />
         <button className={verifyOTP ? 'hidden p-3':'h-10 p-2 bg-red-600 text-black'} type="submit">Submit</button>
-      </form>
-<p className='font-semibold'>sdfgh</p>
+      </form> */}
 
 
-    <div className={verifyOTP ? 'visible':'hidden'}>
+    {/* <div className={verifyOTP ? 'visible':'hidden'}>
       <form >
       <input
         className='border-2'
@@ -296,9 +436,9 @@ const Login=()=> {
           <button onClick={checkOTP} className="h-10 p-2 bg-red-600 text-black" type="submit">Submit</button>
 
       </form>
-      </div>
+      </div> */}
 
-      <div className={openNewPasswordContainer ? "visible":"hidden"}>
+      {/* <div className={openNewPasswordContainer ? "visible":"hidden"}>
         <form>
 
         <input
@@ -325,7 +465,7 @@ const Login=()=> {
 
 
         </form>
-      </div>
+      </div> */}
 
 
 
