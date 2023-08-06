@@ -13,22 +13,22 @@ const Footer = () => {
         </div>
         <div >
           <div>
-            <p class="text-lg font-semibold pb-3.5">Visit us at:</p>
+            <p className="text-lg font-semibold pb-3.5">Visit us at:</p>
           </div>
-       <div class='flex py-1'>
+       <div className='flex py-1'>
        <img src={Email} alt="" /> &nbsp;
         <p> Mail</p>
        </div>
-       <div class='flex py-1'>
+       <div className='flex py-1'>
        <img src={Linkedin} alt="" /> &nbsp;
         <p> Linkedin</p>
-       </div><div class='flex py-1'>
+       </div><div className='flex py-1'>
        <img src={Insta} alt="" /> &nbsp;
         <p> Instagram</p>
        </div>
        </div>
       </div>
-      <hr class="mx-20" />
+      <hr className="mx-20" />
       <div className="container mx-auto py-2 px-8 text-center text-sm">
         &copy; {new Date().getFullYear()} Sathyabama University. All rights reserved.
       </div>
