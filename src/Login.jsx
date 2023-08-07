@@ -304,7 +304,7 @@ const Login=()=> {
 
           <div className=' flex justify-center'>
 
-            <button className={verifyOTP ? 'hidden p-3':'bg-red-900 text-white px-6 py-2 rounded-md my-2'} type="submit">Submit</button>
+            <button className={verifyOTP ? 'hidden p-3':'bg-red-900 text-white px-6 py-2 rounded-md my-2 text-lg'} type="submit">Submit</button>
           </div>
           </form>
       </div>
@@ -328,7 +328,7 @@ const Login=()=> {
         </div>
 
           <div className=' flex justify-center'>
-          <button onClick={checkOTP} className="bg-red-900 text-white px-6 py-2 rounded-md my-2" type="submit">Submit</button>
+          <button onClick={checkOTP} className="bg-red-900 text-white px-6 py-2 rounded-md my-2 text-lg" type="submit">Submit</button>
           </div>
       </form>
       </div>
@@ -367,7 +367,7 @@ const Login=()=> {
         />
 
         <div className=' flex justify-center'>
-        <button onClick={continueRegister} className='bg-red-900 text-white px-6 py-2 rounded-md my-2' type="submit">Submit</button>
+        <button onClick={continueRegister} className='bg-red-900 text-white px-6 py-2 rounded-md my-2 text-lg' type="submit">Submit</button>
         </div>
 
         </form>
