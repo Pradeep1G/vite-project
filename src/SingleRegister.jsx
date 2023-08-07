@@ -159,6 +159,24 @@ export default function SingleRegister() {
 
       </div>
 
+      <div className="flex flex-row justify-between border-2">
+        <div className="w-1/12 flex justify-center p-5 border-x-2 font-semibold">
+          <p>Sr. No.</p>
+        </div>
+        <div className="w-3/12 flex justify-center p-5 border-x-2 font-semibold">
+          <p>Supervisor's Name</p>
+        </div>
+        <div className="w-5/12 flex justify-center p-5 border-x-2 font-semibold">
+          <p>Specialization</p>
+        </div>
+        <div className="w-2/12 flex justify-center p-5 border-x-2 font-semibold">
+          <p>Guideship Vacancy</p>
+        </div>
+        <div className="w-2/12 flex justify-center p-5 border-x-2 font-semibold">
+          <p>Select</p>
+        </div>
+      </div>
+
 
 
       {filteredGuides.map((item)=>{
