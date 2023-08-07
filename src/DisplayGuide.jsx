@@ -51,7 +51,7 @@ export default function DisplayGuide(props) {
           <p>{props.serialNumber}</p>
         </div>
 
-        <div className="lg:w-3/12 flex justify-center p-5 border-x-2">
+        <div className="lg:w-3/12 sm:w-full flex justify-center p-5 border-x-2">
           <div className="flex flex-col items-center space-y-1 lg:text-lg sm:text-sm">
             <img
               className="object-scale-down h-40 w-30"
@@ -77,7 +77,7 @@ export default function DisplayGuide(props) {
         </div>
 
         <div className="lg:w-2/12 flex flex-col sm:flex-row items-center justify-center p-5 border-x-2 font-semibold">
-        <b className="block sm:hidden">Vacancies : </b>
+          <b className="block sm:hidden">Vacancies : </b>
           <p>{props.vacancies}</p>
         </div>
 
@@ -85,7 +85,7 @@ export default function DisplayGuide(props) {
           <button
             className={
               true
-                ? "bg-red-900 text-white lg:px-6 py-2 rounded-md my-2 lg:text-lg sm:text-sm sm:px-2"
+                ? "bg-red-900 text-white px-6 py-2 rounded-md my-2 text-lg"
                 : "hidden"
             }
             key={props.empid}
