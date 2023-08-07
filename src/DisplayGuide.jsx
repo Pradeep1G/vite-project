@@ -46,38 +46,61 @@ export default function DisplayGuide(props) {
 
 
 
-<div className="flex flex-row justify-between border-2">
-        <div className="w-1/12 flex justify-center p-5 border-x-2">
+<div className="lg:flex lg:flex-row lg:justify-between border-2 m-0">
+        <div className="lg:w-1/12 sm:w-10% flex justify-center p-5 border-x-2">
           <p>{props.serialNumber}</p>
         </div>
-        <div className="w-3/12 flex justify-center p-5 border-x-2">
 
-          <div className="flex flex-col items-center space-y-1">
-            <img src={props.img+""} height={100} width={100}></img>
+        <div className="lg:w-3/12 flex justify-center p-5 border-x-2">
+          <div className="flex flex-col items-center space-y-1 lg:text-lg sm:text-sm">
+            <img
+              className="object-scale-down h-40 w-30"
+              src={props.img}
+              height={100}
+              width={100}
+              alt="Guide"
+            />
             <p>{props.name}</p>
-            <p>{props.designation}</p>
-            <p>{props.mailid}</p>
+            <p className="">{props.designation}</p>
+            <p className="">{props.mailid}</p>
           </div>
-
         </div>
-        <div className="w-5/12 flex p-5 border-x-2 ">
+
+        <div className="lg:w-5/12 md:flex p-5 border-x-2 hidden sm:block">
           <div className="pl-5">
-          <ul  className="list-disc">
-                    <li>{props.dm1}</li>
-                    <li>{props.dm2}</li>
-                    <li>{props.dm3}</li>
+            <ul className="list-disc">
+              <li>{props.dm1}</li>
+              <li>{props.dm2}</li>
+              <li>{props.dm3}</li>
             </ul>
           </div>
         </div>
-        <div className="w-2/12 flex flex-col items-center justify-center p-5 border-x-2 font-semibold">
+
+        <div className="lg:w-2/12 flex flex-col sm:flex-row items-center justify-center p-5 border-x-2 font-semibold">
+        <b className="block sm:hidden">Vacancies : </b>
           <p>{props.vacancies}</p>
         </div>
-        <div className="w-2/12 flex flex-col items-center justify-center p-5 border-x-2 ">
-          
-          <button className={parseInt(props.vacancies)>0 ? "bg-red-900 text-white px-6 py-2 rounded-md my-2 text-lg" : "hidden"} key={props.empid} onClick={() => handleButtonClick(props.empid, props.name, props.mailid, props.vacancies, props.empid)}>
-          SELECT
-        </button>
 
+        <div className="lg:w-2/12 flex flex-col items-center justify-center p-5 border-x-2">
+          <button
+            className={
+              true
+                ? "bg-red-900 text-white lg:px-6 py-2 rounded-md my-2 lg:text-lg sm:text-sm sm:px-2"
+                : "hidden"
+            }
+            key={props.empid}
+            onClick={() =>
+              handleButtonClick(
+                props.empid,
+                props.name,
+                props.mailid,
+                props.vacancies,
+                props.empid
+              )
+            }
+          >
+            SELECT
+          </button>
         </div>
       </div>
 

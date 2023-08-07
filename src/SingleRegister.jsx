@@ -160,20 +160,20 @@ export default function SingleRegister() {
 
       </div>
 
-      <div className="flex flex-row justify-between border-2">
-        <div className="w-1/12 flex justify-center p-5 border-x-2 font-semibold">
+      <div className="lg:flex md:flex md:flex-row lg:flex-row justify-between border-2 m-0 hidden sm:block">
+        <div className="lg:w-1/12 sm:w-1/10 flex justify-center p-5 border-x-2 font-semibold lg:text-lg sm:text-sm">
           <p>Sr. No.</p>
         </div>
-        <div className="w-3/12 flex justify-center p-5 border-x-2 font-semibold">
+        <div className="lg:w-3/12 sm:w-6/10 flex justify-center p-5 border-x-2 font-semibold">
           <p>Supervisor's Name</p>
         </div>
-        <div className="w-5/12 flex justify-center p-5 border-x-2 font-semibold">
+        <div className="lg:w-5/12 md:flex justify-center  p-5 border-x-2 font-semibold hidden sm:block">
           <p>Specialization</p>
         </div>
-        <div className="w-2/12 flex justify-center p-5 border-x-2 font-semibold">
+        <div className="lg:w-2/12 flex sm:w-1/10 justify-center p-5 border-x-2 font-semibold">
           <p>Guideship Vacancy</p>
         </div>
-        <div className="w-2/12 flex justify-center p-5 border-x-2 font-semibold">
+        <div className="lg:w-2/12 sm:w-2/10 flex justify-center p-5 border-x-2 font-semibold">
           <p>Select</p>
         </div>
       </div>
