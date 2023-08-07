@@ -19,6 +19,26 @@ export default function DisplayGuide(props) {
     }
   };
 
+
+
+
+  const [serialNumber, setSerialNumber] = useState(0);
+
+   // Increment the serial number for each entry
+   const incrementSerialNumber = () => {
+    setSerialNumber((prevNumber) => prevNumber + 1);
+  };
+
+  // Call the increment function once when the component mounts
+  React.useEffect(() => {
+    incrementSerialNumber();
+  }, []);
+
+
+
+
+
+
   return (
     <>
 
@@ -28,15 +48,15 @@ export default function DisplayGuide(props) {
 
 <div className="flex flex-row justify-between border-2">
         <div className="w-1/12 flex justify-center p-5 border-x-2">
-          <p>{props.key}</p>
+          <p>{props.serialNumber}</p>
         </div>
         <div className="w-3/12 flex justify-center p-5 border-x-2">
 
           <div className="flex flex-col items-center space-y-1">
             <img src={props.img+""} height={100} width={100}></img>
             <p>{props.name}</p>
-            <p>Designation : {props.designation}</p>
-            <p>Mail ID : {props.mailid}</p>
+            <p>{props.designation}</p>
+            <p>{props.mailid}</p>
           </div>
 
         </div>
@@ -54,7 +74,7 @@ export default function DisplayGuide(props) {
         </div>
         <div className="w-2/12 flex flex-col items-center justify-center p-5 border-x-2 ">
           
-          <button className="bg-red-900 text-white px-6 py-2 rounded-md my-2 text-lg" key={props.empid} onClick={() => handleButtonClick(props.empid, props.name, props.mailid, props.vacancies, props.empid)}>
+          <button className={parseInt(props.vacancies)>0 ? "bg-red-900 text-white px-6 py-2 rounded-md my-2 text-lg" : "hidden"} key={props.empid} onClick={() => handleButtonClick(props.empid, props.name, props.mailid, props.vacancies, props.empid)}>
           SELECT
         </button>
 
