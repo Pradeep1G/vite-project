@@ -135,8 +135,8 @@ export default function SingleRegister() {
 
       <div className="flex flex-row items-center justify-center">
 
-<h1 className='p-4 text-white leading-loose  font-semibold text-2xl items-center'></h1>
-</div>
+      <h1 className='p-4 text-white leading-loose  font-semibold text-2xl items-center'></h1>
+      </div>
 
 
 
@@ -144,14 +144,14 @@ export default function SingleRegister() {
 
       <div className="flex flex-row items-center justify-center">
 
-      <h1 className='p-4 text-white leading-loose  font-semibold text-2xl items-center'>Select Your Guide</h1>
+      <h1 className='p-4 text-white leading-loose  font-semibold lg:text-2xl md:text-2xl items-center text-sm'>Select Your Guide</h1>
       </div>
       <div className="flex flex-row items-center">
 
       <input
         type="text"
         placeholder="Search guide..."
-        className="border-2 border-solid border-black rounded-lg px-2 h-12 my-4 mr-10 w-fit"
+        className="border-2 border-solid border-black rounded-lg px-2 h-12 my-4 mr-10 lg:w-fit md:w-fit w-40"
         value={searchQuery}
         onChange={(e) => setSearchQuery(e.target.value)}
       />
