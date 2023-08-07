@@ -17,7 +17,7 @@ export default function Home(){
         <>
             <Loginnavbar />
 
-            <div className="loginbg">
+            <div className="loginbg s:p-20">
     <div className=' border p-4 bg-white bg-opacity-80 backdrop-filter p-6 rounded-lg shadow-lg'>
             
 
