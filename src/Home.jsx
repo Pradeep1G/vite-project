@@ -1,6 +1,8 @@
 
-import { useNavigate } from "react-router-dom"
-import Loginnavbar from "./shared/Loginnavbar"
+import { useNavigate } from "react-router-dom";
+import Loginnavbar from "./shared/Loginnavbar";
+import Footer from "./shared/Footer";
+
 
 export default function Home(){
 
@@ -38,6 +40,8 @@ export default function Home(){
             <br></br>
 
             <button onClick={GoLogin} className="p-4 bg-red-700 text-white text-lg">Login</button>
+        <Footer />
+        
         </>
     )
 }
