@@ -1,6 +1,5 @@
 
-import { useNavigate } from "react-router-dom"
-import Loginnavbar from "./shared/Loginnavbar"
+import { useNavigate } from "react-router-dom";
 import Loginnavbar from "./shared/Loginnavbar";
 import Footer from "./shared/Footer";
 
