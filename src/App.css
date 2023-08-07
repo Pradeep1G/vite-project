@@ -22,7 +22,7 @@
 
 @media (max-width: 500px){
   .loginbg{
-    background: url("./assets/loginbglibrary.jpg"); 
+    background: url("./assets/loginbglibrarysmall.jpg"); 
     min-height: 100vh;
     background-size: cover;
     background-repeat: no-repeat;
