@@ -4,6 +4,8 @@ import { useState } from "react";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
+import Loginnavbar from "./shared/Loginnavbar";
+import Footer from "./shared/Footer";
 
 
 
@@ -98,6 +100,28 @@ const [recievedOTP, setrecievedOTP] = useState("")
 
 
 
+  const [isVerificationSuccess, setisVerificationSuccess] = useState(false)
+  const [verificationInitiated, setVerificationInitiated] = useState(false);
+  const [resendTimer, setResendTimer] = useState(30);
+
+
+  const startResendTimer = () => {
+    setIsVerifying(true);
+    setResendTimer(30); // Set the initial timer value
+    const interval = setInterval(() => {
+      setResendTimer(prevTimer => prevTimer - 1);
+    }, 1000); // Decrease the timer every second
+  
+    // Stop the timer after 30 seconds
+    setTimeout(() => {
+      clearInterval(interval);
+      setIsVerifying(false); // Enable the verify button
+    }, 30000);
+  };
+  
+
+
+
 
 
   useEffect(() => {
@@ -150,14 +174,18 @@ const [recievedOTP, setrecievedOTP] = useState("")
     if (seconduserEmail){
     try{
         setIsVerifying(true);
+        setVerificationInitiated(true);
+
         const response = await axios.get(serverPath1+"/checkSecondMail/"+seconduserEmail);
         console.warn(response.data)
         if (response.data.firstTime){
+            startResendTimer();
             setrecievedOTP(response.data.otp)
             setseconduserotpcontainer(true)
             setisSecondMailVerified(true)
         }
         else if(response.data.data=="mail not found"){
+            setVerificationInitiated(false)
             setIsLoading(false)
             alert("Mail not found")
             setIsVerifying(false)
@@ -166,10 +194,13 @@ const [recievedOTP, setrecievedOTP] = useState("")
         setIsLoading(false)
         console.warn(err)
         setIsVerifying(false)
+    } finally {
+        setIsVerifying(false)
     }
 
-    }
+  }
     setIsLoading(false)
+  
 }
 
 
@@ -202,16 +233,16 @@ const checkpersononeRegistered = async () => {
 
 const checkSecondOtp = (e)=>{
     e.preventDefault()
-    if (recievedOTP==seconduserotp)
-    {
-        setIsVerifying(true)
-        setverifystatus(true)
-        setseconduserotpcontainer(false)
-        setisSecondMailVerified(true)
-    }
-    else{
-        alert("Wrong otp")
-    }
+    // if (recievedOTP==seconduserotp)
+    // {
+    //     setIsVerifying(true)
+    //     setverifystatus(true)
+    //     setseconduserotpcontainer(false)
+    //     setisSecondMailVerified(true)
+    // }
+    // else{
+    //     alert("Wrong otp")
+    // }
 }
 
 
@@ -421,14 +452,374 @@ const checkSecondOtp = (e)=>{
   return (
     <>
 
+    <Loginnavbar />
+
     {isLoading && <LoadingScreen/>}
       <h1>REGISTRATION FORM</h1>
 
       <form onSubmit={Submit}>
-        <div className="ProjectInformation border-2 ">
-          <h1>Project Information</h1>
 
-          <label>Project Title</label>
+
+
+
+
+      <div className="m-4 border-solid border-2 rounded-lg">
+        <div className="bg-[#330716] m-4 rounded-lg  flex justify-center items-center font-bold text-white lg:text-4xl text-lg lg:py-36 py-20">
+          <p>Confirmation Details</p>
+        </div>
+
+
+
+        <div className="border-solid border-2 m-4 p-5">
+
+        <div className="flex justify-center lg:space-y-0 space-y-2">
+          <p className="lg:text-2xl text-xl font-bold pb-4">Project Information</p>
+        </div>
+
+
+        <div className="lg:flex justify-evenly lg:space-y-0 space-y-2">
+
+        <div className="lg:w-full lg:mx-12">
+          <div>
+          <label>Project Title</label><br></br>
+            <input
+              className="border-2 h-12 px-4 w-full bg-gray-200 mb-2"
+              type="text"
+              placeholder="Title..."
+              value={projTitle}
+              required
+              onChange={(e) => setprojTitle(e.target.value)}
+            />
+          </div>
+        </div>
+
+        <div className="lg:w-full lg:mx-12">
+          <div>
+          <label>Project Domain</label><br></br>
+            <input
+              className="border-2 h-12 px-4 w-full bg-gray-200 mb-4"
+              type="text"
+              placeholder="Domain..."
+              value={projDomain}
+              required
+              onChange={(e) => setprojDomain(e.target.value)}
+            />
+            </div>
+          </div>
+
+        </div> 
+
+
+        <div className="lg:mx-12">
+        <label>Project Description</label><br></br>
+          <textarea
+            className="border-2 p-4 w-full bg-gray-200"
+            rows="4"
+            type="text"
+            placeholder="Describe here..."
+            value={projDesc}
+            required
+            onChange={(e) => setprojDesc(e.target.value)}
+          />
+        </div>
+        </div>
+
+
+
+
+        <div className="border-solid border-2 m-4 p-5">
+
+        <div className="flex justify-center lg:space-y-0 space-y-2">
+          <p className="lg:text-2xl text-xl font-bold pb-4">Team Member 1</p>
+        </div>
+
+
+        <div className="lg:flex justify-evenly lg:space-y-0 space-y-2">
+
+        <div className="lg:w-full lg:mx-12">
+          <div>
+          <label>Full Name</label>
+          <input
+            className="border-2 h-12 px-4 w-full bg-gray-200 mb-4"
+            type="text"
+            placeholder="name"
+            value={userName}
+            required
+            onChange={(e) => setuserName(e.target.value)}
+          />
+          </div>
+        </div>
+
+        <div className="lg:w-full lg:mx-12">
+          <div>
+          <label>Register Number</label>
+          <input
+            className="border-2  h-12 px-4 w-full bg-gray-200 mb-4"
+            type="number"
+            placeholder="reg no"
+            value={userRegNo}
+            required
+            onChange={(e) => setuserRegNo(e.target.value)}
+          />
+            </div>
+          </div>
+
+        </div> 
+
+
+
+
+
+        <div className="lg:flex justify-evenly lg:space-y-0 space-y-2">
+
+        <div className="lg:w-full lg:mx-12">
+          <div>
+          <label>Email</label>
+          <input className="border-2 h-12 px-4 w-full bg-gray-200 mb-4" type="text" value={userEmail} readOnly />
+          </div>
+        </div>
+
+        <div className="lg:w-full lg:mx-12">
+          <div>
+          <label>Phone Number</label>
+          <input
+            className="border-2 h-12 px-4 w-full bg-gray-200 mb-4"
+            type="tel"
+            placeholder="phone"
+            value={userPhone}
+            required
+            onChange={(e) => setuserPhone(e.target.value)}
+          />
+            </div>
+          </div>
+
+        </div> 
+        
+        </div>
+
+
+
+        <div className="border-solid border-2 m-4 p-5">
+
+        <div className="flex justify-center lg:space-y-0 space-y-2">
+          <p className="lg:text-2xl text-xl font-bold pb-4">Team Member 2</p>
+        </div>
+
+
+        <div className="lg:flex justify-evenly lg:space-y-0 space-y-2">
+
+        <div className="lg:w-full lg:mx-12">
+          <div>
+          <label>Full Name</label>
+          <input
+            className="border-2 h-12 px-4 w-full bg-gray-200 mb-4"
+            type="text"
+            placeholder=""
+            value={seconduserName}
+            required
+            onChange={(e) => setseconduserName(e.target.value)}
+          />
+          </div>
+        </div>
+
+        <div className="lg:w-full lg:mx-12">
+          <div>
+          <label>Register Number</label>
+          <input
+            className="border-2 h-12 px-4 w-full bg-gray-200 mb-4 "
+            type="number"
+            placeholder=""
+            value={seconduserRegNo}
+            required
+            onChange={(e) => setseconduserRegNo(e.target.value)}
+          />
+            </div>
+          </div>
+
+        </div> 
+
+
+
+
+
+        <div className="lg:flex justify-evenly lg:space-y-0 space-y-2">
+
+        <div className="lg:w-full lg:mx-12">
+          <div>
+          <label>Phone Number</label>
+          <input
+            className="border-2 h-12 px-4 w-full bg-gray-200 mb-4"
+            type="tel"
+            placeholder=""
+            value={seconduserPhone}
+            required
+            onChange={(e) => setseconduserPhone(e.target.value)}
+          />
+          </div>
+        </div>
+
+        <div className="lg:w-full lg:mx-12">
+          <div>
+          <label>Email</label>
+          <input
+            className="border-2 h-12 px-4 w-full bg-gray-200 mb-4"
+            type="email"
+            placeholder=""
+            value={seconduserEmail}
+            required
+            onChange={(e) => setseconduserEmail(e.target.value)}
+          />
+          <p className={verifystatus ? "visible text-lg":"hidden"}><b>VERIFIED</b></p>
+
+            </div>
+          </div>
+
+           
+
+        </div> 
+
+        <div className="flex justify-around">
+        <div className={seconduserotpcontainer ? "visible":"hidden"}> 
+        <input
+          className="border-2 h-12 px-4 w-min bg-gray-200 m-4"
+          type="number"
+          placeholder="Enter OTP"
+          value={seconduserotp}
+          required
+          onChange={(e) => {
+            setseconduserotp(e.target.value);
+            if (recievedOTP==e.target.value)
+            {
+        setIsVerifying(true)
+        setverifystatus(true)
+        setseconduserotpcontainer(false)
+        setisSecondMailVerified(true)
+        setisVerificationSuccess(true)
+            }
+            }}
+        />
+
+
+        {/* <button className="p-4 bg-red-700 text-white text-lg"
+        onClick={checkSecondOtp}
+        disabled={isotpVerifying}>
+        submit</button> */}
+          
+
+        </div>
+        </div>
+        
+
+        <div className="flex justify-around">
+        <div className={isVerificationSuccess ? "hidden":"block"}>
+        <button
+          className="bg-red-900 text-white px-6 py-2 rounded-md my-2 text-lg"
+          onClick={checkSecondMailId}
+          disabled={verificationInitiated && (isVerifying || resendTimer > 0)}
+        >
+          {verificationInitiated
+            ? resendTimer > 0
+              ? `Resend in ${resendTimer}s`
+              : 'Resend'
+            : 'Verify'}
+        </button>
+        </div>
+        </div>
+          
+
+        </div>
+
+
+
+
+
+        <div className="border-solid border-2 m-4 p-5">
+
+<div className="flex justify-center lg:space-y-0 space-y-2">
+  <p className="lg:text-2xl text-xl font-bold pb-4">Guide Details</p>
+</div>
+
+
+<div className="lg:flex justify-evenly lg:space-y-0 space-y-2">
+
+<div className="lg:w-full lg:mx-12">
+  <div>
+  <label>Guide Name</label>
+          <input className="border-2 h-12 px-4 w-full bg-gray-200 mb-4" type="text" value={guideName} readOnly />
+  </div>
+</div>
+
+<div className="lg:w-full lg:mx-12">
+  <div>
+  <label>Guide Email Id</label>
+          <input
+            className="border-2 h-12 px-4 w-full bg-gray-200 mb-4"
+            type="text"
+            value={guideMailId}
+            readOnly
+          />
+    </div>
+  </div>
+
+</div> 
+
+
+
+</div>
+
+
+
+        
+    <div className="flex justify-around pb-5">
+    <button type="submit" className="bg-red-900 text-white px-6 py-2 rounded-md my-2 text-lg">
+        {isLoading ? "Loading..." : "SUBMIT"}
+        </button>
+    </div>
+
+
+
+
+
+
+      </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        {/* <div className="ProjectInformation border-2 "> */}
+          {/* <h1>Project Information</h1> */}
+
+          {/* <label>Project Title</label>
           <input
             className="border-2"
             type="text"
@@ -436,10 +827,10 @@ const checkSecondOtp = (e)=>{
             value={projTitle}
             required
             onChange={(e) => setprojTitle(e.target.value)}
-          />
-          <br></br>
+          /> */}
+          {/* <br></br> */}
 
-          <label>Project Domain</label>
+          {/* <label>Project Domain</label>
           <input
             className="border-2 "
             type="text"
@@ -447,10 +838,10 @@ const checkSecondOtp = (e)=>{
             value={projDomain}
             required
             onChange={(e) => setprojDomain(e.target.value)}
-          />
-          <br></br>
+          /> */}
+          {/* <br></br> */}
 
-          <label>Project Description</label>
+          {/* <label>Project Description</label>
           <input
             className="border-2"
             type="text"
@@ -458,13 +849,13 @@ const checkSecondOtp = (e)=>{
             value={projDesc}
             required
             onChange={(e) => setprojDesc(e.target.value)}
-          />
-        </div>
+          /> */}
+        {/* </div> */}
 
-        <div className="TeamInfo border-2 ">
-          <h1>Team Member 1</h1>
+        {/* <div className="TeamInfo border-2 "> */}
+          {/* <h1>Team Member 1</h1> */}
 
-          <label>Full Name</label>
+          {/* <label>Full Name</label>
           <input
             className="border-2"
             type="text"
@@ -472,10 +863,10 @@ const checkSecondOtp = (e)=>{
             value={userName}
             required
             onChange={(e) => setuserName(e.target.value)}
-          />
-          <br></br>
+          /> */}
+          {/* <br></br> */}
 
-          <label>Register Number</label>
+          {/* <label>Register Number</label>
           <input
             className="border-2 "
             type="number"
@@ -483,14 +874,14 @@ const checkSecondOtp = (e)=>{
             value={userRegNo}
             required
             onChange={(e) => setuserRegNo(e.target.value)}
-          />
-          <br></br>
+          /> */}
+          {/* <br></br> */}
 
-          <label>Email</label>
+          {/* <label>Email</label>
           <input className="border-2" type="text" value={userEmail} readOnly />
-          <br></br>
+          <br></br> */}
 
-          <label>Phone Number</label>
+          {/* <label>Phone Number</label>
           <input
             className="border-2"
             type="tel"
@@ -498,18 +889,18 @@ const checkSecondOtp = (e)=>{
             value={userPhone}
             required
             onChange={(e) => setuserPhone(e.target.value)}
-          />
-        </div>
+          /> */}
+        {/* </div> */}
 
 
 
 
         
 
-        <div className="TeamInfo border-2 ">
-          <h1>Team Member 2</h1>
+        {/* <div className="TeamInfo border-2 "> */}
+          {/* <h1>Team Member 2</h1> */}
 
-          <label>Full Name</label>
+          {/* <label>Full Name</label>
           <input
             className="border-2"
             type="text"
@@ -517,10 +908,10 @@ const checkSecondOtp = (e)=>{
             value={seconduserName}
             required
             onChange={(e) => setseconduserName(e.target.value)}
-          />
-          <br></br>
+          /> */}
+          {/* <br></br> */}
 
-          <label>Register Number</label>
+          {/* <label>Register Number</label>
           <input
             className="border-2 "
             type="number"
@@ -528,10 +919,10 @@ const checkSecondOtp = (e)=>{
             value={seconduserRegNo}
             required
             onChange={(e) => setseconduserRegNo(e.target.value)}
-          />
-          <br></br>
+          /> */}
+          {/* <br></br> */}
 
-          <label>Phone Number</label>
+          {/* <label>Phone Number</label>
           <input
             className="border-2"
             type="tel"
@@ -539,10 +930,10 @@ const checkSecondOtp = (e)=>{
             value={seconduserPhone}
             required
             onChange={(e) => setseconduserPhone(e.target.value)}
-          />
-          <br></br>
+          /> */}
+          {/* <br></br> */}
 
-          <label>Email</label>
+          {/* <label>Email</label>
           <input
             className="border-2"
             type="email"
@@ -550,16 +941,16 @@ const checkSecondOtp = (e)=>{
             value={seconduserEmail}
             required
             onChange={(e) => setseconduserEmail(e.target.value)}
-          /> 
-          <button className="p-4 bg-red-700 text-white text-lg"
+          />  */}
+          {/* <button className="p-4 bg-red-700 text-white text-lg"
            onClick={checkSecondMailId}
            disabled={isVerifying}>
-           verify</button>
-          <br></br>
-          <p className={verifystatus ? "visible":"hidden"}><b>verified</b></p>
+           verify</button> */}
+          {/* <br></br> */}
+          {/* <p className={verifystatus ? "visible":"hidden"}><b>verified</b></p> */}
 
 
-          <div className={seconduserotpcontainer ? "visible":"hidden"}>
+          {/* <div className={seconduserotpcontainer ? "visible":"hidden"}>
 
 
           <input
@@ -576,10 +967,10 @@ const checkSecondOtp = (e)=>{
            submit</button>
             
 
-          </div>    
+          </div>     */}
 
           
-        </div>
+        {/* </div> */}
 
     
 
@@ -590,7 +981,7 @@ const checkSecondOtp = (e)=>{
 
 
 
-        <div className="Guide Details">
+        {/* <div className="Guide Details">
           <h1>Guide Details</h1>
           <label>Guide Name</label>
           <input className="border-2" type="text" value={guideName} readOnly />
@@ -602,10 +993,14 @@ const checkSecondOtp = (e)=>{
             type="text"
             value={guideMailId}
             readOnly
-          />
-        </div>
-        <button type="submit"  className="h-10 p-2 bg-red-600 text-black">SUBMIT</button>
+          /> */}
+        {/* </div> */}
+        {/* <button type="submit"  className="h-10 p-2 bg-red-600 text-black">SUBMIT</button> */}
       </form>
+
+
+      <Footer />
+
     </>
   );
 }
