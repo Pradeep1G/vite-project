@@ -428,14 +428,52 @@ export default function SingleRegisterForm() {
 
 
 
+
+
+
+
+        <div className="border-solid border-2 m-4 p-5">
+
+<div className="flex justify-center lg:space-y-0 space-y-2">
+  <p className="lg:text-2xl text-xl font-bold pb-4">Guide Details</p>
+</div>
+
+
+<div className="lg:flex justify-evenly lg:space-y-0 space-y-2">
+
+<div className="lg:w-full lg:mx-12">
+  <div>
+  <label>Guide Name</label>
+          <input className="border-2 h-12 px-4 w-full bg-gray-200 mb-4" type="text" value={guideName} readOnly />
+  </div>
+</div>
+
+<div className="lg:w-full lg:mx-12">
+  <div>
+  <label>Guide Email Id</label>
+          <input
+            className="border-2 h-12 px-4 w-full bg-gray-200 mb-4"
+            type="text"
+            value={guideMailId}
+            readOnly
+          />
+    </div>
+  </div>
+
+</div> 
+
+
+
+</div>
+
+
+
         
-
-
-
-
-
-
-
+    <div className="flex justify-around pb-5">
+    <button type="submit" className="bg-red-900 text-white px-6 py-2 rounded-md my-2 text-lg">
+        {isLoading ? "Loading..." : "SUBMIT"}
+        </button>
+    </div>
 
 
 
@@ -446,7 +484,6 @@ export default function SingleRegisterForm() {
 
 
 
-        <div className="ProjectInformation border-2 ">
           {/* <h1>Project Information</h1> */}
 
           {/* <label>Project Title</label>
@@ -458,7 +495,6 @@ export default function SingleRegisterForm() {
             required
             onChange={(e) => setprojTitle(e.target.value)}
           /> */}
-          <br></br>
 
           {/* <label>Project Domain</label>
           <input
@@ -469,7 +505,6 @@ export default function SingleRegisterForm() {
             required
             onChange={(e) => setprojDomain(e.target.value)}
           /> */}
-          <br></br>
 
           {/* <label>Project Description</label>
           <input
@@ -480,10 +515,7 @@ export default function SingleRegisterForm() {
             required
             onChange={(e) => setprojDesc(e.target.value)}
           /> */}
-        </div>
 
-        <div className="TeamInfo border-2 ">
-          <h1>Your Profile</h1>
 
           {/* <label>Full Name</label>
           <input
@@ -494,7 +526,6 @@ export default function SingleRegisterForm() {
             required
             onChange={(e) => setuserName(e.target.value)}
           /> */}
-          <br></br>
 
           {/* <label>Register Number</label>
           <input
@@ -505,11 +536,9 @@ export default function SingleRegisterForm() {
             required
             onChange={(e) => setuserRegNo(e.target.value)}
           /> */}
-          <br></br>
 
           {/* <label>Email</label>
           <input className="border-2" type="text" value={userEmail} readOnly /> */}
-          <br></br>
 
           {/* <label>Phone Number</label>
           <input
@@ -520,25 +549,20 @@ export default function SingleRegisterForm() {
             required
             onChange={(e) => setuserPhone(e.target.value)}
           /> */}
-        </div>
 
-        <div className="Guide Details">
-          <h1>Guide Details</h1>
-          <label>Guide Name</label>
-          <input className="border-2" type="text" value={guideName} readOnly />
-          <br></br>
+          {/* <label>Guide Name</label>
+          <input className="border-2" type="text" value={guideName} readOnly /> */}
 
-          <label>Guide Email Id</label>
+          {/* <label>Guide Email Id</label>
           <input
             className="border-2"
             type="text"
             value={guideMailId}
             readOnly
-          />
-        </div>
-        <button type="submit" className="h-10 p-2 bg-red-600 text-black">
+          /> */}
+        {/* <button type="submit" className="h-10 p-2 bg-red-600 text-black">
         {isLoading ? "Loading..." : "SUBMIT"}
-        </button>
+        </button> */}
       </form>
       
 
