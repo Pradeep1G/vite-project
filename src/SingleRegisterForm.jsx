@@ -4,6 +4,8 @@ import { useState } from "react";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
+import Loginnavbar from "./shared/Loginnavbar";
+import Footer from "./shared/Footer";
 
 
 
@@ -263,17 +265,95 @@ export default function SingleRegisterForm() {
   return (
     <>
 
+    <Loginnavbar />
+
 
       {isLoading &&  <LoadingScreen />}
 
+      
 
-      <h1>REGISTRATION FORM</h1>
+
+      {/* <h1>REGISTRATION FORM</h1> */}
 
       <form onSubmit={Submit}>
-        <div className="ProjectInformation border-2 ">
-          <h1>Project Information</h1>
 
-          <label>Project Title</label>
+
+
+
+      <div className="m-4 border-solid border-2 rounded-lg">
+        <div className="bg-[#330716] m-4 rounded-lg  flex justify-center items-center font-bold text-white lg:text-4xl text-lg lg:py-36 py-20">
+          <p>Confirmation Details</p>
+        </div>
+
+        <div className="border-solid border-2 m-4 p-5">
+
+        <div className="flex justify-center lg:space-y-0 space-y-2">
+          <p className="lg:text-2xl text-xl font-bold lg:pb-4">Project Information</p>
+        </div>
+
+
+        <div className="lg:flex justify-evenly lg:space-y-0 space-y-2">
+
+        <div className="lg:w-full lg:mx-12">
+          <div>
+          <label>Project Title</label><br></br>
+            <input
+              className="border-2 h-12 px-4 w-full bg-gray-200 mb-2"
+              type="text"
+              placeholder="Title..."
+              value={projTitle}
+              required
+              onChange={(e) => setprojTitle(e.target.value)}
+            />
+          </div>
+        </div>
+
+        <div className="lg:w-full lg:mx-12">
+          <div>
+          <label>Project Domain</label><br></br>
+            <input
+              className="border-2 h-12 px-4 w-full bg-gray-200 mb-4"
+              type="text"
+              placeholder="Domain..."
+              value={projDomain}
+              required
+              onChange={(e) => setprojDomain(e.target.value)}
+            />
+            </div>
+          </div>
+
+        </div> 
+
+
+        <div className="lg:mx-12">
+        <label>Project Description</label><br></br>
+          <textarea
+            className="border-2 p-4 w-full bg-gray-200"
+            rows="4"
+            type="text"
+            placeholder="Describe here..."
+            value={projDesc}
+            required
+            onChange={(e) => setprojDesc(e.target.value)}
+          />
+        </div>
+
+
+
+
+        </div>
+
+      </div>
+
+
+
+
+
+
+        <div className="ProjectInformation border-2 ">
+          {/* <h1>Project Information</h1> */}
+
+          {/* <label>Project Title</label>
           <input
             className="border-2"
             type="text"
@@ -281,10 +361,10 @@ export default function SingleRegisterForm() {
             value={projTitle}
             required
             onChange={(e) => setprojTitle(e.target.value)}
-          />
+          /> */}
           <br></br>
 
-          <label>Project Domain</label>
+          {/* <label>Project Domain</label>
           <input
             className="border-2 "
             type="text"
@@ -292,10 +372,10 @@ export default function SingleRegisterForm() {
             value={projDomain}
             required
             onChange={(e) => setprojDomain(e.target.value)}
-          />
+          /> */}
           <br></br>
 
-          <label>Project Description</label>
+          {/* <label>Project Description</label>
           <input
             className="border-2"
             type="text"
@@ -303,7 +383,7 @@ export default function SingleRegisterForm() {
             value={projDesc}
             required
             onChange={(e) => setprojDesc(e.target.value)}
-          />
+          /> */}
         </div>
 
         <div className="TeamInfo border-2 ">
@@ -364,6 +444,9 @@ export default function SingleRegisterForm() {
         {isLoading ? "Loading..." : "SUBMIT"}
         </button>
       </form>
+      
+
+      <Footer />
     </>
   );
 }
