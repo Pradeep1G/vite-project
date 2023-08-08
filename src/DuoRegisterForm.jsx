@@ -455,7 +455,7 @@ const checkSecondOtp = (e)=>{
     <Loginnavbar />
 
     {isLoading && <LoadingScreen/>}
-      <h1>REGISTRATION FORM</h1>
+      {/* <h1>REGISTRATION FORM</h1> */}
 
       <form onSubmit={Submit}>
 

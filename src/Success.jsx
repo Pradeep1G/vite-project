@@ -24,11 +24,13 @@ export default function Success(){
 
     return(
         <>
-        <div className="text-lg border-4 m-2 text-white bg-red-800 text-center align-middle justify-center py-10">
+        <div className="text-lg border-2 m-2 text-white  text-center align-middle justify-center rounded-lg border-black shadow-lg shadow-gray-300 sha">
+          <div className="border rounded-lg bg-[#9e1c3f] m-3 py-16">
             <h1>You have successfully completed filling the form.</h1>
             <h1>Contact your project coordinator for further process.</h1>
-            <h1>Thank you</h1>
-            <button onClick={GoLogin} className="p-4 bg-white text-black mt-4">Back to Login</button>
+            <h1>Thank you!!</h1>
+            <button onClick={GoLogin} className=" p-4 bg-white text-black mt-6 shadow-md rounded-md shadow-gray-400">Back to Login</button>
+            </div>
             </div>
         </>
     )
