@@ -18,7 +18,7 @@ export default function Home(){
             <Loginnavbar />
 
             <div className="loginbg s:p-20">
-    <div className=' border p-4 bg-white bg-opacity-80 backdrop-filter p-6 rounded-lg shadow-lg'>
+    <div className=' border p-6 bg-white bg-opacity-80 backdrop-filter rounded-lg shadow-lg font-semibold'>
             
 
             <p>If you are logging in for first time :</p><br></br>
