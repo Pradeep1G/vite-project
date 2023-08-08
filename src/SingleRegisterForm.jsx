@@ -288,7 +288,7 @@ export default function SingleRegisterForm() {
         <div className="border-solid border-2 m-4 p-5">
 
         <div className="flex justify-center lg:space-y-0 space-y-2">
-          <p className="lg:text-2xl text-xl font-bold lg:pb-4">Project Information</p>
+          <p className="lg:text-2xl text-xl font-bold pb-4">Project Information</p>
         </div>
 
 
@@ -337,11 +337,107 @@ export default function SingleRegisterForm() {
             onChange={(e) => setprojDesc(e.target.value)}
           />
         </div>
-
-
-
-
         </div>
+
+
+
+
+
+
+
+
+
+
+
+
+        <div className="border-solid border-2 m-4 p-5">
+
+        <div className="flex justify-center lg:space-y-0 space-y-2">
+          <p className="lg:text-2xl text-xl font-bold pb-4">Student Details</p>
+        </div>
+
+
+        <div className="lg:flex justify-evenly lg:space-y-0 space-y-2">
+
+        <div className="lg:w-full lg:mx-12">
+          <div>
+          <label>Full Name</label>
+          <input
+            className="border-2 h-12 px-4 w-full bg-gray-200 mb-4"
+            type="text"
+            placeholder="Name"
+            value={userName}
+            required
+            onChange={(e) => setuserName(e.target.value)}
+          />
+          </div>
+        </div>
+
+        <div className="lg:w-full lg:mx-12">
+          <div>
+          <label>Register Number</label>
+          <input
+            className="border-2 h-12 px-4 w-full bg-gray-200 mb-6"
+            type="number"
+            placeholder="reg no"
+            value={userRegNo}
+            required
+            onChange={(e) => setuserRegNo(e.target.value)}
+          />
+            </div>
+          </div>
+
+        </div> 
+
+
+
+
+
+        <div className="lg:flex justify-evenly lg:space-y-0 space-y-2">
+
+        <div className="lg:w-full lg:mx-12">
+          <div>
+          <label>Email</label>
+          <input className="border-2 h-12 px-4 w-full bg-gray-200 mb-4" type="text" value={userEmail} readOnly />
+          </div>
+        </div>
+
+        <div className="lg:w-full lg:mx-12">
+          <div>
+          <label>Phone Number</label>
+          <input
+            className="border-2 h-12 px-4 w-full bg-gray-200 mb-4"
+            type="tel"
+            placeholder="phone"
+            value={userPhone}
+            required
+            onChange={(e) => setuserPhone(e.target.value)}
+          />
+            </div>
+          </div>
+
+        </div> 
+
+
+        
+        </div>
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+
+
 
       </div>
 
@@ -389,7 +485,7 @@ export default function SingleRegisterForm() {
         <div className="TeamInfo border-2 ">
           <h1>Your Profile</h1>
 
-          <label>Full Name</label>
+          {/* <label>Full Name</label>
           <input
             className="border-2"
             type="text"
@@ -397,10 +493,10 @@ export default function SingleRegisterForm() {
             value={userName}
             required
             onChange={(e) => setuserName(e.target.value)}
-          />
+          /> */}
           <br></br>
 
-          <label>Register Number</label>
+          {/* <label>Register Number</label>
           <input
             className="border-2 "
             type="number"
@@ -408,14 +504,14 @@ export default function SingleRegisterForm() {
             value={userRegNo}
             required
             onChange={(e) => setuserRegNo(e.target.value)}
-          />
+          /> */}
           <br></br>
 
-          <label>Email</label>
-          <input className="border-2" type="text" value={userEmail} readOnly />
+          {/* <label>Email</label>
+          <input className="border-2" type="text" value={userEmail} readOnly /> */}
           <br></br>
 
-          <label>Phone Number</label>
+          {/* <label>Phone Number</label>
           <input
             className="border-2"
             type="tel"
@@ -423,7 +519,7 @@ export default function SingleRegisterForm() {
             value={userPhone}
             required
             onChange={(e) => setuserPhone(e.target.value)}
-          />
+          /> */}
         </div>
 
         <div className="Guide Details">
