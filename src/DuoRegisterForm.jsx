@@ -184,6 +184,12 @@ const [recievedOTP, setrecievedOTP] = useState("")
             setseconduserotpcontainer(true)
             setisSecondMailVerified(true)
         }
+        else if(!response.data.firstTime){
+          setVerificationInitiated(false)
+          setIsLoading(false)
+          alert("Account already Registered")
+          setIsVerifying(false)
+      }
         else if(response.data.data=="mail not found"){
             setVerificationInitiated(false)
             setIsLoading(false)
