@@ -171,7 +171,7 @@ const [recievedOTP, setrecievedOTP] = useState("")
 
   const checkSecondMailId = async() => {
     setIsLoading(true)
-    if (seconduserEmail){
+    if (seconduserEmail && userEmail!=seconduserEmail){
     try{
         setIsVerifying(true);
         setVerificationInitiated(true);
@@ -204,8 +204,12 @@ const [recievedOTP, setrecievedOTP] = useState("")
         setIsVerifying(false)
     }
 
-  }
     setIsLoading(false)
+
+
+  }else{
+    alert("No duplicate entries allowed!")
+  }
   
 }
 
