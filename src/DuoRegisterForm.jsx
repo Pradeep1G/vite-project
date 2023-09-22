@@ -673,6 +673,15 @@ const checkSecondOtp = (e)=>{
         <div className="lg:w-full lg:mx-12">
           <div>
           <label>Email</label>
+          {verifystatus ? <input
+            className="border-2 h-12 px-4 w-full bg-gray-200 mb-4"
+            type="email"
+            placeholder=""
+            value={seconduserEmail}
+            required
+            readOnly
+            onChange={(e) => setseconduserEmail(e.target.value)}
+          />:
           <input
             className="border-2 h-12 px-4 w-full bg-gray-200 mb-4"
             type="email"
@@ -680,7 +689,8 @@ const checkSecondOtp = (e)=>{
             value={seconduserEmail}
             required
             onChange={(e) => setseconduserEmail(e.target.value)}
-          />
+          />}
+
           <p className={verifystatus ? "visible text-lg":"hidden"}><b>VERIFIED</b></p>
 
             </div>
