@@ -209,6 +209,8 @@ const [recievedOTP, setrecievedOTP] = useState("")
 
   }else{
     alert("No duplicate entries allowed!")
+    setIsLoading(false)
+
   }
   
 }
