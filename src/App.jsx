@@ -8,7 +8,7 @@ import DuoRegisterForm from './DuoRegisterForm';
 import SingleRegisterForm from './SingleRegisterForm';
 import Success from './Success';
 import Home from './Home';
-
+import Staff from "./Stafflogin"
 // import Login from './Login';
 // import Footer from './shared/Footer'
 function App() {
@@ -22,6 +22,7 @@ function App() {
 
           <Route path="/login" element={<Login />}></Route>
           <Route path="/dashboard" element={<Dashboard />}></Route>
+          <Route path="/stafflogin" element={<Staff />}></Route>
 
           <Route path="/login/selectteam" element={<SelectTeam />}></Route>
 
