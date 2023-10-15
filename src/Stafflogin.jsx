@@ -1,9 +1,15 @@
-import React  from 'react';
+import React from 'react';
+import { useNavigate } from 'react-router-dom'; 
 import Loginnavbar from './shared/Loginnavbar';
 import Footer from './shared/Footer';
 
 const Stafflogin = () => {
- 
+  const navigate = useNavigate(); 
+
+  const handleLogin = () => {
+    navigate('/StaffDashboard');
+  };
+
   return (
     <div>
       <Loginnavbar />
@@ -25,7 +31,13 @@ const Stafflogin = () => {
                 required
               />
               <div className="flex justify-center">
-                <button className="bg-red-900 text-white px-6 py-2 rounded-md my-2 text-lg" type="submit">Submit</button>
+                <button
+                  className="bg-red-900 text-white px-6 py-2 rounded-md my-2 text-lg"
+                  type="button" 
+                  onClick={handleLogin} 
+                >
+                  Submit
+                </button>
               </div>
             </form>
           </div>
