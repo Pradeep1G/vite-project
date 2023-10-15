@@ -23,7 +23,7 @@ const Loginnavbar = () => {
       <div className={`lg:flex items-center space-x-4 text-white ${showMenu ? 'hidden' : ''}`}>
         <a href="/login">Student Login</a>
         <a href="/stafflogin">Staff Login</a>
-        <a href="/">About</a>
+        <a href="/">Guide lines</a>
       </div>
       <div className="lg:hidden flex items-center">
         <button
@@ -37,7 +37,7 @@ const Loginnavbar = () => {
         <div className="lg:hidden flex flex-col items-center bg-[#9e1c3f] text-white">
           <a className="font-semibold" href="/login">Student Login</a>
           <a className="font-semibold" href="/stafflogin">Staff Login</a>
-          <a className="font-semibold" href="/">About</a>
+          <a className="font-semibold" href="/">Guide Lines</a>
         </div>
       )}
     </nav>
