@@ -40,7 +40,7 @@ function LoadingScreen() {
           animation: "spin 1s linear infinite",
         }}
       ></div>
-      <p>Please Wait</p>
+      <b>Please Wait</b>
     </div>
   );
 }

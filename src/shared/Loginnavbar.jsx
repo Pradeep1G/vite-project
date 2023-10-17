@@ -16,7 +16,7 @@ const Loginnavbar = () => {
           <img
             src={sistlogologin}
             alt="Logo"
-            className="object-scale-down h-20 w-60 pl-4 py-0" // Increased image size (h-20 and w-60)
+            className="object-scale-down h-20 w-60 pl-4 py-0" 
           />
         </a>
       </div>
@@ -33,13 +33,11 @@ const Loginnavbar = () => {
           <FiMenu size={24} />
         </button>
       </div>
-      {showMenu && (
-        <div className="lg:hidden flex flex-col items-center bg-[#9e1c3f] text-white">
-          <a className="font-semibold" href="/login">Student Login</a>
-          <a className="font-semibold" href="/stafflogin">Staff Login</a>
-          <a className="font-semibold" href="/">Guide Lines</a>
-        </div>
-      )}
+      <div className={`lg:hidden flex flex-col items-center bg-[#9e1c3f] text-white ${showMenu ? '' : 'hidden'}`}>
+        <a className="font-semibold" href="/login">Student Login</a>
+        <a className="font-semibold" href="/stafflogin">Staff Login</a>
+        <a className="font-semibold" href="/">Guide Lines</a>
+      </div>
     </nav>
   );
 };
