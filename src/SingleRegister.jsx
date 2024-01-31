@@ -179,8 +179,8 @@ export default function SingleRegister() {
       </div>
 
 
-
       {filteredGuides.map((item)=>{
+        console.log(item["IMAGE"])
         return <DisplayGuide key={item['id']} serialNumber={guideSerialNumber++} empid={item['EMPID']} name={item['NAME']} img = {item["IMAGE"]} vacancies={item['VACANCIES']} designation={item['DESIGNATION']} dm1={item["DOMAIN1"]} dm2={item["DOMAIN2"]} dm3={item["DOMAIN3"]} mailid={item["UniversityEMAILID"]} im="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTb3m_AEpNzWsxMYF_W3DiheGuLfRH9hTb4SA&usqp=CAU"/>
       })}
 

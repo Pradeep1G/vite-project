@@ -36,6 +36,21 @@ export default function DisplayGuide(props) {
 
 
 
+  function getDirectLinkFromShareableLink(shareableLink) {
+    try {
+      const fileIdMatch = shareableLink.match(/\/uc\?id=(.*?)(&|$)/);
+      if (fileIdMatch && fileIdMatch[1]) {
+        const fileId = fileIdMatch[1];
+        return `https://drive.google.com/thumbnail?id=${fileId}`;
+      } else {
+        throw new Error("Invalid shareable link format");
+      }
+    } catch (error) {
+      console.error("Error processing shareable link:", error.message);
+      return null;
+    }
+  }
+
 
 
 
@@ -55,7 +70,7 @@ export default function DisplayGuide(props) {
           <div className="flex flex-col items-center space-y-1 lg:text-lg sm:text-sm">
             <img
               className="object-scale-down h-40 w-30"
-              src={props.img}
+              src={getDirectLinkFromShareableLink(props.img)}
               height={100}
               width={100}
               alt="Guide"
