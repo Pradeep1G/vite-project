@@ -2,30 +2,25 @@ import React, { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 
 export default function DisplayGuide(props) {
-
   const navigate = useNavigate();
   const location = useLocation();
   const currentPath = location.pathname;
 
-  const handleButtonClick = (route,name,mailid,vacancies,empid) => {
-    if (parseInt(vacancies)>0){
-        localStorage.setItem("GuideName",name)
-        localStorage.setItem("GuideMailId",mailid)
-        localStorage.setItem("GuideId", empid)
-        navigate(currentPath+"/"+route);
-    }
-    else{
-        alert("NO VACANCIES")
+  const handleButtonClick = (route, name, mailId, vacancies, empId) => {
+    if (parseInt(vacancies) > 0) {
+      localStorage.setItem("GuideName", name);
+      localStorage.setItem("GuideMailId", mailId);
+      localStorage.setItem("GuideId", empId);
+      navigate(currentPath + "/" + route);
+    } else {
+      alert("NO VACANCIES");
     }
   };
 
-
-
-
   const [serialNumber, setSerialNumber] = useState(0);
 
-   // Increment the serial number for each entry
-   const incrementSerialNumber = () => {
+  // Increment the serial number for each entry
+  const incrementSerialNumber = () => {
     setSerialNumber((prevNumber) => prevNumber + 1);
   };
 
@@ -34,19 +29,24 @@ export default function DisplayGuide(props) {
     incrementSerialNumber();
   }, []);
 
-
-
-
-
+  function getDirectLinkFromShareableLink(shareableLink) {
+    try {
+      const fileIdMatch = shareableLink.match(/\/uc\?id=(.*?)(&|$)/);
+      if (fileIdMatch && fileIdMatch[1]) {
+        const fileId = fileIdMatch[1];
+        return `https://drive.google.com/thumbnail?id=${fileId}`;
+      } else {
+        throw new Error("Invalid shareable link format");
+      }
+    } catch (error) {
+      console.error("Error processing shareable link:", error.message);
+      return null;
+    }
+  }
 
   return (
     <>
-
-
-
-
-
-<div className="lg:flex lg:flex-row lg:justify-between border-2 m-0">
+      <div className="lg:flex lg:flex-row lg:justify-between border-2 m-0">
         <div className="lg:w-1/12 sm:w-10% flex justify-center p-5 border-x-2">
           <p>{props.serialNumber}</p>
         </div>
@@ -55,14 +55,14 @@ export default function DisplayGuide(props) {
           <div className="flex flex-col items-center space-y-1 lg:text-lg sm:text-sm">
             <img
               className="object-scale-down h-40 w-30"
-              src={props.img}
+              src={getDirectLinkFromShareableLink(props.img)}
               height={100}
               width={100}
               alt="Guide"
             />
             <p>{props.name}</p>
             <p className="">{props.designation}</p>
-            <p className="">{props.mailid}</p>
+            <p className="">{props.mailId}</p>
           </div>
         </div>
 
@@ -88,14 +88,14 @@ export default function DisplayGuide(props) {
                 ? "bg-red-900 text-white px-6 py-2 rounded-md my-2 text-lg"
                 : "hidden"
             }
-            key={props.empid}
+            key={props.empId}
             onClick={() =>
               handleButtonClick(
-                props.empid,
+                props.empId,
                 props.name,
-                props.mailid,
+                props.mailId,
                 props.vacancies,
-                props.empid
+                props.empId
               )
             }
           >
@@ -104,19 +104,12 @@ export default function DisplayGuide(props) {
         </div>
       </div>
 
-
-
-
-
-
-
-
       {/* <div className="flex space-x-2 border-2 m-2">
         <h1>{props.name}</h1>
         <img src={props.img+""} height={100} width={100}></img>
                 <p>No of Vacancies = {props.vacancies}</p>
                 
-        <button className="h-10 p-2 bg-red-600 text-black" key={props.empid} onClick={() => handleButtonClick(props.empid, props.name, props.mailid, props.vacancies, props.empid)}>
+        <button className="h-10 p-2 bg-red-600 text-black" key={props.empId} onClick={() => handleButtonClick(props.empId, props.name, props.mailId, props.vacancies, props.empId)}>
           SELECT
         </button>
       </div> */}
