@@ -5,7 +5,7 @@ import { FiMenu } from "react-icons/fi"; // Assuming you want to use the Feather
 
 
 
-import sist_logo_login from "../assets/sist_logo_login.png";
+import sist_logo_login from "./assets/sist_logo_login.png";
 
 const LoginNavBar = () => {
   const [showMenu, setShowMenu] = useState(false);
