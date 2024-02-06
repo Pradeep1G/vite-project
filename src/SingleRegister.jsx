@@ -59,8 +59,7 @@ export default function SingleRegister() {
   const getData = async () => {
     setIsLoading(true);
     try {
-
-      const response = await axios.get(serverPath1+'/guide_list');
+      const response = await axios.get(serverPath1 + "/guide_list");
       setGuideDict(response.data);
     } catch (err) {
       console.warn(err);
