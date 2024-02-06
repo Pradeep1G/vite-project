@@ -4,7 +4,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
 import jwtDecode from "jwt-decode";
 
-import LoginNavBar from "./shared/LoginNavBar";
+import LoginNavBar from "./LoginNavBar";
 import Footer from "./shared/Footer";
 
 function LoadingScreen() {

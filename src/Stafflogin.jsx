@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate, useLocation } from 'react-router-dom';
 import Footer from './shared/Footer';
-import LoginNavBar from './shared/LoginNavBar';
+import LoginNavBar from './LoginNavBar';
 
 function LoadingScreen() {
   return (

@@ -6,7 +6,7 @@ import jwtDecode from "jwt-decode";
 import axios from "axios";
 
 import DisplayGuide from "./DisplayGuide";
-import LoginNavBar from "./shared/LoginNavBar";
+import LoginNavBar from "./LoginNavBar";
 import Footer from "./shared/Footer";
 
 function LoadingScreen() {

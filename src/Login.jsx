@@ -5,7 +5,7 @@ import axios from "axios";
 
 import "./index.css";
 
-import LoginNavBar from "./shared/LoginNavBar";
+import LoginNavBar from "./LoginNavBar";
 import Footer from "./shared/Footer";
 
 function LoadingScreen() {

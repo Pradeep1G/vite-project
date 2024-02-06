@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import jwtDecode from "jwt-decode";
 
-import LoginNavBar from "./shared/LoginNavBar";
+import LoginNavBar from "./LoginNavBar";
 import Footer from "./shared/Footer";
 
 export default function SelectTeam() {

@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import LoginNavBar from "./shared/LoginNavBar";
+import LoginNavBar from "./LoginNavBar";
 import Footer from "./shared/Footer";
 
 export default function Home() {
