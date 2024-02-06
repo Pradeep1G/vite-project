@@ -184,7 +184,7 @@ const Dashboard = () => {
         </div>
 
         <div className="bg-white p-4 rounded shadow-md col-span-2">
-          <h1 className="text-3xl font-bold text-gray-800 mb-4">Comments</h1>
+          <h1 className="text-3xl font-bold text-gray-800 mb-4">Comments  Chat</h1>
           {/* Add your comments section here */}
         </div>
       </div>
