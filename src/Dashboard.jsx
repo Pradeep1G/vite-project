@@ -47,9 +47,9 @@ const Dashboard = () => {
       const token = localStorage.getItem("token");
       if (token) {
         try {
-          const response = await axios.get(`${serverPath1}/api/user`, {
+          const response = await axios.get(${serverPath1}/api/user, {
             headers: {
-              Authorization: `Bearer ${token}`,
+              Authorization: Bearer ${token},
             },
           });
 
@@ -141,25 +141,25 @@ const Dashboard = () => {
   <div className="flex flex-col md:flex-row md:justify-between">
     <button
       onClick={() => toggleStatus("guideApproval")}
-      className={`text-lg font-bold p-2 rounded mb-2 md:mb-0 ${projectStatus.guideApproval ? 'bg-green-500 text-white' : 'bg-red-500 text-white'}`}
+      className={text-lg font-bold p-2 rounded mb-2 md:mb-0 ${projectStatus.guideApproval ? 'bg-green-500 text-white' : 'bg-red-500 text-white'}}
     >
       Guide Approval
     </button>
     <button
       onClick={() => toggleStatus("researchPaper")}
-      className={`text-lg font-bold p-2 rounded mb-2 md:mb-0 ${projectStatus.researchPaper ? 'bg-green-500 text-white' : 'bg-red-500 text-white'}`}
+      className={text-lg font-bold p-2 rounded mb-2 md:mb-0 ${projectStatus.researchPaper ? 'bg-green-500 text-white' : 'bg-red-500 text-white'}}
     >
       Research Paper
     </button>
     <button
       onClick={() => toggleStatus("documentation")}
-      className={`text-lg font-bold p-2 rounded mb-2 md:mb-0 ${projectStatus.documentation ? 'bg-green-500 text-white' : 'bg-red-500 text-white'}`}
+      className={text-lg font-bold p-2 rounded mb-2 md:mb-0 ${projectStatus.documentation ? 'bg-green-500 text-white' : 'bg-red-500 text-white'}}
     >
       Documentation
     </button>
     <button
       onClick={() => toggleStatus("ppt")}
-      className={`text-lg font-bold p-2 rounded ${projectStatus.ppt ? 'bg-green-500 text-white' : 'bg-red-500 text-white'}`}
+      className={text-lg font-bold p-2 rounded ${projectStatus.ppt ? 'bg-green-500 text-white' : 'bg-red-500 text-white'}}
     >
       PPT
     </button>
@@ -184,7 +184,7 @@ const Dashboard = () => {
         </div>
 
         <div className="bg-white p-4 rounded shadow-md col-span-2">
-          <h1 className="text-3xl font-bold text-gray-800 mb-4">Comments  Chat</h1>
+          <h1 className="text-3xl font-bold text-gray-800 mb-4">Comments</h1>
           {/* Add your comments section here */}
         </div>
       </div>
