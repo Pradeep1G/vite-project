@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate, useLocation } from 'react-router-dom';
-import Loginnavbar from './shared/Loginnavbar';
+import Loginnavbar from './shared/LoginNavBar';
 import Footer from './shared/Footer';
 
 function LoadingScreen() {
