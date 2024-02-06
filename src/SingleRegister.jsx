@@ -149,6 +149,7 @@ export default function SingleRegister() {
         </div>
       </div>
 
+
       {filteredGuides.map((item) => {
         return (
           <DisplayGuide
@@ -166,6 +167,7 @@ export default function SingleRegister() {
             im="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTb3m_AEpNzWsxMYF_W3DiheGuLfRH9hTb4SA&usqp=CAU"
           />
         );
+
       })}
 
       <Footer />

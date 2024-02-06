@@ -1,5 +1,9 @@
+
 import React, { useState } from "react";
 import { FiMenu } from "react-icons/fi"; // Assuming you want to use the Feather icon pack
+
+
+
 
 import sist_logo_login from "../assets/sist_logo_login.png";
 
@@ -16,12 +20,15 @@ const LoginNavBar = () => {
         <div className="flex items-center">
           <a href="/">
             <img
+
               src={sist_logo_login}
+
               alt="Logo"
               className="object-scale-down h-35 w-80 px-3 pt-3"
             />
           </a>
         </div>
+
         <div
           className={`lg:flex items-center space-x-10 text-white${
             showMenu ? "hidden" : "hidden"
@@ -36,6 +43,7 @@ const LoginNavBar = () => {
           <a className="text-white" href="/">
             About
           </a>
+
         </div>
         <div className="lg:hidden flex items-center">
           <button
@@ -48,6 +56,7 @@ const LoginNavBar = () => {
       </nav>
       {showMenu && (
         <div className="lg:hidden flex flex-col items-center bg-[#9e1c3f] text-white">
+
           <a className="py-3" href="/login">
             Student Login
           </a>
@@ -57,6 +66,7 @@ const LoginNavBar = () => {
           <a className="py-3" href="/">
             About
           </a>
+
         </div>
       )}
     </>

@@ -29,6 +29,7 @@ export default function DisplayGuide(props) {
     incrementSerialNumber();
   }, []);
 
+  
   function getDirectLinkFromShareableLink(shareableLink) {
     try {
       const fileIdMatch = shareableLink.match(/\/uc\?id=(.*?)(&|$)/);
@@ -43,6 +44,8 @@ export default function DisplayGuide(props) {
       return null;
     }
   }
+
+  
 
   return (
     <>
