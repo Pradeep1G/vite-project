@@ -150,6 +150,7 @@ export default function SingleRegisterForm() {
               projectDomain: projDomain,
               selectedGuide: guideName,
               selectedGuideMailId: guideMailId,
+              password: localStorage.getItem("newPassword")
             },
           };
 
