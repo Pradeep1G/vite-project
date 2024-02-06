@@ -8,6 +8,9 @@ const Dashboard = () => {
   const userEmail = localStorage.getItem("userEmail");
   const [userName, setUserName] = useState("");
 
+  // const serverPath1 = "http://127.0.0.1:5000"
+  const serverPath1 = "https://gpaserver2.onrender.com";
+
   // Simulate user data
   const studentDetails = {
     profilePicture: "https://th.bing.com/th/id/OIP.MYwdjrgFU0JwL6ahVIdgZwHaH_?w=186&h=201&c=7&r=0&o=5&pid=1.7",

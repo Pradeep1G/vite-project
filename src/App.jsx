@@ -22,13 +22,13 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/stafflogin" element={<Staff />} />
-          <Route path="/login/selectteam" element={<SelectTeam />} />
-          <Route path="/login/selectteam/1" element={<SingleRegister />} />
-          <Route path="/login/selectteam/2" element={<SingleRegister />} />
-          <Route path='/login/selectteam/1/:id' element={<SingleRegisterForm />} />
-          <Route path='/login/selectteam/2/:id' element={<DuoRegisterForm />} />
-          <Route path='/login/selectteam/1/:id/success' element={<Success />} />
-          <Route path='/login/selectteam/2/:id/success' element={<Success />} />
+          <Route path="/login/select_team" element={<SelectTeam />} />
+          <Route path="/login/select_team/1" element={<SingleRegister />} />
+          <Route path="/login/select_team/2" element={<SingleRegister />} />
+          <Route path='/login/select_team/1/:id' element={<SingleRegisterForm />} />
+          <Route path='/login/select_team/2/:id' element={<DuoRegisterForm />} />
+          <Route path='/login/select_team/1/:id/success' element={<Success />} />
+          <Route path='/login/select_team/2/:id/success' element={<Success />} />
         </Routes>
       </Router>
     </div>
