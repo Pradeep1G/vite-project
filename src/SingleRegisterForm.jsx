@@ -1,14 +1,11 @@
+import { useState, useEffect } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
+
 import axios from "axios";
 import jwtDecode from "jwt-decode";
-import { useState } from "react";
-import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import { useLocation } from "react-router-dom";
-import Loginnavbar from "./shared/Loginnavbar";
+
+import LoginNavBar from "./shared/LoginNavBar";
 import Footer from "./shared/Footer";
-
-
-
 
 function LoadingScreen() {
   return (
@@ -24,7 +21,7 @@ function LoadingScreen() {
         justifyContent: "center",
         alignItems: "center",
         zIndex: 9999,
-        flexDirection: "column"
+        flexDirection: "column",
       }}
     >
       <div
@@ -42,518 +39,449 @@ function LoadingScreen() {
   );
 }
 
-
-
-
-
-
 export default function SingleRegisterForm() {
-
   // const serverPath1 = "http://127.0.0.1:5000"
-  const serverPath1 = "https://gpaserver2.onrender.com"
+  const serverPath1 = "https://gpaserver2.onrender.com";
 
+  const navigate = useNavigate();
+  const currentPath = location.pathname;
 
-    const navigate = useNavigate()
-    const currentPath = location.pathname;
+  const [projTitle, setProjTitle] = useState("");
+  const [projDomain, setProjDomain] = useState("");
+  const [projDesc, setProjDesc] = useState("");
 
-  const [projTitle, setprojTitle] = useState("");
-  const [projDomain, setprojDomain] = useState("");
-  const [projDesc, setprojDesc] = useState("");
+  const [userName, setUserName] = useState("");
+  const [userRegNo, setUserRegNo] = useState("");
+  const userEmail = localStorage.getItem("userMailId");
 
-  const [userName, setuserName] = useState("");
-  const [userRegNo, setuserRegNo] = useState("");
-  const [userEmail, setuserEmail] = useState(
-    localStorage.getItem("userMailId")
-  );
-  const [userPhone, setuserPhone] = useState("");
+  const [userPhone, setUserPhone] = useState("");
 
-  const [guideName, setguideName] = useState(localStorage.getItem("GuideName"));
-  const [guideMailId, setguideMailId] = useState(
-    localStorage.getItem("GuideMailId")
-  );
+  const guideName = localStorage.getItem("GuideName");
+  const guideMailId = localStorage.getItem("GuideMailId");
 
-
-  const [getvacancies, setgetvacancies] = useState("")
-  const [isnotRegisterd, setisnotRegisterd]  = useState("")
-
-
+  const [getVacancies, setGetVacancies] = useState("");
+  const [isNotRegistered, setIsNotRegistered] = useState("");
 
   const [isLoading, setIsLoading] = useState(false);
 
-
-
-
   useEffect(() => {
     const checkToken = async () => {
-      const token = localStorage.getItem('token_for_first_time');
+      const token = localStorage.getItem("token_for_first_time");
 
       if (token) {
         const decodedToken = jwtDecode(token);
         const expirationTime = decodedToken.exp * 1000;
 
         if (expirationTime < Date.now()) {
-          localStorage.removeItem('token');
-          localStorage.removeItem('GuideName');
-          localStorage.removeItem("GuideMailId")
-          navigate('/login');
+          localStorage.removeItem("token");
+          localStorage.removeItem("GuideName");
+          localStorage.removeItem("GuideMailId");
+          navigate("/login");
         }
       } else {
-        navigate('/login');
+        navigate("/login");
       }
     };
     checkToken();
-  }, [guideMailId,navigate]);
+  }, [navigate]);
 
   useEffect(() => {
     // Call getData() when the component mounts or when guideMailId changes
     getData();
     checkRegistered();
-  }, [userEmail,guideMailId,getvacancies]);
-  
+  }, [getVacancies]);
 
   const getData = async () => {
     try {
+<<<<<<< HEAD
       const response = await axios.get(serverPath1+'/check_vacancies/'+guideMailId);
       setgetvacancies(response.data);
     //   console.warn(getvacancies)
+=======
+      const response = await axios.get(
+        serverPath1 + "/check_vacancies/" + guideMailId
+      );
+      setGetVacancies(response.data);
+      //   console.warn(getVacancies)
+>>>>>>> b82f2779ca8df6d9d4716dbb5118e8ae318b67c3
     } catch (err) {
       console.warn(err);
     }
   };
 
-
   const checkRegistered = async () => {
-    try{
-      const response = await axios.get(serverPath1+"/api/check/"+userEmail)
-      console.warn(response.data)
-      setisnotRegisterd(response.data.first_time)
-
-    }catch (err){
-      console.warn(err)
+    try {
+      const response = await axios.get(serverPath1 + "/api/check/" + userEmail);
+      console.warn(response.data);
+      setIsNotRegistered(response.data.first_time);
+    } catch (err) {
+      console.warn(err);
     }
-  }
-
-
-
-  
-
+  };
 
   const Submit = async (e) => {
     e.preventDefault();
-  
+
     setIsLoading(true);
-  
-    if (parseInt(getvacancies['vacancies']) > 0 && isnotRegisterd) {
+
+    if (parseInt(getVacancies["vacancies"]) > 0 && isNotRegistered) {
       const data4 = {
         email: userEmail,
-        password: localStorage.getItem('newpassword')
+        password: localStorage.getItem("newPassword"),
       };
-  
+
       try {
-        const response = await axios.put(serverPath1 + "/add_registered_data", data4);
+        const response = await axios.put(
+          serverPath1 + "/add_registered_data",
+          data4
+        );
         console.log(response.data);
-        if (response.data['error'] === 'Email already registered') {
-          setisnotRegisterd(false);
+        if (response.data["error"] === "Email already registered") {
+          setIsNotRegistered(false);
           alert("Account already Registered");
-        } else if (response.data['message'] === 'User registered successfully') {
-  
+        } else if (
+          response.data["message"] === "User registered successfully"
+        ) {
+          const data = {
+            collection_name: userRegNo, // Replace 'my_collection' with the desired collection name
+            data: {
+              team: false,
+              name: userName,
+              regNo: userRegNo,
+              phoneNo: userPhone,
+              mailId: userEmail,
+              projectTitle: projTitle,
+              projectDesc: projDesc,
+              projectDomain: projDomain,
+              selectedGuide: guideName,
+              selectedGuideMailId: guideMailId,
+            },
+          };
 
-          
+          // Send the data to the Flask route using Axios
+          axios
+            .post(serverPath1 + "/create_collection", data, {
+              headers: {
+                "Content-Type": "application/json",
+              },
+            })
+            .then((response) => {
+              console.log(response.data);
+            })
+            .catch((error) => {
+              console.error("Error:", error);
+            });
 
+          const data2 = {
+            collection_name: "users", // Replace 'my_collection' with the desired collection name
+            filter_data: { email: userEmail }, // Replace with the filter to identify the data you want to update
+            updated_data: {
+              password: localStorage.getItem("newPassword"),
+              firstTime: false,
+              regNo: userRegNo,
+            },
+          };
 
+          // Send the data to the Flask update route using Axios
+          axios
+            .put(serverPath1 + "/update_data", data2, {
+              headers: {
+                "Content-Type": "application/json",
+              },
+            })
+            .then((response) => {
+              console.log(response.data);
+            })
+            .catch((error) => {
+              console.error("Error:", error);
+            });
 
-            const data = {
-                collection_name: userRegNo, // Replace 'my_collection' with the desired collection name
-                data: {
-                  team: false,
-                  name: userName,
-                  regNo: userRegNo,
-                  phoneNo: userPhone,
-                  mailId: userEmail,
-                  projectTitle: projTitle,
-                  projectDesc: projDesc,
-                  projectDomain: projDomain,
-                  selectedGuide: guideName,
-                  selectedGuideMailId: guideMailId
-                },
-              };
-          
-              // Send the data to the Flask route using Axios
-              axios.post(serverPath1+'/create_collection', data, {
-                headers: {
-                  'Content-Type': 'application/json',
-                },
-              })
-                .then((response) => {
-                  console.log(response.data);
-                })
-                .catch((error) => {
-                  console.error('Error:', error);
-                });
-        
-        
-        
-                const data2 = {
-                    collection_name: 'users', // Replace 'my_collection' with the desired collection name
-                    filter_data: { email: userEmail }, // Replace with the filter to identify the data you want to update
-                    updated_data: {
-                      password: localStorage.getItem('newpassword'),
-                      firstTime: false,
-                      regNo: userRegNo
-                    },
-                  };
-              
-                  // Send the data to the Flask update route using Axios
-                  axios.put(serverPath1+'/update_data', data2, {
-                    headers: {
-                      'Content-Type': 'application/json',
-                    },
-                  })
-                    .then((response) => {
-                      console.log(response.data);
-                    })
-                    .catch((error) => {
-                      console.error('Error:', error);
-                    });
-        
-                  
-        
-        
-                    const data3 = {
-                      collection_name: 'facultylist', // Replace 'my_collection' with the desired collection name
-                      filter_data: { "University EMAIL ID": guideMailId }, // Replace with the filter to identify the data you want to update
-                      updated_data: {
-                        "TOTAL BATCHES": parseInt(getvacancies['vacancies'])-1
-                      },
-                    };
-                
-                    // Send the data to the Flask update route using Axios
-                    axios.put(serverPath1+'/update_vacancies_data', data3, {
-                      headers: {
-                        'Content-Type': 'application/json',
-                      },
-                    })
-                      .then((response) => {
-                        console.log(response.data);
-                      })
-                      .catch((error) => {
-                        console.error('Error:', error);
-                      });
-                
-        
-                // alert("Success")
-                navigate(currentPath + "/success");
-              }
-            } catch (error) {
-              console.warn(error, "Account Already Registered");
-              setisnotRegisterd(false);
-              alert("Account already Registered");
-            }
-          } else if (!isnotRegisterd) {
-            alert("Account is already registered");
-          } else {
-            alert("No Vacancy Select Another Staff");
-          }
-        
-          setIsLoading(false);
-        };
+          const data3 = {
+            collection_name: "facultyList", // Replace 'my_collection' with the desired collection name
+            filter_data: { "University EMAIL ID": guideMailId }, // Replace with the filter to identify the data you want to update
+            updated_data: {
+              "TOTAL BATCHES": parseInt(getVacancies["vacancies"]) - 1,
+            },
+          };
 
+          // Send the data to the Flask update route using Axios
+          axios
+            .put(serverPath1 + "/update_vacancies_data", data3, {
+              headers: {
+                "Content-Type": "application/json",
+              },
+            })
+            .then((response) => {
+              console.log(response.data);
+            })
+            .catch((error) => {
+              console.error("Error:", error);
+            });
 
+          // alert("Success")
+          navigate(currentPath + "/success");
+        }
+      } catch (error) {
+        console.warn(error, "Account Already Registered");
+        setIsNotRegistered(false);
+        alert("Account already Registered");
+      }
+    } else if (!isNotRegistered) {
+      alert("Account is already registered");
+    } else {
+      alert("No Vacancy Select Another Staff");
+    }
 
-
+    setIsLoading(false);
+  };
 
   return (
     <>
+      <LoginNavBar />
 
-    <Loginnavbar />
-
-
-      {isLoading &&  <LoadingScreen />}
-
-      
-
+      {isLoading && <LoadingScreen />}
 
       {/* <h1>REGISTRATION FORM</h1> */}
 
       <form onSubmit={Submit}>
-
-
-
-
-      <div className="m-4 border-solid border-2 rounded-lg">
-        <div className="bg-[#330716] m-4 rounded-lg  flex justify-center items-center font-bold text-white lg:text-4xl text-lg lg:py-36 py-20">
-          <p>Confirmation Details</p>
-        </div>
-
-        <div className="border-solid border-2 m-4 p-5">
-
-        <div className="flex justify-center lg:space-y-0 space-y-2">
-          <p className="lg:text-2xl text-xl font-bold pb-4">Project Information</p>
-        </div>
-
-
-        <div className="lg:flex justify-evenly lg:space-y-0 space-y-2">
-
-        <div className="lg:w-full lg:mx-12">
-          <div>
-          <label>Project Title</label><br></br>
-            <input
-              className="border-2 h-12 px-4 w-full bg-gray-200 mb-2"
-              type="text"
-              placeholder="Title..."
-              value={projTitle}
-              required
-              onChange={(e) => setprojTitle(e.target.value)}
-            />
+        <div className="m-4 border-solid border-2 rounded-lg">
+          <div className="bg-[#330716] m-4 rounded-lg  flex justify-center items-center font-bold text-white lg:text-4xl text-lg lg:py-36 py-20">
+            <p>Confirmation Details</p>
           </div>
-        </div>
 
-        <div className="lg:w-full lg:mx-12">
-          <div>
-          <label>Project Domain</label><br></br>
-            <input
-              className="border-2 h-12 px-4 w-full bg-gray-200 mb-4"
-              type="text"
-              placeholder="Domain..."
-              value={projDomain}
-              required
-              onChange={(e) => setprojDomain(e.target.value)}
-            />
+          <div className="border-solid border-2 m-4 p-5">
+            <div className="flex justify-center lg:space-y-0 space-y-2">
+              <p className="lg:text-2xl text-xl font-bold pb-4">
+                Project Information
+              </p>
+            </div>
+
+            <div className="lg:flex justify-evenly lg:space-y-0 space-y-2">
+              <div className="lg:w-full lg:mx-12">
+                <div>
+                  <label>Project Title</label>
+                  <br></br>
+                  <input
+                    className="border-2 h-12 px-4 w-full bg-gray-200 mb-2"
+                    type="text"
+                    placeholder="Title..."
+                    value={projTitle}
+                    required
+                    onChange={(e) => setProjTitle(e.target.value)}
+                  />
+                </div>
+              </div>
+
+              <div className="lg:w-full lg:mx-12">
+                <div>
+                  <label>Project Domain</label>
+                  <br></br>
+                  <input
+                    className="border-2 h-12 px-4 w-full bg-gray-200 mb-4"
+                    type="text"
+                    placeholder="Domain..."
+                    value={projDomain}
+                    required
+                    onChange={(e) => setProjDomain(e.target.value)}
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div className="lg:mx-12">
+              <label>Project Description</label>
+              <br></br>
+              <textarea
+                className="border-2 p-4 w-full bg-gray-200"
+                rows="4"
+                type="text"
+                placeholder="Describe here..."
+                value={projDesc}
+                required
+                onChange={(e) => setProjDesc(e.target.value)}
+              />
             </div>
           </div>
 
-        </div> 
+          <div className="border-solid border-2 m-4 p-5">
+            <div className="flex justify-center lg:space-y-0 space-y-2">
+              <p className="lg:text-2xl text-xl font-bold pb-4">
+                Student Details
+              </p>
+            </div>
 
+            <div className="lg:flex justify-evenly lg:space-y-0 space-y-2">
+              <div className="lg:w-full lg:mx-12">
+                <div>
+                  <label>Full Name</label>
+                  <input
+                    className="border-2 h-12 px-4 w-full bg-gray-200 mb-4"
+                    type="text"
+                    placeholder="Name"
+                    value={userName}
+                    required
+                    onChange={(e) => setUserName(e.target.value)}
+                  />
+                </div>
+              </div>
 
-        <div className="lg:mx-12">
-        <label>Project Description</label><br></br>
-          <textarea
-            className="border-2 p-4 w-full bg-gray-200"
-            rows="4"
-            type="text"
-            placeholder="Describe here..."
-            value={projDesc}
-            required
-            onChange={(e) => setprojDesc(e.target.value)}
-          />
-        </div>
-        </div>
+              <div className="lg:w-full lg:mx-12">
+                <div>
+                  <label>Register Number</label>
+                  <input
+                    className="border-2 h-12 px-4 w-full bg-gray-200 mb-6"
+                    type="number"
+                    placeholder="reg no"
+                    value={userRegNo}
+                    required
+                    onChange={(e) => setUserRegNo(e.target.value)}
+                  />
+                </div>
+              </div>
+            </div>
 
+            <div className="lg:flex justify-evenly lg:space-y-0 space-y-2">
+              <div className="lg:w-full lg:mx-12">
+                <div>
+                  <label>Email</label>
+                  <input
+                    className="border-2 h-12 px-4 w-full bg-gray-200 mb-4"
+                    type="text"
+                    value={userEmail}
+                    readOnly
+                  />
+                </div>
+              </div>
 
-
-
-
-
-
-
-
-
-
-
-        <div className="border-solid border-2 m-4 p-5">
-
-        <div className="flex justify-center lg:space-y-0 space-y-2">
-          <p className="lg:text-2xl text-xl font-bold pb-4">Student Details</p>
-        </div>
-
-
-        <div className="lg:flex justify-evenly lg:space-y-0 space-y-2">
-
-        <div className="lg:w-full lg:mx-12">
-          <div>
-          <label>Full Name</label>
-          <input
-            className="border-2 h-12 px-4 w-full bg-gray-200 mb-4"
-            type="text"
-            placeholder="Name"
-            value={userName}
-            required
-            onChange={(e) => setuserName(e.target.value)}
-          />
-          </div>
-        </div>
-
-        <div className="lg:w-full lg:mx-12">
-          <div>
-          <label>Register Number</label>
-          <input
-            className="border-2 h-12 px-4 w-full bg-gray-200 mb-6"
-            type="number"
-            placeholder="reg no"
-            value={userRegNo}
-            required
-            onChange={(e) => setuserRegNo(e.target.value)}
-          />
+              <div className="lg:w-full lg:mx-12">
+                <div>
+                  <label>Phone Number</label>
+                  <input
+                    className="border-2 h-12 px-4 w-full bg-gray-200 mb-4"
+                    type="tel"
+                    placeholder="phone"
+                    value={userPhone}
+                    required
+                    onChange={(e) => setUserPhone(e.target.value)}
+                  />
+                </div>
+              </div>
             </div>
           </div>
 
-        </div> 
+          <div className="border-solid border-2 m-4 p-5">
+            <div className="flex justify-center lg:space-y-0 space-y-2">
+              <p className="lg:text-2xl text-xl font-bold pb-4">
+                Guide Details
+              </p>
+            </div>
 
+            <div className="lg:flex justify-evenly lg:space-y-0 space-y-2">
+              <div className="lg:w-full lg:mx-12">
+                <div>
+                  <label>Guide Name</label>
+                  <input
+                    className="border-2 h-12 px-4 w-full bg-gray-200 mb-4"
+                    type="text"
+                    value={guideName}
+                    readOnly
+                  />
+                </div>
+              </div>
 
-
-
-
-        <div className="lg:flex justify-evenly lg:space-y-0 space-y-2">
-
-        <div className="lg:w-full lg:mx-12">
-          <div>
-          <label>Email</label>
-          <input className="border-2 h-12 px-4 w-full bg-gray-200 mb-4" type="text" value={userEmail} readOnly />
-          </div>
-        </div>
-
-        <div className="lg:w-full lg:mx-12">
-          <div>
-          <label>Phone Number</label>
-          <input
-            className="border-2 h-12 px-4 w-full bg-gray-200 mb-4"
-            type="tel"
-            placeholder="phone"
-            value={userPhone}
-            required
-            onChange={(e) => setuserPhone(e.target.value)}
-          />
+              <div className="lg:w-full lg:mx-12">
+                <div>
+                  <label>Guide Email Id</label>
+                  <input
+                    className="border-2 h-12 px-4 w-full bg-gray-200 mb-4"
+                    type="text"
+                    value={guideMailId}
+                    readOnly
+                  />
+                </div>
+              </div>
             </div>
           </div>
 
-        </div> 
-
-
-        
+          <div className="flex justify-around pb-5">
+            <button
+              type="submit"
+              className="bg-red-900 text-white px-6 py-2 rounded-md my-2 text-lg"
+            >
+              {isLoading ? "Loading..." : "SUBMIT"}
+            </button>
+          </div>
         </div>
 
+        {/* <h1>Project Information</h1> */}
 
-
-
-
-
-
-
-
-
-
-        <div className="border-solid border-2 m-4 p-5">
-
-<div className="flex justify-center lg:space-y-0 space-y-2">
-  <p className="lg:text-2xl text-xl font-bold pb-4">Guide Details</p>
-</div>
-
-
-<div className="lg:flex justify-evenly lg:space-y-0 space-y-2">
-
-<div className="lg:w-full lg:mx-12">
-  <div>
-  <label>Guide Name</label>
-          <input className="border-2 h-12 px-4 w-full bg-gray-200 mb-4" type="text" value={guideName} readOnly />
-  </div>
-</div>
-
-<div className="lg:w-full lg:mx-12">
-  <div>
-  <label>Guide Email Id</label>
-          <input
-            className="border-2 h-12 px-4 w-full bg-gray-200 mb-4"
-            type="text"
-            value={guideMailId}
-            readOnly
-          />
-    </div>
-  </div>
-
-</div> 
-
-
-
-</div>
-
-
-
-        
-    <div className="flex justify-around pb-5">
-    <button type="submit" className="bg-red-900 text-white px-6 py-2 rounded-md my-2 text-lg">
-        {isLoading ? "Loading..." : "SUBMIT"}
-        </button>
-    </div>
-
-
-
-      </div>
-
-
-
-
-
-
-          {/* <h1>Project Information</h1> */}
-
-          {/* <label>Project Title</label>
+        {/* <label>Project Title</label>
           <input
             className="border-2"
             type="text"
             placeholder=""
             value={projTitle}
             required
-            onChange={(e) => setprojTitle(e.target.value)}
+            onChange={(e) => setProjTitle(e.target.value)}
           /> */}
 
-          {/* <label>Project Domain</label>
+        {/* <label>Project Domain</label>
           <input
             className="border-2 "
             type="text"
             placeholder=""
             value={projDomain}
             required
-            onChange={(e) => setprojDomain(e.target.value)}
+            onChange={(e) => setProjDomain(e.target.value)}
           /> */}
 
-          {/* <label>Project Description</label>
+        {/* <label>Project Description</label>
           <input
             className="border-2"
             type="text"
             placeholder=""
             value={projDesc}
             required
-            onChange={(e) => setprojDesc(e.target.value)}
+            onChange={(e) => setProjDesc(e.target.value)}
           /> */}
 
-
-          {/* <label>Full Name</label>
+        {/* <label>Full Name</label>
           <input
             className="border-2"
             type="text"
             placeholder=""
             value={userName}
             required
-            onChange={(e) => setuserName(e.target.value)}
+            onChange={(e) => setUserName(e.target.value)}
           /> */}
 
-          {/* <label>Register Number</label>
+        {/* <label>Register Number</label>
           <input
             className="border-2 "
             type="number"
             placeholder=""
             value={userRegNo}
             required
-            onChange={(e) => setuserRegNo(e.target.value)}
+            onChange={(e) => setUserRegNo(e.target.value)}
           /> */}
 
-          {/* <label>Email</label>
+        {/* <label>Email</label>
           <input className="border-2" type="text" value={userEmail} readOnly /> */}
 
-          {/* <label>Phone Number</label>
+        {/* <label>Phone Number</label>
           <input
             className="border-2"
             type="tel"
             placeholder=""
             value={userPhone}
             required
-            onChange={(e) => setuserPhone(e.target.value)}
+            onChange={(e) => setUserPhone(e.target.value)}
           /> */}
 
-          {/* <label>Guide Name</label>
+        {/* <label>Guide Name</label>
           <input className="border-2" type="text" value={guideName} readOnly /> */}
 
-          {/* <label>Guide Email Id</label>
+        {/* <label>Guide Email Id</label>
           <input
             className="border-2"
             type="text"
@@ -564,7 +492,6 @@ export default function SingleRegisterForm() {
         {isLoading ? "Loading..." : "SUBMIT"}
         </button> */}
       </form>
-      
 
       <Footer />
     </>

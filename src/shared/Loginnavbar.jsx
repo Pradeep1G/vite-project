@@ -1,9 +1,13 @@
-import React, { useState } from 'react';
-import { FiMenu } from 'react-icons/fi'; // Assuming you want to use the Feather icon pack
 
-import sistlogologin from '../assets/sistlogologin.png';
+import React, { useState } from "react";
+import { FiMenu } from "react-icons/fi"; // Assuming you want to use the Feather icon pack
 
-const Loginnavbar = () => {
+
+
+
+import sist_logo_login from "../assets/sist_logo_login.png";
+
+const LoginNavBar = () => {
   const [showMenu, setShowMenu] = useState(false);
 
   const handleMenuToggle = () => {
@@ -16,16 +20,30 @@ const Loginnavbar = () => {
         <div className="flex items-center">
           <a href="/">
             <img
-              src={sistlogologin}
+
+              src={sist_logo_login}
+
               alt="Logo"
               className="object-scale-down h-35 w-80 px-3 pt-3"
             />
           </a>
         </div>
-        <div className={`lg:flex items-center space-x-10 text-white ${showMenu ? 'hidden' : 'hidden'}`}>
-          <a className="" href="/login">Student Login</a>
-          <a className="" href="/stafflogin">Staff Login</a>
-          <a className="" href="/">About</a>
+
+        <div
+          className={`lg:flex items-center space-x-10 text-white${
+            showMenu ? "hidden" : "hidden"
+          }`}
+        >
+          <a className=" text-white " href="/login">
+            Student Login
+          </a>
+          <a className="text-white" href="/staff_login">
+            Staff Login
+          </a>
+          <a className="text-white" href="/">
+            About
+          </a>
+
         </div>
         <div className="lg:hidden flex items-center">
           <button
@@ -38,13 +56,21 @@ const Loginnavbar = () => {
       </nav>
       {showMenu && (
         <div className="lg:hidden flex flex-col items-center bg-[#9e1c3f] text-white">
-          <a className="py-3" href="/login">Student Login</a>
-          <a className="py-3" href="/stafflogin">Staff Login</a>
-          <a className="py-3" href="/">About</a>
+
+          <a className="py-3" href="/login">
+            Student Login
+          </a>
+          <a className="py-3" href="/staff_login">
+            Staff Login
+          </a>
+          <a className="py-3" href="/">
+            About
+          </a>
+
         </div>
       )}
     </>
   );
 };
 
-export default Loginnavbar;
+export default LoginNavBar;
