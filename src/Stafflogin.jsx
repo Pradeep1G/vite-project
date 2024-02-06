@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate, useLocation } from 'react-router-dom';
-import LoginNavBar from './shared/LoginNavBar';
 import Footer from './shared/Footer';
+import LoginNavBar from './shared/LoginNavBar';
 
 function LoadingScreen() {
   return (
@@ -146,7 +146,7 @@ const StaffLogin = () => {
 
   return (
     <>
-      <Loginnavbar />
+      <LoginNavBar />
       {isLoading && <LoadingScreen />}
       <div className='loginbg px-10 xs:px-10'>
         <div className='lg:w-1/4 md:w-2/4 s:w-2/4 xs:w-3/4 border p-4 bg-white bg-opacity-40 backdrop-filter p-6 rounded-lg shadow-lg'>

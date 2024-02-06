@@ -40,8 +40,8 @@ function LoadingScreen() {
 }
 
 export default function SingleRegisterForm() {
-  // const serverPath1 = "http://127.0.0.1:5000"
-  const serverPath1 = "https://gpaserver2.onrender.com";
+  const serverPath1 = "http://127.0.0.1:5000"
+  // const serverPath1 = "https://gpaserver2.onrender.com";
 
   const navigate = useNavigate();
   const currentPath = location.pathname;
@@ -156,7 +156,7 @@ export default function SingleRegisterForm() {
 
           // Send the data to the Flask route using Axios
           axios
-            .post(serverPath1 + "/create_collection", data, {
+            .post(serverPath1 + "/create_collection/"+userEmail, data, {
               headers: {
                 "Content-Type": "application/json",
               },
