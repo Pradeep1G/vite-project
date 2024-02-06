@@ -113,7 +113,7 @@ export default function SingleRegisterForm() {
 
   const getData = async () => {
     try {
-      const response = await axios.get(serverPath1+'/checkVacancies/'+guideMailId);
+      const response = await axios.get(serverPath1+'/check_vacancies/'+guideMailId);
       setgetvacancies(response.data);
     //   console.warn(getvacancies)
     } catch (err) {
