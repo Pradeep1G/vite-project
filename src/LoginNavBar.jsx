@@ -30,7 +30,7 @@ const LoginNavBar = () => {
         </div>
 
         <div
-          className={`lg:flex items-center space-x-10 text-white${
+          className={`lg:flex items-center space-x-10 text-white ${
             showMenu ? "hidden" : "hidden"
           }`}
         >
@@ -55,7 +55,7 @@ const LoginNavBar = () => {
         </div>
       </nav>
       {showMenu && (
-        <div className="lg:hidden flex flex-col items-center bg-[#9e1c3f] text-white">
+        <div className={`lg:hidden flex flex-col items-center bg-[#9e1c3f] text-white ${showMenu ? '' : 'hidden'}`}>
 
           <a className="py-3" href="/login">
             Student Login

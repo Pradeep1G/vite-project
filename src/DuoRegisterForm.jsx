@@ -25,8 +25,8 @@ function LoadingScreen() {
 }
 
 export default function DuoRegisterForm() {
-  // const serverPath1 = "http://127.0.0.1:5000"
-  const serverPath1 = "https://gpaserver2.onrender.com";
+  const serverPath1 = "http://127.0.0.1:5000"
+  // const serverPath1 = "https://gpaserver2.onrender.com";
 
   const navigate = useNavigate();
   const currentPath = location.pathname;
@@ -278,6 +278,7 @@ export default function DuoRegisterForm() {
                     projectDomain: projDomain,
                     selectedGuide: guideName,
                     selectedGuideMailId: guideMailId,
+                    password: localStorage.getItem("newPassword")
                   },
                 };
 
@@ -322,11 +323,16 @@ export default function DuoRegisterForm() {
                 const data4 = {
                   collection_name: "users",
                   filter_data: { email: secondUserEmail },
+                  updated_data: {
+                    password: localStorage.getItem("newPassword"),
+                    firstTime: false,
+                    regNo: secondUserRegNo,
+                  } 
                 };
 
                 // Send the data to the Flask update route using Axios
                 axios
-                  .post(serverPath1 + "/delete_user", data4, {
+                  .put(serverPath1 + "/update_data", data4, {
                     headers: {
                       "Content-Type": "application/json",
                     },
@@ -339,7 +345,7 @@ export default function DuoRegisterForm() {
                   });
 
                 const data3 = {
-                  collection_name: "facultyList",
+                  collection_name: "facultylist",
                   filter_data: { "University EMAIL ID": guideMailId },
                   updated_data: {
                     "TOTAL BATCHES": parseInt(getVacancies["vacancies"]) - 1,
