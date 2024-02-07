@@ -265,10 +265,10 @@ export default function DuoRegisterForm() {
                   collection_name: userRegNo,
                   data: {
                     team: true,
-                    p1name: userName,
-                    p1regNo: userRegNo,
-                    p1phoneNo: userPhone,
-                    p1mailId: userEmail,
+                    name: userName,
+                    regNo: userRegNo,
+                    phoneNo: userPhone,
+                    mailId: userEmail,
                     p2name: secondUserName,
                     p2regNo: secondUserRegNo,
                     p2phoneNo: secondUserPhone,
@@ -283,7 +283,7 @@ export default function DuoRegisterForm() {
 
                 // Send the data to the Flask route using Axios
                 axios
-                  .post(serverPath1 + "/create_collection", data, {
+                  .post(serverPath1 + "/create_collection/"+userEmail+"/"+secondUserEmail, data, {
                     headers: {
                       "Content-Type": "application/json",
                     },

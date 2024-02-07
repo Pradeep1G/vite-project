@@ -8,8 +8,8 @@ const Dashboard = () => {
   const userEmail = localStorage.getItem("userEmail");
   const [userName, setUserName] = useState("");
 
-  // const serverPath1 = "http://127.0.0.1:5000"
-  const serverPath1 = "https://gpaserver2.onrender.com";
+  const serverPath1 = "http://127.0.0.1:5000"
+  // const serverPath1 = "https://gpaserver2.onrender.com";
 
   // Simulate user data
   const studentDetails = {
@@ -30,7 +30,28 @@ const Dashboard = () => {
     documentation: false,
   };
 
-  const [projectStatus, setProjectStatus] = useState(initialProjectStatus);
+  const [projectStatus, setProjectStatus] = useState({
+    "documentation": false,
+    "ppt": false,
+    "guideApproval": false,
+    "researchPaper": {
+      "approval": false,
+      "communicated": false,
+      "accepted": false,
+      "payment": false
+    }
+  });
+
+  const [StudentData, setStudentData] = useState();
+  const [projectDetails, setprojectDetails] = useState({});
+  const [documentation, setDocumentation] = useState({
+    "researchPaper": null,
+    "documentation": null,
+    "ppt": null
+  });
+
+
+
 
   // UseEffect to decode JWT token (if applicable)
   useEffect(() => {
@@ -50,11 +71,13 @@ const Dashboard = () => {
       const token = localStorage.getItem("token");
       if (token) {
         try {
-          const response = await axios.get(`${serverPath1}/api/user`, {
+          const response = await axios.post(`${serverPath1}/studentLogin/getStudentData/${userEmail}`, {
             headers: {
               Authorization: `Bearer ${token}`,
             },
           });
+
+          console.warn(response.data)
 
           // Assuming the server response contains a property named 'userName'
           setUserName(response.data.userName);
@@ -69,7 +92,7 @@ const Dashboard = () => {
 
     // Call the fetchUserName function
     fetchUserName();
-  }, [navigate]);
+  }, []);
 
   // Function to toggle the project status
   const toggleStatus = (status) => {
