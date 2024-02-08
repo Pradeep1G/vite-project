@@ -90,7 +90,7 @@ const Login = () => {
     setIsLoading(true);
 
     if (!verifyOTP) {
-      console.warn(+serverPath1 + "/api/check/" + formData["email"]);
+      console.warn(serverPath1 + "/api/check/" + formData["email"]);
       try {
         const response = await axios.get(
           serverPath1 +
