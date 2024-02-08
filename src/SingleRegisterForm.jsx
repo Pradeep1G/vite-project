@@ -198,6 +198,7 @@ export default function SingleRegisterForm() {
             updated_data: {
               "TOTAL BATCHES": parseInt(getVacancies["vacancies"]) - 1,
             },
+            student_mailId : userEmail
           };
 
           // Send the data to the Flask update route using Axios

@@ -327,7 +327,7 @@ export default function DuoRegisterForm() {
                     password: localStorage.getItem("newPassword"),
                     firstTime: false,
                     regNo: secondUserRegNo,
-                  } 
+                  }
                 };
 
                 // Send the data to the Flask update route using Axios
@@ -350,6 +350,7 @@ export default function DuoRegisterForm() {
                   updated_data: {
                     "TOTAL BATCHES": parseInt(getVacancies["vacancies"]) - 1,
                   },
+                  student_mailId : userEmail
                 };
 
                 // Send the data to the Flask update route using Axios
