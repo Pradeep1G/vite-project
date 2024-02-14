@@ -15,7 +15,7 @@ body, html {
 
 .login_bg {
   background: url("./assets/login_bg.jpg");
-  min-height: 100vh;
+  min-height: 70vh;
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;

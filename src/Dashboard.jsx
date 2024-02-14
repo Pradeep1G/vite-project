@@ -12,8 +12,8 @@ const Dashboard = () => {
 
   // Function to handle input changes for guide comments
 
-  // const serverPath1 = "http://127.0.0.1:5000"
-   const serverPath1 = "https://gpaserver2.onrender.com";
+  const serverPath1 = "http://127.0.0.1:5000"
+  //  const serverPath1 = "https://gpaserver2.onrender.com";
 
   // Simulate user data
   const studentDetails = {
@@ -154,14 +154,27 @@ const Dashboard = () => {
   // UseEffect to decode JWT token (if applicable)
   useEffect(() => {
     const token = localStorage.getItem("token");
+    const userEmail = localStorage.getItem("userEmail");
+    
     if (token) {
-      const decodedToken = jwtDecode(token);
-      // Perform actions based on the decoded token
-    } else {
-      // Redirect to login if no token is found
-      navigate("/login");
+      const headers = {
+        'Authorization': `${token}`
+      };
+      const func=async()=>{
+        const response = await axios.get(serverPath1+"/checkAuthentication/"+userEmail, {headers});
+        if (response.data.message=="Authenticated"){
+          // console.warn(("hiii"))
+        }
+        else{
+          localStorage.removeItem("token");
+          localStorage.removeItem("userEmail");
+          navigate("/login");
+        }
+      }
+      func(); 
     }
   }, [navigate]);
+
 
   // UseEffect to fetch the user's name from the server
   useEffect(() => {

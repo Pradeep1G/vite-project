@@ -41,8 +41,8 @@ function LoadingScreen() {
 }
 
 const Login = () => {
-  // const serverPath1 = "http://127.0.0.1:5000"
-  const serverPath1 = "https://gpaserver2.onrender.com";
+  const serverPath1 = "http://127.0.0.1:5000"
+  // const serverPath1 = "https://gpaserver2.onrender.com";
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -79,8 +79,24 @@ const Login = () => {
 
   useEffect(() => {
     const token = localStorage.getItem("token");
-    if (location.pathname === "/login" && token) {
-      navigate("/dashboard");
+    const userEmail = localStorage.getItem("userEmail");
+
+    
+    if (token) {
+      const headers = {
+        'Authorization': `${token}`
+      };
+      const func=async()=>{
+        const response = await axios.get(serverPath1+"/checkAuthentication/"+userEmail, {headers});
+        if (response.data.message=="Authenticated"){
+          navigate("/dashboard");
+        }
+        else{
+          localStorage.removeItem("token");
+        }
+      }
+      func();
+      
     }
   }, [location]);
 

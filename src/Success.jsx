@@ -11,6 +11,18 @@ export default function Success() {
   localStorage.removeItem("newPassword");
   localStorage.removeItem("userMailId");
   localStorage.removeItem("GuideId");
+  localStorage.removeItem("GuideImage");
+  localStorage.removeItem("userSection");
+  localStorage.removeItem("userEmail");
+  localStorage.removeItem("GuideId");
+  localStorage.removeItem("userRegNo");
+  localStorage.removeItem("userPhoneNo");
+  localStorage.removeItem("userName");
+
+
+
+
+
 
   const GoLogin = () => {
     navigate("/login");

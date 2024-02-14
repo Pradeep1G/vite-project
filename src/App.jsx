@@ -11,7 +11,8 @@ import DuoRegisterForm from './DuoRegisterForm';
 import SingleRegisterForm from './SingleRegisterForm';
 import Success from './Success';
 import Home from './Home';
-import Staff from "./Stafflogin";
+import StaffLogin from "./Stafflogin";
+import StaffDashboard from './StaffDashboard';
 
 function App() {
   return (
@@ -21,7 +22,8 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/stafflogin" element={<Staff />} />
+          <Route path="/staff_login" element={<StaffLogin />} />
+          <Route path="/staff_dashboard" element={<StaffDashboard />} />
           <Route path="/login/select_team" element={<SelectTeam />} />
           <Route path="/login/select_team/1" element={<SingleRegister />} />
           <Route path="/login/select_team/2" element={<SingleRegister />} />

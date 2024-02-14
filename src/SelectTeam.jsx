@@ -10,21 +10,49 @@ export default function SelectTeam() {
   const currentPath = location.pathname;
   const navigate = useNavigate();
 
+  const serverPath1 = "http://127.0.0.1:5000"
+  // const serverPath1 = "https://gpaserver2.onrender.com";
+
+
+  // useEffect(() => {
+  //   const token = localStorage.getItem("token_for_first_time");
+
+  //   if (token) {
+  //     const decodedToken = jwtDecode(token);
+  //     const expirationTime = decodedToken.exp * 1000;
+
+  //     if (expirationTime < Date.now()) {
+  //       localStorage.removeItem("token_for_first_time");
+  //       navigate("/login");
+  //     }
+  //   } else {
+  //     navigate("/login");
+  //   }
+  // }, [navigate]);
+
   useEffect(() => {
     const token = localStorage.getItem("token_for_first_time");
-
+    const userEmail = localStorage.getItem("userEmail");
+    
     if (token) {
-      const decodedToken = jwtDecode(token);
-      const expirationTime = decodedToken.exp * 1000;
-
-      if (expirationTime < Date.now()) {
-        localStorage.removeItem("token_for_first_time");
-        navigate("/login");
+      const headers = {
+        'Authorization': `${token}`
+      };
+      const func=async()=>{
+        const response = await axios.get(serverPath1+"/checkAuthentication/"+userEmail, {headers});
+        if (response.data.message=="Authenticated"){
+          // console.warn(("hiii"))
+        }
+        else{
+          localStorage.removeItem("token");
+          localStorage.removeItem("userEmail");
+          navigate("/login");
+        }
       }
-    } else {
-      navigate("/login");
+      func(); 
     }
   }, [navigate]);
+
 
   const handleButtonClick = (number) => {
     navigate(`${currentPath}/${number}`);

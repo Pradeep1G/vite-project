@@ -89,26 +89,51 @@ export default function DuoRegisterForm() {
     }, 30000);
   };
 
+  // useEffect(() => {
+  //   const checkToken = async () => {
+  //     const token = localStorage.getItem("token_for_first_time");
+
+  //     if (token) {
+  //       const decodedToken = jwtDecode(token);
+  //       const expirationTime = decodedToken.exp * 1000;
+
+  //       if (expirationTime < Date.now()) {
+  //         localStorage.removeItem("token");
+  //         localStorage.removeItem("GuideName");
+  //         localStorage.removeItem("GuideMailId");
+  //         navigate("/login");
+  //       }
+  //     } else {
+  //       navigate("/login");
+  //     }
+  //   };
+  //   checkToken();
+  // }, [guideMailId, navigate]);
+
+
   useEffect(() => {
-    const checkToken = async () => {
-      const token = localStorage.getItem("token_for_first_time");
-
-      if (token) {
-        const decodedToken = jwtDecode(token);
-        const expirationTime = decodedToken.exp * 1000;
-
-        if (expirationTime < Date.now()) {
+    const token = localStorage.getItem("token_for_first_time");
+    const userEmail = localStorage.getItem("userEmail");
+    
+    if (token) {
+      const headers = {
+        'Authorization': `${token}`
+      };
+      const func=async()=>{
+        const response = await axios.get(serverPath1+"/checkAuthentication/"+userEmail, {headers});
+        if (response.data.message=="Authenticated"){
+          // console.warn(("hiii"))
+        }
+        else{
           localStorage.removeItem("token");
-          localStorage.removeItem("GuideName");
-          localStorage.removeItem("GuideMailId");
+          localStorage.removeItem("userEmail");
           navigate("/login");
         }
-      } else {
-        navigate("/login");
       }
-    };
-    checkToken();
-  }, [guideMailId, navigate]);
+      func(); 
+    }
+  }, [navigate]);
+
 
   useEffect(() => {
     // Call getData() when the component mounts or when guideMailId changes

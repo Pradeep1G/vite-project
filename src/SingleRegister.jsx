@@ -67,30 +67,57 @@ export default function SingleRegister() {
     setIsLoading(false);
   };
 
+  // useEffect(() => {
+  //   const checkToken = async () => {
+  //     const token = localStorage.getItem("token_for_first_time");
+
+  //     if (token) {
+  //       const decodedToken = jwtDecode(token);
+  //       const expirationTime = decodedToken.exp * 1000;
+
+  //       if (expirationTime < Date.now()) {
+  //         localStorage.removeItem("token");
+  //         localStorage.removeItem("GuideName");
+  //         localStorage.removeItem("GuideMailId");
+  //         localStorage.removeItem("userMailId");
+  //         localStorage.removeItem("newPassword");
+  //         navigate("/login");
+  //       }
+  //     } else {
+  //       navigate("/login");
+  //     }
+  //   };
+
+  //   checkToken();
+  //   getData();
+  // }, [navigate]);
+
+
   useEffect(() => {
-    const checkToken = async () => {
-      const token = localStorage.getItem("token_for_first_time");
-
-      if (token) {
-        const decodedToken = jwtDecode(token);
-        const expirationTime = decodedToken.exp * 1000;
-
-        if (expirationTime < Date.now()) {
+    const token = localStorage.getItem("token_for_first_time");
+    const userEmail = localStorage.getItem("userEmail");
+    
+    if (token) {
+      const headers = {
+        'Authorization': `${token}`
+      };
+      const func=async()=>{
+        const response = await axios.get(serverPath1+"/checkAuthentication/"+userEmail, {headers});
+        if (response.data.message=="Authenticated"){
+          // console.warn(("hiii"))
+        }
+        else{
           localStorage.removeItem("token");
-          localStorage.removeItem("GuideName");
-          localStorage.removeItem("GuideMailId");
-          localStorage.removeItem("userMailId");
-          localStorage.removeItem("newPassword");
+          localStorage.removeItem("userEmail");
           navigate("/login");
         }
-      } else {
-        navigate("/login");
       }
-    };
-
-    checkToken();
-    getData();
+      func(); 
+      getData();
+    }
   }, [navigate]);
+
+
 
   useEffect(() => {
     // Filter guides based on the search query
