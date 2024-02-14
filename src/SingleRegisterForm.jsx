@@ -40,8 +40,8 @@ function LoadingScreen() {
 }
 
 export default function SingleRegisterForm() {
-  // const serverPath1 = "http://127.0.0.1:5000"
-  const serverPath1 = "https://gpaserver2.onrender.com";
+  const serverPath1 = "http://127.0.0.1:5000"
+  // const serverPath1 = "https://gpaserver2.onrender.com";
 
   const navigate = useNavigate();
   const currentPath = location.pathname;
@@ -50,11 +50,13 @@ export default function SingleRegisterForm() {
   const [projDomain, setProjDomain] = useState("");
   const [projDesc, setProjDesc] = useState("");
 
-  const [userName, setUserName] = useState("");
-  const [userRegNo, setUserRegNo] = useState("");
+  const [userName, setUserName] = useState( localStorage.getItem("userName"));
+  const [userRegNo, setUserRegNo] = useState( localStorage.getItem("userRegNo"));
   const userEmail = localStorage.getItem("userMailId");
+  const userSection = localStorage.getItem("userSection");
+  
 
-  const [userPhone, setUserPhone] = useState("");
+  const [userPhone, setUserPhone] = useState( localStorage.getItem("userPhoneNo"));
 
   const guideName = localStorage.getItem("GuideName");
   const guideMailId = localStorage.getItem("GuideMailId");
@@ -145,6 +147,7 @@ export default function SingleRegisterForm() {
               regNo: userRegNo,
               phoneNo: userPhone,
               mailId: userEmail,
+              section: userSection,
               projectTitle: projTitle,
               projectDesc: projDesc,
               projectDomain: projDomain,
@@ -330,8 +333,8 @@ export default function SingleRegisterForm() {
                     type="number"
                     placeholder="reg no"
                     value={userRegNo}
-                    required
-                    onChange={(e) => setUserRegNo(e.target.value)}
+                    readOnly
+                    // onChange={(e) => setUserRegNo(e.target.value)}
                   />
                 </div>
               </div>

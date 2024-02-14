@@ -2,16 +2,18 @@ import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from 'axios';
 import jwtDecode from 'jwt-decode';
+import sist_logo_login from "./assets/sist_logo_login.png";
 
 const Dashboard = () => {
   const navigate = useNavigate();
   const userEmail = localStorage.getItem("userEmail");
-  const [guideComments, setGuideComments] = useState('hi guide comments');
+  const [guideComments, setGuideComments] = useState([]);
+//  const [Teamid,setTeamid]=useState();
 
   // Function to handle input changes for guide comments
 
-  // const serverPath1 = "http://127.0.0.1:5000"
-  const serverPath1 = "https://gpaserver2.onrender.com";
+  const serverPath1 = "http://127.0.0.1:5000"
+  //  const serverPath1 = "https://gpaserver2.onrender.com";
 
   // Simulate user data
   const studentDetails = {
@@ -42,6 +44,7 @@ const Dashboard = () => {
     // "p2section":null,
     "selectedGuide":null,
     "selectedGuideMailId":null , 
+    "teamId":null
     
   }]
   );
@@ -107,11 +110,15 @@ const Dashboard = () => {
         
           // Assuming the server response contains a property named 'userName'
           setStudentData(response.data.studentData);
+          console.warn(StudentData);
           setprojectDetails(response.data.projectDetails);
           setProjectStatus(response.data.projectStatus[0]);
           console.warn(response.data.projectStatus);
           setDocumentation(response.data.documentation);
           setGuideimg(response.data.guideImage);
+          setGuideComments(response.data.comments);
+          // setTeamid(response.data.teamId);
+          console.warn(guideComments);
           console.warn(projectStatus);
           // setstudentimg(response.data.studentImage);
         } catch (error) {
@@ -127,9 +134,18 @@ const Dashboard = () => {
     fetchUserName();
   }, []);
 
-  
 
-  // Function to handle logout
+
+  const [isDropdownOpen, setDropdownOpen] = useState(false);
+
+  const toggleDropdown = () => {
+    setDropdownOpen(!isDropdownOpen);
+  };
+
+  const handleHelp = () => {
+    // Redirect to the help page or perform other help-related actions
+    window.location.href = 'mailto:support@example.com';
+  };
   const studentLogout = () => {
     // Remove token from local storage
     localStorage.removeItem("token");
@@ -137,81 +153,133 @@ const Dashboard = () => {
     navigate("/login");
   };
 
-  const handleDocumentUpload = (e) => {
-    const documentFile = e.target.files[0];
-    console.log("Document Uploaded:", documentFile.name);
+
+
+  const [projectDocLink, setProjectDocLink] = useState('');
+  const [researchPaperLink, setResearchPaperLink] = useState('');
+  const [projectpptlink , setProjectPPTLink]=useState('');
+  const validateLinks = () => {
+    // Validate Google Drive link using regular expression
+    const googleDriveLinkRegex = /^https:\/\/drive\.google\.com\/(file\/d\/[^/]+|open\?id=[^&]+)&?/;
+    
+    if (!googleDriveLinkRegex.test(projectpptlink)) {
+      alert('Invalid Google Drive link for PPT  Document');
+      return;
+    }
+    if (!googleDriveLinkRegex.test(projectDocLink)) {
+      alert('Invalid Google Drive link for Project Document');
+      return;
+    }
+
+    if (!googleDriveLinkRegex.test(researchPaperLink)) {
+      alert('Invalid Google Drive link for Research Paper Document');
+      return;
+    }
+    
+
+    // Links are valid, you can proceed with further actions or submit
+    alert('Links are valid. Proceed with submission.');
   };
 
-  const handleResearchPaperUpload = (e) => {
-    const researchPaperFile = e.target.files[0];
-    console.log("Research Paper Uploaded:", researchPaperFile.name);
-  };
-
+ 
   return (
     <div className="">
-      <nav className="bg-[#9e1c3f] text-white p-4">
-        <div className="container mx-auto flex justify-between items-center">
-          <div className="text-lg font-bold">Your Logo</div>
-          <div className="flex items-center">
-            <div className="mr-4">Welcome, {StudentData[0]["name"]}</div>
-            <button
-              onClick={studentLogout}
-              className="text-lg font-bold p-2 rounded bg-blue-500 text-white"
-            >
-              Logout
-            </button>
-          </div>
+  <nav className="bg-[#9e1c3f] text-white p-4">
+      <div className="container mx-auto flex justify-between items-center">
+        <div className="flex items-center">
+          <a href="/">
+            <img
+              src={sist_logo_login}
+              alt="Logo"
+              className="h-12 w-auto float-start"
+            />
+          </a>
         </div>
-      </nav>
-      <div className="container mx-auto p-4 grid grid-cols-1 md:grid-cols-2 gap-4 max-w-screen-xl">
-    <div className="bg-white p-4 rounded shadow-md mb-4">
-      {/* Content for the first column */}
-<h1 className="text-3xl font-bold text-gray-800 mb-4">Student details</h1>
-          <img
-            src={getDirectLinkFromShareableLink(studentImg)}
-            alt="Profile"
-            className="w-32 h-32 rounded-full mx-auto mb-4"
-          />
-          <p className="text-lg font-semibold text-gray-700">Student Information:</p>
-          
-          <p className="text-lg text-gray-600">Name: {StudentData[0]["name"]}</p>
-          <p className="text-lg text-gray-600">Reg No: {StudentData[0]["regNo"]}</p>
-          <p className="text-lg text-gray-600">Section :</p>
+        <div className="flex items-center relative">
+          <div className="mr-4">Welcome, {StudentData[0]["teamId"]}</div>
+          <button
+            onClick={toggleDropdown}
+            className="text-sm font-semibold rounded text-white focus:outline-none"
+          >
+            &#9660; {/* Down arrow */}
+          </button>
+          {isDropdownOpen && (
+            <div className="absolute top-10 right-0 bg-white text-gray-800 p-2 rounded shadow-md">
+              <button onClick={handleHelp} className="block p-2 hover:bg-gray-200">
+                Help
+              </button>
+              <button onClick={studentLogout} className="block p-2 hover:bg-gray-200">
+                Logout
+              </button>
+            </div>
+          )}
+        </div>
+      </div>
+    </nav>
+
+
+
+
+    <div className="container mx-auto p-4 grid grid-cols-1 md:grid-cols-3 gap-4 max-w-screen-xl">
+  {/* First Card - Student 1 */}
+  <div className="bg-white rounded-xl shadow-xl mb-4 overflow-hidden">
+  <div className="bg-[#9e1c3f] text-white py-2 rounded-t-xl mb-4 mx-0 -mx-4">
+    <h1 className="text-2xl font-bold text-center">Student 1</h1>
+  </div>
+    <img
+      src={getDirectLinkFromShareableLink(studentImg)}
+      alt="Profile"
+      className="w-32 h-32 rounded-full mx-auto mb-4"
+    />
+    <div className="p-4">
+    <p className="text-lg font-semibold text-gray-700">Name: {StudentData[0]["name"]}</p>
+    <p className="text-lg text-gray-600">Reg No: {StudentData[0]["regNo"]}</p>
+    <p className="text-lg text-gray-600">Section:</p>
     </div>
-    {StudentData[0]["p2name"] && (
-    <div className="bg-white p-4 rounded shadow-md mb-4">
-      <h1 className="text-3xl font-bold text-gray-800 mb-4">Student details</h1>
+  </div>
+
+  {/* Second Card - Student 2 (if exists) */}
+  {StudentData[0]["p2name"] && (
+    <div className="bg-white rounded-xl shadow-xl mb-4 overflow-hidden">
+    <div className="bg-[#9e1c3f] text-white py-2 rounded-t-xl mb-4 mx-0 -mx-4">
+      <h1 className="text-2xl font-bold text-center">Student 2</h1>
+    </div>
       <img
-            src={getDirectLinkFromShareableLink(studentImg)}
-            alt="Profile"
-            className="w-32 h-32 rounded-full mx-auto mb-4"
-          />
-           <p className="text-lg font-semibold text-gray-700">Student Information:</p>
-      <p className="text-lg text-gray-600">Name: {StudentData[0]["p2name"]}</p>
+        src={getDirectLinkFromShareableLink(studentImg)}
+        alt="Profile"
+        className="w-32 h-32 rounded-full mx-auto mb-4"
+      />
+      <div className="p-4">
+      <p className="text-lg font-semibold text-gray-700">Name: {StudentData[0]["p2name"]}</p>
       <p className="text-lg text-gray-600">Reg No: {StudentData[0]["p2regNo"]}</p>
-      <p className="text-lg text-gray-600">Section :</p>
+      <p className="text-lg text-gray-600">Section:</p>
+      </div>
       {/* Add other details for the second student here */}
     </div>
   )}
 
-    <div className="bg-white p-4 rounded shadow-md mb-4">
-      {/* Content for the second column */}
-<h1 className="text-3xl font-bold text-gray-800 mb-4">Guide details</h1>
-          <img
-            src={getDirectLinkFromShareableLink(guideImg)}
-            alt="Profile"
-            className="w-32 h-32 rounded-full mx-auto mb-4"
-          />
-          <p className="text-lg text-gray-600">Name: {StudentData[0]["selectedGuide"]}</p>
-          <p className="text-lg text-gray-600">Email: {StudentData[0]["selectedGuideMailId"]}</p>
-    </div>
+  {/* Third Card - Guide */}
+ <div className="bg-white rounded-xl shadow-xl mb-4 overflow-hidden">
+  <div className="bg-[#9e1c3f] text-white py-2 rounded-t-xl mb-4 mx-0 -mx-4">
+    <h1 className="text-2xl font-bold text-center">Guide Details</h1>
   </div>
-  <div className="bg-white p-4 rounded shadow-md mb-4">
-  <h1 className="text-3xl font-bold text-gray-800 mb-4">Project details</h1>
-  <div className="mb-4 grid grid-cols-1 md:grid-cols-2 gap-4">
+  <img
+    src={getDirectLinkFromShareableLink(guideImg)}
+    alt="Profile"
+    className="w-32 h-32 rounded-full mx-auto mb-4"
+  />
+  <div className="p-4">
+    <p className="text-lg text-gray-600 text-center">Name: {StudentData[0]["selectedGuide"]}</p>
+    <p className="text-lg text-gray-600 text-center">Email: {StudentData[0]["selectedGuideMailId"]}</p>
+  </div>
+</div>
+</div>
+<div className="mx-4 bg-white rounded-xl shadow-xl mb-4 overflow-hidden">
+  <h1 className="bg-[#9e1c3f] text-white p-4 rounded-t-xl mb-4 font-semibold">Project Details</h1>
+  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4 mx-2">
     {/* Title */}
     <div>
-      <label className="block text-lg font-semibold text-gray-700">Title:</label>
+      <label className="block text-lg font-semibold text-gray-700 mb-2">Title:</label>
       <input
         type="text"
         name="projectTitle"
@@ -223,20 +291,20 @@ const Dashboard = () => {
 
     {/* Domain */}
     <div>
-      <label className="block text-lg font-semibold text-gray-700">Domain:</label>
+      <label className="block text-lg font-semibold text-gray-700 mb-2">Domain:</label>
       <input
         type="text"
         name="projectDomain"
         value={projectDetails[0]["projectDomain"]}
-        style={{ backgroundColor: '#f0f0f0', color: '#333' }} 
         className="w-full p-2 border rounded focus:outline-none focus:border-blue-500"
+        style={{ backgroundColor: '#f0f0f0', color: '#333' }} 
       />
     </div>
   </div>
 
   {/* Description */}
-  <div className="mb-4">
-    <label className="block text-lg font-semibold text-gray-700">Description:</label>
+  <div className="py-4 mx-2">
+    <label className="block text-lg font-semibold text-gray-700 mb-2">Description:</label>
     <textarea
       name="projectDescription"
       value={projectDetails[0]["projectDesc"]}
@@ -246,22 +314,29 @@ const Dashboard = () => {
   </div>
 </div>
 
+<div className="mx-4 bg-white rounded-xl shadow-xl mb-4 overflow-hidden">
+  <h1 className="bg-[#9e1c3f] text-white p-4 rounded-t-xl mb-4 font-semibold">Project Details</h1>
+  
+  <h1 className="text-3xl font-bold text-gray-800 mb-4 my-2 mx-3">Guide  Approval status</h1>
 
-  <div className="bg-white p-4 rounded shadow-md  mb-4  md:flex-wrap md:justify-between">
-  <h1 className="text-3xl font-bold text-gray-800 mb-4">Project Status</h1>
-  <div className="flex flex-col md:flex-row md:justify-between">
+ <div className="flex flex-col md:flex-row md:items-start md:gap-4 mx-3">
+    {/* Guide Approval */}
     <button
       onClick={() => toggleStatus("guideApproval")}
       className={`text-lg font-bold p-2 rounded mb-2 md:mb-0 ${projectStatus.guideApproval ? 'bg-green-500 text-white' : 'bg-red-500 text-white'}`}
     >
       Guide Approval
     </button>
-    <button
-  className={`text-lg font-bold p-2 rounded mb-2 md:mb-0 ${projectStatus.documentation ? 'bg-green-500 text-white' : 'bg-red-500 text-white'}`}
->
-  Documentation
-</button>
 
+    {/* Documentation */}
+    <button
+      onClick={() => toggleStatus("documentation")}
+      className={`text-lg font-bold p-2 rounded mb-2 md:mb-0 ${projectStatus.documentation ? 'bg-green-500 text-white' : 'bg-red-500 text-white'}`}
+    >
+      Documentation
+    </button>
+
+    {/* PPT */}
     <button
       onClick={() => toggleStatus("ppt")}
       className={`text-lg font-bold p-2 rounded ${projectStatus.ppt ? 'bg-green-500 text-white' : 'bg-red-500 text-white'}`}
@@ -269,74 +344,111 @@ const Dashboard = () => {
       PPT
     </button>
   </div>
-  <br></br>
-  <h1 className="text-3xl font-bold text-gray-800 mb-4">Research Paper Status</h1>
-  <div className="flex flex-col md:flex-row md:justify-between">
+  <div>
+  <h1 className="text-3xl font-bold text-gray-800 mb-4 my-2 mx-3">Research paper status</h1>
+  <div className="flex flex-col md:flex-row md:items-start md:gap-4 mx-3 my-3">
+    {/* Approval */}
     <button
       onClick={() => toggleStatus("researchPaper")}
       className={`text-lg font-bold p-2 rounded mb-2 md:mb-0 ${projectStatus.researchPaper.approval ? 'bg-green-500 text-white' : 'bg-red-500 text-white'}`}
     >
-     Approval
+      Approval
     </button>
+
+    {/* Communicated */}
     <button
       onClick={() => toggleStatus("researchPaper")}
       className={`text-lg font-bold p-2 rounded mb-2 md:mb-0 ${projectStatus.researchPaper.communicated ? 'bg-green-500 text-white' : 'bg-red-500 text-white'}`}
     >
       Communicated
     </button>
+
+    {/* Accepted */}
     <button
       onClick={() => toggleStatus("researchPaper")}
       className={`text-lg font-bold p-2 rounded mb-2 md:mb-0 ${projectStatus.researchPaper.accepted ? 'bg-green-500 text-white' : 'bg-red-500 text-white'}`}
     >
-     Accepted
+      Accepted
     </button>
+
+    {/* Payment */}
     <button
       onClick={() => toggleStatus("researchPaper")}
       className={`text-lg font-bold p-2 rounded mb-2 md:mb-0 ${projectStatus.researchPaper.payment ? 'bg-green-500 text-white' : 'bg-red-500 text-white'}`}
     >
       Payment
     </button>
-    </div>
-    <br></br>
-    
-    
+  </div>
+  </div>
 </div>
 
-        <div className="bg-white p-4 rounded shadow-md col-span-2 mb-4">
-          <h1 className="text-3xl font-bold text-gray-800 mb-4">Project Status</h1>
-          <div className="flex flex-col gap-4">
-            <h4><b>Project document</b></h4>
-            <label className="flex flex-col items-center bg-[#9e1c3f] text-white p-4 rounded cursor-pointer">
-              <span>Upload Document</span>
-              <input type="file" className="hidden" onChange={(e) => handleDocumentUpload(e)} />
-            </label>
 
-            <h4><b>Research paper document</b></h4>
-            <label className="flex flex-col items-center bg-[#9e1c3f] text-white p-4 rounded cursor-pointer">
-              <span>Upload Research Paper</span>
-              <input type="file" className="hidden" onChange={(e) => handleResearchPaperUpload(e)} />
-            </label>
-          </div>
+
+
+
+<div className="mx-4 bg-white rounded-xl shadow-xl mb-4 overflow-hidden">
+      <h1 className="bg-[#9e1c3f] text-white p-4 rounded-t-xl mb-4 font-semibold">Project Submissions</h1>
+      <div className="flex flex-col gap-4 m-4">
+      <h4><b>PPT document</b></h4>
+      <div className="flex  space-x-4">
+        <input
+          type="text"
+          placeholder="Enter Google Drive link for PPT Document"
+          value={projectpptlink}
+          onChange={(e) => setProjectPPTLink(e.target.value)}
+          className="w-full p-2 border rounded focus:outline-none focus:border-blue-500"
+        />
+        <button onClick={() => validateLinks()} className="p-2 bg-blue-500 text-white rounded">
+         Send
+        </button>
         </div>
-
-        <div className="bg-white p-4 rounded shadow-md col-span-2">
-      <h1 className="text-3xl font-bold text-gray-800 mb-4">Comments </h1>
-      <div>
-  <h2 className="text-xl font-semibold text-gray-800 mt-4">Guide Comments:</h2>
-  <textarea
-    id="guideComments"
-    name="guideComments"
-    value={guideComments}
-    // onChange={handleGuideCommentsChange}
-    className="w-full p-2 border rounded focus:outline-none focus:border-blue-500 mt-2"  // Added margin-top and adjusted styling
-    rows="4"
-    style={{ backgroundColor: '#f0f0f0', color: '#333' }}  // Set background color and text color
-    // placeholder="Enter comments from the guide..."
-  />
+        <h4><b>Project document</b></h4>
+        <div className="flex  space-x-4">
+        <input
+          type="text"
+          placeholder="Enter Google Drive link for Project Document"
+          value={projectDocLink}
+          onChange={(e) => setProjectDocLink(e.target.value)}
+          className="w-full p-2 border rounded focus:outline-none focus:border-blue-500"
+        />
+        <button onClick={() => validateLinks()} className="p-2 bg-blue-500 text-white rounded">
+         Send
+        </button>
+        </div>
+        <h4><b>Research paper document</b></h4>
+        <div className="flex  space-x-4">
+        <input
+          type="text"
+          placeholder="Enter Google Drive link for Research Paper Document"
+          value={researchPaperLink}
+          onChange={(e) => setResearchPaperLink(e.target.value)}
+          className="w-full p-2 border rounded focus:outline-none focus:border-blue-500"
+        />
+        <button onClick={() => validateLinks()} className="p-2 bg-blue-500 text-white rounded">
+         Send
+        </button>
+        </div>
+      </div>
+    </div>
+    <div className="mx-4 bg-white rounded-xl shadow-xl mb-4 overflow-hidden">
+  <h1 className="bg-[#9e1c3f] text-white p-4 rounded-t-xl mb-4 font-semibold">Guide Comments</h1>
+<div className="md:overflow-auto m-2">
+      {guideComments[0] ? (guideComments.map((comment, index) => {
+        const date = Object.keys(comment)[0];
+        const text = comment[date];
+        return (
+          <div className="bg-gray-200 p-3 rounded mb-2" key={index}>
+            <p className="text-sm text-gray-600">Date: {date}</p>
+            <p className="text-base text-gray-800">Comment: {text}</p>
+          </div>
+        );
+      })) : (<p className="p-4 flex justify-center">No comments yet</p>)}
+    </div>
+ 
 </div>
 
-     
-    </div>
+
+
       </div>
   
   );

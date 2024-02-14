@@ -146,6 +146,15 @@ const Login = () => {
             console.warn(token);
             localStorage.setItem("token_for_first_time", token);
             localStorage.setItem("userMailId", formData["email"]);
+            localStorage.setItem("userName", response.data.name);
+            localStorage.setItem("userPhoneNo", response.data.phoneNo);
+            localStorage.setItem("userSection", response.data.section);
+            localStorage.setItem("userRegNo", response.data.regNo);
+
+            
+
+
+
           }
           if (response.data.Is_Email_sent == "false") {
             console.warn("Email not sent");

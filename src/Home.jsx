@@ -16,6 +16,7 @@ export default function Home() {
 
       <div className="login_bg s:p-20">
         <div className=" border p-6 bg-white bg-opacity-80 backdrop-filter rounded-lg shadow-lg font-semibold">
+        <br></br>
           <p>If you are logging in for first time :</p>
           <br></br>
           <li>Try any your mail as password and login.</li>
