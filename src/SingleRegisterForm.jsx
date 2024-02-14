@@ -245,7 +245,7 @@ export default function SingleRegisterForm() {
 
       <form onSubmit={Submit}>
         <div className="m-4 border-solid border-2 rounded-lg">
-          <div className="bg-[#330716] m-4 rounded-lg  flex justify-center items-center font-bold text-white lg:text-4xl text-lg lg:py-36 py-20">
+          <div className="bg-[#330716] m-4 rounded-lg  flex justify-center items-center font-bold text-white lg:text-4xl text-lg lg:py-24 py-20">
             <p>Confirmation Details</p>
           </div>
 
@@ -358,10 +358,11 @@ export default function SingleRegisterForm() {
                   <label>Phone Number</label>
                   <input
                     className="border-2 h-12 px-4 w-full bg-gray-200 mb-4"
-                    type="tel"
+                    type="number"
                     placeholder="phone"
                     value={userPhone}
                     required
+                    maxLength={10}
                     onChange={(e) => setUserPhone(e.target.value)}
                   />
                 </div>

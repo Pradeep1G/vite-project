@@ -44,17 +44,21 @@ export default function DuoRegisterForm() {
   const [projDomain, setProjDomain] = useState("");
   const [projDesc, setProjDesc] = useState("");
 
-  const [userName, setUserName] = useState("");
-  const [userRegNo, setUserRegNo] = useState("");
+  const [userName, setUserName] = useState(localStorage.getItem("userName"));
+  const [userRegNo, setUserRegNo] = useState(localStorage.getItem("userRegNo"));
   const [userEmail, setUserEmail] = useState(
     localStorage.getItem("userMailId")
   );
-  const [userPhone, setUserPhone] = useState("");
+  const userSection = localStorage.getItem("userSection");
+  const [userPhone, setUserPhone] = useState(localStorage.getItem("userPhoneNo"));
 
   const [secondUserName, setSecondUserName] = useState("");
   const [secondUserRegNo, setSecondUserRegNo] = useState("");
   const [secondUserEmail, setSecondUserEmail] = useState("123@gmail.com");
   const [secondUserPhone, setSecondUserPhone] = useState("");
+  const [secondUserSection, setSecondUserSection] = useState("");
+
+  
 
   const [guideName, setGuideName] = useState(localStorage.getItem("GuideName"));
   const [guideMailId, setGuideMailId] = useState(
@@ -141,6 +145,10 @@ export default function DuoRegisterForm() {
           setReceivedOTP(response.data.otp);
           setSecondUserOTPContainer(true);
           setIsSecondMailVerified(true);
+          setSecondUserName(response.data.name);
+          setSecondUserPhone(response.data.phoneNo);
+          setSecondUserSection(response.data.section);
+          setSecondUserRegNo(response.data.regNo)
         } else if (!response.data.firstTime) {
           setVerificationInitiated(false);
           setIsLoading(false);
@@ -269,10 +277,12 @@ export default function DuoRegisterForm() {
                     regNo: userRegNo,
                     phoneNo: userPhone,
                     mailId: userEmail,
+                    section: userSection,
                     p2name: secondUserName,
                     p2regNo: secondUserRegNo,
                     p2phoneNo: secondUserPhone,
                     p2mailId: secondUserEmail,
+                    p2section: secondUserSection,
                     projectTitle: projTitle,
                     projectDesc: projDesc,
                     projectDomain: projDomain,
@@ -401,7 +411,7 @@ export default function DuoRegisterForm() {
 
       <form onSubmit={Submit}>
         <div className="m-4 border-solid border-2 rounded-lg">
-          <div className="bg-[#330716] m-4 rounded-lg  flex justify-center items-center font-bold text-white lg:text-4xl text-lg lg:py-36 py-20">
+          <div className="bg-[#330716] m-4 rounded-lg  flex justify-center items-center font-bold text-white lg:text-4xl text-lg lg:py-24 py-20">
             <p>Confirmation Details</p>
           </div>
 
@@ -489,8 +499,8 @@ export default function DuoRegisterForm() {
                     type="number"
                     placeholder="reg no"
                     value={userRegNo}
-                    required
-                    onChange={(e) => setUserRegNo(e.target.value)}
+                    readOnly
+                    // onChange={(e) => setUserRegNo(e.target.value)}
                   />
                 </div>
               </div>
@@ -514,10 +524,11 @@ export default function DuoRegisterForm() {
                   <label>Phone Number</label>
                   <input
                     className="border-2 h-12 px-4 w-full bg-gray-200 mb-4"
-                    type="tel"
+                    type="number"
                     placeholder="phone"
                     value={userPhone}
                     required
+                    maxLength={10}
                     onChange={(e) => setUserPhone(e.target.value)}
                   />
                 </div>
@@ -555,8 +566,8 @@ export default function DuoRegisterForm() {
                     type="number"
                     placeholder=""
                     value={secondUserRegNo}
-                    required
-                    onChange={(e) => setSecondUserRegNo(e.target.value)}
+                    readOnly
+                    // onChange={(e) => setSecondUserRegNo(e.target.value)}
                   />
                 </div>
               </div>
@@ -568,10 +579,11 @@ export default function DuoRegisterForm() {
                   <label>Phone Number</label>
                   <input
                     className="border-2 h-12 px-4 w-full bg-gray-200 mb-4"
-                    type="tel"
+                    type="number"
                     placeholder=""
                     value={secondUserPhone}
                     required
+                    maxLength={10}
                     onChange={(e) => setSecondUserPhone(e.target.value)}
                   />
                 </div>
