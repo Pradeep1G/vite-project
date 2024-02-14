@@ -12,8 +12,8 @@ const Dashboard = () => {
 
   // Function to handle input changes for guide comments
 
-  const serverPath1 = "http://127.0.0.1:5000"
-  //  const serverPath1 = "https://gpaserver2.onrender.com";
+  // const serverPath1 = "http://127.0.0.1:5000"
+   const serverPath1 = "https://gpaserver2.onrender.com";
 
   // Simulate user data
   const studentDetails = {
@@ -37,11 +37,12 @@ const Dashboard = () => {
     "team":null,
     "regNo":null,
     "phoneNo":null,
-    // "section":null,
+    "section":null,
     "p2name":null,
     "p2regNo":null,
     "p2phoneNo":null,
-    // "p2section":null,
+     "p2section":null,
+     "editProjectDetails":null,
     "selectedGuide":null,
     "selectedGuideMailId":null , 
     "teamId":null
@@ -58,6 +59,74 @@ const Dashboard = () => {
     "projectDesc":null,
     "projectDomain": null
   }]);
+  const [isEditable, setIsEditable] = useState(false);
+  const [editedProjectDetails, setEditedProjectDetails] = useState({
+    projectTitle: projectDetails[0]["projectTitle"],
+    projectDomain: projectDetails[0]["projectDomain"],
+    projectDesc: projectDetails[0]["projectDesc"],
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [editProjectDetails, seteditProjectDetails] = useState();
+  const toggleEdit = () => {
+    // Clear editedProjectDetails when entering edit mode
+    if (!isEditable) {
+      setEditedProjectDetails({
+        projectTitle: "",
+        projectDomain: "",
+        projectDesc: "",
+      });
+    }
+    setIsEditable(!isEditable);
+  };
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setEditedProjectDetails((prevDetails) => ({
+      ...prevDetails,
+      [name]: value,
+    }));
+  };
+  const handleUpdateProjectDetails = async () => {
+    try {
+      if (
+        !editedProjectDetails.projectTitle ||
+        !editedProjectDetails.projectDomain ||
+        !editedProjectDetails.projectDesc
+      ) {
+        alert('Please fill in all the fields before submitting.');
+        return;
+      }
+
+      setIsSubmitting(true);
+
+      const updatedData = {
+        projectTitle: editedProjectDetails.projectTitle,
+        projectDesc: editedProjectDetails.projectDesc,
+        projectDomain: editedProjectDetails.projectDomain,
+      };
+
+      
+
+      const response = await axios.post(
+        `${serverPath1}/studentLogin/updateProjectDetails/${userEmail}`,
+        updatedData
+      );
+
+      console.warn(response.data);
+
+      // setProjectDetails([editedProjectDetails]);
+      // setIsEditable(false);
+
+      // Refresh the page after successful submission
+      // window.location.reload();
+      seteditProjectDetails(false);
+
+    } catch (error) {
+      console.error('Error updating project details:', error);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+  
   const [documentation, setDocumentation] = useState([{
     "researchPaper": null,
     "documentation": null,
@@ -111,6 +180,7 @@ const Dashboard = () => {
           // Assuming the server response contains a property named 'userName'
           setStudentData(response.data.studentData);
           console.warn(StudentData);
+          seteditProjectDetails(response.data.studentData[0].editProjectDetails);
           setprojectDetails(response.data.projectDetails);
           setProjectStatus(response.data.projectStatus[0]);
           console.warn(response.data.projectStatus);
@@ -234,7 +304,7 @@ const Dashboard = () => {
     <div className="p-4">
     <p className="text-lg font-semibold text-gray-700">Name: {StudentData[0]["name"]}</p>
     <p className="text-lg text-gray-600">Reg No: {StudentData[0]["regNo"]}</p>
-    <p className="text-lg text-gray-600">Section:</p>
+    <p className="text-lg text-gray-600 ">Section: {StudentData[0]["section"]}</p>
     </div>
   </div>
 
@@ -274,48 +344,87 @@ const Dashboard = () => {
   </div>
 </div>
 </div>
-<div className="mx-4 bg-white rounded-xl shadow-xl mb-4 overflow-hidden">
-  <h1 className="bg-[#9e1c3f] text-white p-4 rounded-t-xl mb-4 font-semibold">Project Details</h1>
-  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4 mx-2">
-    {/* Title */}
-    <div>
-      <label className="block text-lg font-semibold text-gray-700 mb-2">Title:</label>
-      <input
-        type="text"
-        name="projectTitle"
-        value={projectDetails[0]["projectTitle"]}
-        className="w-full p-2 border rounded focus:outline-none focus:border-blue-500"
-        style={{ backgroundColor: '#f0f0f0', color: '#333' }} 
-      />
-    </div>
-
-    {/* Domain */}
-    <div>
-      <label className="block text-lg font-semibold text-gray-700 mb-2">Domain:</label>
-      <input
-        type="text"
-        name="projectDomain"
-        value={projectDetails[0]["projectDomain"]}
-        className="w-full p-2 border rounded focus:outline-none focus:border-blue-500"
-        style={{ backgroundColor: '#f0f0f0', color: '#333' }} 
-      />
-    </div>
-  </div>
-
-  {/* Description */}
-  <div className="py-4 mx-2">
-    <label className="block text-lg font-semibold text-gray-700 mb-2">Description:</label>
-    <textarea
-      name="projectDescription"
-      value={projectDetails[0]["projectDesc"]}
-      className="w-full p-2 border rounded focus:outline-none focus:border-blue-500"
-      style={{ backgroundColor: '#f0f0f0', color: '#333' }} 
-    />
-  </div>
-</div>
 
 <div className="mx-4 bg-white rounded-xl shadow-xl mb-4 overflow-hidden">
-  <h1 className="bg-[#9e1c3f] text-white p-4 rounded-t-xl mb-4 font-semibold">Project Details</h1>
+        <h1 className="bg-[#9e1c3f] text-white p-4 rounded-t-xl mb-4 font-semibold">Project Details</h1>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4 mx-2">
+          {/* Title */}
+          <div>
+            <label className="block text-lg font-semibold text-gray-700 mb-2">Title:</label>
+            <input
+              type="text"
+              name="projectTitle"
+              value={isEditable ? editedProjectDetails.projectTitle : projectDetails[0]['projectTitle']}
+              onChange={handleInputChange}
+              className="w-full p-2 border rounded focus:outline-none focus:border-blue-500"
+              style={{ backgroundColor: '#f0f0f0', color: '#333' }}
+              readOnly={!isEditable}
+            />
+          </div>
+
+          {/* Domain */}
+          <div>
+            <label className="block text-lg font-semibold text-gray-700 mb-2">Domain:</label>
+            <input
+              type="text"
+              name="projectDomain"
+              value={isEditable ? editedProjectDetails.projectDomain : projectDetails[0]['projectDomain']}
+              onChange={handleInputChange}
+              className="w-full p-2 border rounded focus:outline-none focus:border-blue-500"
+              style={{ backgroundColor: '#f0f0f0', color: '#333' }}
+              readOnly={!isEditable}
+            />
+          </div>
+        </div>
+
+        {/* Description */}
+        <div className="py-4 mx-2">
+          <label className="block text-lg font-semibold text-gray-700">Description:</label>
+          <textarea
+            name="projectDesc"
+            value={isEditable ? editedProjectDetails.projectDesc : projectDetails[0]['projectDesc']}
+            onChange={handleInputChange}
+            className="w-full p-2 border rounded focus:outline-none focus:border-blue-500"
+            style={{ backgroundColor: '#f0f0f0', color: '#333' }}
+            readOnly={!isEditable}
+          />
+        </div>
+        <br></br>
+
+        {editProjectDetails ? (
+          <div className="flex justify-center space-x-4 mb-4">
+            <button onClick={toggleEdit} className="bg-blue-500 text-white px-4  py-3 rounded focus:outline-none">
+              {isEditable ? 'Cancel' : 'Edit'}
+            </button>
+            {isEditable && !isSubmitting && (
+              <button onClick={handleUpdateProjectDetails} className="bg-blue-500 text-white p-2 rounded focus:outline-none">
+                Submit
+              </button>
+            )}
+          </div>
+        ) : (
+          <p></p>
+        )}
+      </div>
+
+
+{/* <div>
+      {StudentData[0].editProjectDetails ? (
+        <div className="mx-4 bg-white rounded-xl shadow-xl mb-4 overflow-hidden">
+          <button onClick={handleSubmit} className="bg-blue-500 text-white p-2 rounded focus:outline-none">
+            Submit
+          </button>
+        </div>
+      ) : (
+        <button onClick={handleEditClick} className="bg-blue-500 text-white p-2 rounded focus:outline-none">
+          Edit Project Details
+        </button>
+      )}
+    </div> */}
+
+<div className="mx-4 bg-white rounded-xl shadow-xl mb-4 overflow-hidden">
+  <h1 className="bg-[#9e1c3f] text-white p-4 rounded-t-xl mb-4 font-semibold">Project Status</h1>
   
   <h1 className="text-3xl font-bold text-gray-800 mb-4 my-2 mx-3">Guide  Approval status</h1>
 
