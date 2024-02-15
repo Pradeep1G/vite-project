@@ -12,8 +12,8 @@ const Dashboard = () => {
 
   // Function to handle input changes for guide comments
 
-  const serverPath1 = "http://127.0.0.1:5000"
-  //  const serverPath1 = "https://gpaserver2.onrender.com";
+  // const serverPath1 = "http://127.0.0.1:5000"
+   const serverPath1 = "https://gpaserver2.onrender.com";
 
   // Simulate user data
   const studentDetails = {
@@ -172,6 +172,10 @@ const Dashboard = () => {
         }
       }
       func(); 
+    }else{
+      localStorage.removeItem("token");
+      localStorage.removeItem("userEmail");
+      navigate("/login");
     }
   }, [navigate]);
 

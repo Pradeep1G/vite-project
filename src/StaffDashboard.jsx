@@ -6,8 +6,8 @@ import { useNavigate } from 'react-router-dom';
 
 const StaffDashboard = () => {
 
-  const serverPath1 = "http://127.0.0.1:5000"
-  // const serverPath1 = "https://gpaserver2.onrender.com";
+  // const serverPath1 = "http://127.0.0.1:5000"
+  const serverPath1 = "https://gpaserver2.onrender.com";
 
   const navigate = useNavigate();
 
@@ -32,6 +32,10 @@ const StaffDashboard = () => {
         }
       }
       func(); 
+    }else{
+      localStorage.removeItem("token");
+      localStorage.removeItem("userEmail");
+      navigate("/login");
     }
   }, []);
 

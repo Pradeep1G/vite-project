@@ -40,8 +40,8 @@ function LoadingScreen() {
 }
 
 export default function SingleRegisterForm() {
-  const serverPath1 = "http://127.0.0.1:5000"
-  // const serverPath1 = "https://gpaserver2.onrender.com";
+  // const serverPath1 = "http://127.0.0.1:5000"
+  const serverPath1 = "https://gpaserver2.onrender.com";
 
   const navigate = useNavigate();
   const currentPath = location.pathname;
@@ -109,6 +109,10 @@ export default function SingleRegisterForm() {
         }
       }
       func(); 
+    }else{
+      localStorage.removeItem("token");
+      localStorage.removeItem("userEmail");
+      navigate("/login");
     }
   }, [navigate]);
 
@@ -120,7 +124,7 @@ export default function SingleRegisterForm() {
     // Call getData() when the component mounts or when guideMailId changes
     getData();
     checkRegistered();
-  }, [getVacancies]);
+  }, []);
 
   const getData = async () => {
     try {
@@ -149,20 +153,24 @@ export default function SingleRegisterForm() {
     e.preventDefault();
 
     setIsLoading(true);
-
+    console.warn("1")
     if (parseInt(getVacancies["vacancies"]) > 0 && isNotRegistered) {
       const data4 = {
         email: userEmail,
         password: localStorage.getItem("newPassword"),
+        guideMailId: guideMailId
       };
-
+      console.warn("2")
       try {
         const response = await axios.put(
           serverPath1 + "/add_registered_data",
           data4
         );
-        console.log(response.data);
-        if (response.data["error"] === "Email already registered") {
+        console.warn(response.data);
+        if (response.data["message"] === "No Vacancies"){
+          setIsNotRegistered(false);
+          alert("No Vacancies");
+        }else if (response.data["error"] === "Email already registered") {
           setIsNotRegistered(false);
           alert("Account already Registered");
         } else if (
