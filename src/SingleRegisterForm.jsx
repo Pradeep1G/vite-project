@@ -52,7 +52,7 @@ export default function SingleRegisterForm() {
 
   const [userName, setUserName] = useState( localStorage.getItem("userName"));
   const [userRegNo, setUserRegNo] = useState( localStorage.getItem("userRegNo"));
-  const userEmail = localStorage.getItem("userMailId");
+  const userEmail = localStorage.getItem("userEmail");
   const userSection = localStorage.getItem("userSection");
   
 

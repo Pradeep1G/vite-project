@@ -161,7 +161,7 @@ const Login = () => {
             const token = response.data.token_for_first_time;
             console.warn(token);
             localStorage.setItem("token_for_first_time", token);
-            localStorage.setItem("userMailId", formData["email"]);
+            localStorage.setItem("userEmail", formData["email"]);
             localStorage.setItem("userName", response.data.name);
             localStorage.setItem("userPhoneNo", response.data.phoneNo);
             localStorage.setItem("userSection", response.data.section);

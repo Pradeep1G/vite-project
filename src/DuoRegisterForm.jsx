@@ -25,8 +25,8 @@ function LoadingScreen() {
 }
 
 export default function DuoRegisterForm() {
-  // const serverPath1 = "http://127.0.0.1:5000"
-  const serverPath1 = "https://gpaserver2.onrender.com";
+  const serverPath1 = "http://127.0.0.1:5000"
+  // const serverPath1 = "https://gpaserver2.onrender.com";
 
   const navigate = useNavigate();
   const currentPath = location.pathname;
@@ -47,7 +47,7 @@ export default function DuoRegisterForm() {
   const [userName, setUserName] = useState(localStorage.getItem("userName"));
   const [userRegNo, setUserRegNo] = useState(localStorage.getItem("userRegNo"));
   const [userEmail, setUserEmail] = useState(
-    localStorage.getItem("userMailId")
+    localStorage.getItem("userEmail")
   );
   const userSection = localStorage.getItem("userSection");
   const [userPhone, setUserPhone] = useState(localStorage.getItem("userPhoneNo"));
