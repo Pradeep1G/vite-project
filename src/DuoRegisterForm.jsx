@@ -25,8 +25,8 @@ function LoadingScreen() {
 }
 
 export default function DuoRegisterForm() {
-  // const serverPath1 = "http://127.0.0.1:5000"
-  const serverPath1 = "https://gpaserver2.onrender.com";
+  const serverPath1 = "http://127.0.0.1:5000"
+  // const serverPath1 = "https://gpaserver2.onrender.com";
 
   const navigate = useNavigate();
   const currentPath = location.pathname;
@@ -143,8 +143,8 @@ export default function DuoRegisterForm() {
     // Call getData() when the component mounts or when guideMailId changes
     getData();
     checkPersonOneRegistered();
-    checkPersonTwoRegistered();
-  }, [userEmail, secondUserEmail, guideMailId, getVacancies]);
+    // checkPersonTwoRegistered();
+  }, [userEmail, guideMailId]);
 
   const getData = async () => {
     try {
@@ -214,17 +214,17 @@ export default function DuoRegisterForm() {
     }
   };
 
-  const checkPersonTwoRegistered = async () => {
-    try {
-      const response = await axios.get(
-        serverPath1 + "/api/check/" + secondUserEmail
-      );
-      console.warn(response.data);
-      setIsPersonTwoNotRegistered(response.data.first_time);
-    } catch (err) {
-      console.warn(err);
-    }
-  };
+  // const checkPersonTwoRegistered = async () => {
+  //   try {
+  //     const response = await axios.get(
+  //       serverPath1 + "/api/check/" + secondUserEmail
+  //     );
+  //     console.warn(response.data);
+  //     setIsPersonTwoNotRegistered(response.data.first_time);
+  //   } catch (err) {
+  //     console.warn(err);
+  //   }
+  // };
 
   const checkSecondOtp = (e) => {
     e.preventDefault();
@@ -245,10 +245,16 @@ export default function DuoRegisterForm() {
 
     setIsLoading(true);
 
+    console.warn("isSecondMailVerified   "+isSecondMailVerified)
+    console.warn("isPersonOneNotRegistered   "+isPersonOneNotRegistered)
+    console.warn("getVacancies   "+getVacancies["vacancies"])
+
+
+
     if (
       parseInt(getVacancies["vacancies"]) > 0 &&
       isSecondMailVerified &&
-      isPersonTwoNotRegistered &&
+      // isPersonTwoNotRegistered &&
       isPersonOneNotRegistered
     ) {
       try {
@@ -257,10 +263,14 @@ export default function DuoRegisterForm() {
           {
             email: userEmail,
             password: localStorage.getItem("newPassword"),
+            guideMailId: guideMailId
           }
         );
         console.warn(response1.data);
-        if (response1.data["error"] === "Email already registered") {
+        if (response1.data["message"] === "No Vacancies"){
+          setIsPersonOneNotRegistered(false);
+          alert("No Vacancies");
+        }else if (response1.data["error"] === "Email already registered") {
           setIsPersonOneNotRegistered(false);
           alert("Account already Registered");
           navigate("/");
@@ -276,17 +286,21 @@ export default function DuoRegisterForm() {
           const data5 = {
             email: secondUserEmail,
             password: localStorage.getItem("newPassword"),
+            guideMailId: guideMailId
           };
           axios
             .put(serverPath1 + "/add_registered_data", data5)
             .then((response) => {
               console.log(response.data);
-              if (response.data["error"] == "Email already registered") {
+              if (response1.data["message"] === "No Vacancies"){
+                setIsPersonOneNotRegistered(false);
+                alert("No Vacancies");
+              }else if (response.data["error"] == "Email already registered") {
                 setIsPersonTwoNotRegistered(false);
-                alert("Second Member Account already Registered");
                 axios.post(serverPath1 + "/rollback_registered_data", {
                   email: userEmail,
                 });
+                alert("Second Member Account already Registered");
                 navigate("/");
                 console.warn(isNotRegistered);
               } else if (
@@ -424,11 +438,12 @@ export default function DuoRegisterForm() {
       alert("verify second member email");
     } else if (!isPersonOneNotRegistered) {
       alert("Team member 1 has already registered");
-    } else if (!isPersonTwoNotRegistered) {
-      alert("Team member 2 has already registered");
+    // } else if (!isPersonTwoNotRegistered) {
+      // alert("Team member 2 has already registered");
     } else {
       alert("No Vacancy Select Another Staff");
     }
+    setIsLoading(false);
   }
 
   return (
