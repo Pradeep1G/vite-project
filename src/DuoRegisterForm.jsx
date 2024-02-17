@@ -263,7 +263,8 @@ export default function DuoRegisterForm() {
           {
             email: userEmail,
             password: localStorage.getItem("newPassword"),
-            guideMailId: guideMailId
+            guideMailId: guideMailId,
+            update_vacancies_data : false
           }
         );
         console.warn(response1.data);
@@ -286,7 +287,8 @@ export default function DuoRegisterForm() {
           const data5 = {
             email: secondUserEmail,
             password: localStorage.getItem("newPassword"),
-            guideMailId: guideMailId
+            guideMailId: guideMailId,
+            update_vacancies_data : true
           };
           axios
             .put(serverPath1 + "/add_registered_data", data5)
@@ -299,6 +301,7 @@ export default function DuoRegisterForm() {
                 setIsPersonTwoNotRegistered(false);
                 axios.post(serverPath1 + "/rollback_registered_data", {
                   email: userEmail,
+                  guideMailId : guideMailId
                 });
                 alert("Second Member Account already Registered");
                 navigate("/");

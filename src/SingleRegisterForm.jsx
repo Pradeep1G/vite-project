@@ -158,7 +158,8 @@ export default function SingleRegisterForm() {
       const data4 = {
         email: userEmail,
         password: localStorage.getItem("newPassword"),
-        guideMailId: guideMailId
+        guideMailId: guideMailId,
+        update_vacancies_data : true
       };
       console.warn("2")
       try {
