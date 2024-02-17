@@ -232,28 +232,28 @@ export default function SingleRegisterForm() {
               console.error("Error:", error);
             });
 
-          const data3 = {
-            collection_name: "facultylist", // Replace 'my_collection' with the desired collection name
-            filter_data: { "University EMAIL ID": guideMailId }, // Replace with the filter to identify the data you want to update
-            updated_data: {
-              "TOTAL BATCHES": parseInt(getVacancies["vacancies"]) - 1,
-            },
-            student_mailId : userEmail
-          };
+          // const data3 = {
+          //   collection_name: "facultylist", // Replace 'my_collection' with the desired collection name
+          //   filter_data: { "University EMAIL ID": guideMailId }, // Replace with the filter to identify the data you want to update
+          //   updated_data: {
+          //     "TOTAL BATCHES": parseInt(getVacancies["vacancies"]) - 1,
+          //   },
+          //   student_mailId : userEmail
+          // };
 
-          // Send the data to the Flask update route using Axios
-          axios
-            .put(serverPath1 + "/update_vacancies_data", data3, {
-              headers: {
-                "Content-Type": "application/json",
-              },
-            })
-            .then((response) => {
-              console.log(response.data);
-            })
-            .catch((error) => {
-              console.error("Error:", error);
-            });
+          // // Send the data to the Flask update route using Axios
+          // axios
+          //   .put(serverPath1 + "/update_vacancies_data", data3, {
+          //     headers: {
+          //       "Content-Type": "application/json",
+          //     },
+          //   })
+          //   .then((response) => {
+          //     console.log(response.data);
+          //   })
+          //   .catch((error) => {
+          //     console.error("Error:", error);
+          //   });
 
           // alert("Success")
           navigate(currentPath + "/success");
