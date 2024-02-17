@@ -41,8 +41,8 @@ function LoadingScreen() {
 }
 
 const Login = () => {
-  // const serverPath1 = "http://127.0.0.1:5000"
-  const serverPath1 = "https://gpaserver2.onrender.com";
+  const serverPath1 = "http://127.0.0.1:5000"
+  // const serverPath1 = "https://gpaserver2.onrender.com";
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -272,7 +272,7 @@ const Login = () => {
                   <input
                     className="border-2 border-solid border-black rounded-lg px-2 h-12 my-4 w-full"
                     type="email"
-                    placeholder="Email"
+                    placeholder="Email or Team ID"
                     value={formData.email}
                     required
                     onChange={(e) =>
