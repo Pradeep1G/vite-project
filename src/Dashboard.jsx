@@ -236,6 +236,8 @@ const Dashboard = () => {
   const studentLogout = () => {
     // Remove token from local storage
     localStorage.removeItem("token");
+    localStorage.removeItem("userEmail");
+    localStorage.removeItem("teamId");
     // Redirect to login page
     navigate("/login");
   };
@@ -339,7 +341,7 @@ const Dashboard = () => {
       <div className="p-4">
       <p className="text-lg font-semibold text-gray-700">Name: {StudentData[0]["p2name"]}</p>
       <p className="text-lg text-gray-600">Reg No: {StudentData[0]["p2regNo"]}</p>
-      <p className="text-lg text-gray-600">Section:</p>
+      <p className="text-lg text-gray-600">Section: {StudentData[0]["p2section"]}</p>
       </div>
       {/* Add other details for the second student here */}
     </div>
