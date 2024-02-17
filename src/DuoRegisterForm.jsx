@@ -178,17 +178,17 @@ export default function DuoRegisterForm() {
           setSecondUserPhone(response.data.phoneNo);
           setSecondUserSection(response.data.section);
           setSecondUserRegNo(response.data.regNo)
-        } else if (!response.data.firstTime) {
+          } else if (response.data.data == "mail not found") {
+            setVerificationInitiated(false);
+            setIsLoading(false);
+            alert("Mail not found");
+            setIsVerifying(false);
+          } else if (!response.data.firstTime) {
           setVerificationInitiated(false);
           setIsLoading(false);
           alert("Account already Registered");
           setIsVerifying(false);
-        } else if (response.data.data == "mail not found") {
-          setVerificationInitiated(false);
-          setIsLoading(false);
-          alert("Mail not found");
-          setIsVerifying(false);
-        }
+        } 
       } catch (err) {
         setIsLoading(false);
         console.warn(err);
@@ -303,7 +303,7 @@ export default function DuoRegisterForm() {
                   email: userEmail,
                   guideMailId : guideMailId
                 });
-                alert("Second Member Account already Registered");
+                alert("Second Member Account already Registered\nIf not try after a minute.");
                 navigate("/");
                 console.warn(isNotRegistered);
               } else if (
