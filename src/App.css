@@ -37,3 +37,20 @@ body, html {
     align-items: center;
   }
 }
+
+
+
+@keyframes loading {
+  0% {
+    background-position: 0%; /* Start position, move the start position 50% to the left */
+  }
+  100% {
+    background-position: 100%; /* End position, move the end position 50% to the right */
+  }
+}
+
+.loading-content {
+  background: linear-gradient(to right, rgba(128, 128, 128, 0.3) 0%, rgba(128, 128, 128, 0.3) 50%, rgba(255, 255, 255, 1) 50%, rgba(255, 255, 255, 1) 100%);
+  background-size: 200% 100%; /* Double the width to allow for smooth back-and-forth animation */
+  animation: loading 0.6s infinite alternate-reverse linear ; /* Adjust the duration and other parameters as needed */
+}

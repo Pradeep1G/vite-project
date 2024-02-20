@@ -11,6 +11,19 @@ export const ProjectCard = ({
   regNoTwo,
   studentTwo,
 }) => {
+
+
+
+  // Simulate data fetching
+setTimeout(() => {
+  // Replace this with your actual data fetching logic
+  const contentDiv = document.getElementById('content');
+  contentDiv.classList.remove('loading-content'); // Remove the loading animation class
+  // contentDiv.textContent = 'Data loaded'; // Display fetched data or appropriate message
+}, 2000); // Simulate 2 seconds delay, replace with actual data loading time
+
+
+
   return (
     // <div className="max-w-md mx-auto bg-white rounded-xl overflow-hidden shadow-lg">
     //   <img
@@ -18,7 +31,7 @@ export const ProjectCard = ({
     //     src="https://marvel-b1-cdn.bc0a.com/f00000000100045/www.elmhurst.edu/wp-content/uploads/2018/12/5-skills-project-management-degree-elmhurst-college-infographic-thumb.jpg"
     //     alt="Bg-image"
     //   />
-    <div className="space-y-2 w-full md:w-[27rem] rounded-md shadow-[0px_0px_30px_gray] hover:shadow-[0px_0px_10px_gray] hover:scale transition-shadow">
+    <div className={`space-y-2 w-full md:w-[27rem] rounded-md shadow-[0px_0px_30px_gray] hover:shadow-[0px_0px_10px_gray] hover:scale transition-shadow ${projectId ? '' : 'loading-content'}`} id="loading">
       <div className="flex w-full h-[13rem] bg-[#cf6e90] justify-center items-center  p-4 mb-4">
         <img
           className="w-[9rem]  border-2 border-slate-400 rounded-full mr-4 relative"

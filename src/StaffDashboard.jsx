@@ -45,7 +45,39 @@ const StaffDashboard = () => {
       localStorage.removeItem("userEmail");
       navigate("/login");
     }
+
+    fetchStudentsData();
   }, []);
+
+  const [error, setError] = useState();
+  const [studentsData, setStudentsData] = useState([{
+    "team":"",
+    "projectId":"",
+    "studentOneImg":"",
+    "studentTwoImg":"",
+    "regNoOne":"",
+    "studentOne":"",
+    "regNoTwo":"",
+    "studentTwo":"",
+    "section":"",
+    "p2section":"",
+    "projectTitle":""
+
+  }]);
+  const fetchStudentsData = async () => {
+    try {
+      
+      const userEmail = localStorage.getItem("guideMailId"); 
+      const response = await axios.post(serverPath1+"/staffLogin/getStudentsData/"+userEmail);
+
+      console.warn(response.data);
+      setStudentsData(response.data.allStudentsData);
+     
+    } catch (error) {
+      setError(error.message || 'An error occurred while fetching data.');
+      
+    }
+  };
 
 
 
@@ -172,10 +204,10 @@ const StaffDashboard = () => {
         </div>
       </div> */}
     <main
-      className="w-[90%] h-fit mx-auto grid place-items-center grid-cols-1 md:grid-cols-3 gap-3 mb-5"
+      className="w-[90%] h-fit mx-auto grid place-items-center grid-cols-1 lg:grid-cols-3 gap-3 mb-5"
       onClick={() => setOpen(false)}
     >
-      {projectDetails.map((project) => (
+      {studentsData.map((project) => (
         <ProjectCard
           key={project.projectId}
           team={project.team}

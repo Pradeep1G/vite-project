@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import axios from 'axios';
 import jwtDecode from 'jwt-decode';
 import sist_logo_login from "./assets/sist_logo_login.png";
-
+import log_out from "./assets/svgs/log_out.svg";
 const Dashboard = () => {
   const navigate = useNavigate();
   const userEmail = localStorage.getItem("userEmail");
@@ -294,12 +294,18 @@ const Dashboard = () => {
           </button>
           {isDropdownOpen && (
             <div className="absolute top-10 right-0 bg-white text-gray-800 p-2 rounded shadow-md">
+            <div className="flex flex-row justify-center items-center">
+            
               <button onClick={handleHelp} className="block p-2 hover:bg-gray-200">
-                Help
+                help
               </button>
+              </div>
+              <div className="flex flex-row justify-center items-center">
+              <img className="h-4 w-4" src={log_out} alt="LogOut" />
               <button onClick={studentLogout} className="block p-2 hover:bg-gray-200">
                 Logout
               </button>
+              </div>
             </div>
           )}
         </div>
