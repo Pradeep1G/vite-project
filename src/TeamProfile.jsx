@@ -6,10 +6,20 @@ import home from "./assets/svgs/home.svg";
 import log_out from "./assets/svgs/log_out.svg";
 
 import back_arrow from "./assets/svgs/back_arrow.svg";
+import { useEffect } from "react";
+import axios from "axios";
+
+
 
 export function TeamProfile() {
-  const [team, setTeam] = useState(true); // change this according to the team of 2 or not by backend logic
+  const serverPath1 = "http://127.0.0.1:5000"
+  // const serverPath1 = "https://gpaserver2.onrender.com";
 
+
+
+
+
+  const [team, setTeam] = useState(true); // change this according to the team of 2 or not by backend logic
   const [open, setOpen] = useState(false);
 
   const [projectDetails, setProjectDetails] = useState({
@@ -45,6 +55,69 @@ export function TeamProfile() {
     emailTwo: "fake2@fakemail.com",
     mobileNoTwo: "0123456789",
   });
+  const teamId = localStorage.getItem("projectId") // Replace with the actual team ID;
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.post(`${serverPath1}/staffLogin/getProfileData/profile_details/${teamId}`);
+        console.warn(response.data)
+        console.warn(response.data.studentDetailsOne)
+        setStudentDetailsOne(response.data.studentDetailsOne);
+        setStudentDetailsTwo(response.data.studentDetailsTwo || {});
+        setProjectDetails(response.data.projectdetails);
+        setGuideDetails(response.data.guidedetails);
+        // console.warn(studentDetailsOne)
+      } catch (error) {
+        console.error('Error fetching team details:', error.message);
+        // Handle the error as needed
+      }
+    };
+
+    fetchData();
+  }, []);
+
+
+
+
+
+
+  const handleApproval = async (status) => {
+
+    setProjectDetails({
+      ...projectDetails,
+      projectApproval: true,
+    })
+    try {
+      const response = await axios.post(`${serverPath1}/staffLogin/updateProjectDetails/${teamId}`, {
+        approvalStatus: "approved",
+      });  
+    } catch (error) {
+      console.error('Error updating project approval status:', error.message);
+      
+    }
+  };
+
+
+  const handleRejected = async (status) => {
+
+    setProjectDetails({
+      ...projectDetails,
+      projectApproval: false,
+    })
+    try {
+      const response = await axios.post(`${serverPath1}/staffLogin/updateProjectDetails/${teamId}`, {
+        approvalStatus: "declined",
+      });  
+    } catch (error) {
+      console.error('Error updating project approval status:', error.message);
+      
+    }
+  };
+
+
+
+
 
   return (
     <>
@@ -188,7 +261,7 @@ export function TeamProfile() {
                 <h2 className="font-bold flex justify-center items-center text-xl capitalize break-before-all">
                   {guideDetails.guideName}
                 </h2>
-                <h3 className="font-[400] flex justify-center items-center break-before-all">
+                <h3 className="font-[400] flex justify-center w-fit items-center break-all">
                   {guideDetails.guideMaidId}
                 </h3>
               </div>
@@ -209,7 +282,7 @@ export function TeamProfile() {
                 <input
                   className="w-[75%] h-[80%] px-2 mr-2 font-[400] text-lg outline-none border border-slate-400 rounded-md"
                   placeholder="Project title"
-                  defaultValue={projectDetails.title}
+                  value={projectDetails.title}
                   readOnly
                   type="text"
                   name="title"
@@ -228,7 +301,7 @@ export function TeamProfile() {
                 <input
                   className="w-[75%] h-[80%] px-2 mr-2 font-[400] text-lg outline-none border border-slate-400 rounded-md"
                   placeholder="Project domain"
-                  defaultValue={projectDetails.domain}
+                  value={projectDetails.domain}
                   readOnly
                   type="text"
                   name="domain"
@@ -246,7 +319,7 @@ export function TeamProfile() {
                 <textarea
                   className="w-[98%] h-[70%] px-2 py-2 font-[400] text-lg outline-none border border-slate-400 rounded-md resize-none"
                   // placeholder="Project desc"
-                  defaultValue={projectDetails.desc}
+                  value={projectDetails.desc}
                   readOnly
                   type="text"
                   name="desc"
@@ -257,12 +330,7 @@ export function TeamProfile() {
                   <button
                     className="mx-3 my-2 px-4 py-1 rounded-3xl text-[1rem] text-white font-medium shadow-[0px_0px_10px_gray] hover:scale-105 active:scale-100 active:shadow-[0px_0px_12px_black]"
                     type="button"
-                    onClick={(prev) =>
-                      setProjectDetails({
-                        ...prev,
-                        projectApproval: true,
-                      })
-                    }
+                    onClick={handleApproval}
                     style={{
                       backgroundColor:
                         projectDetails.projectApproval === false
@@ -277,12 +345,7 @@ export function TeamProfile() {
                   <button
                     className="mx-3 my-2 px-4 py-1 rounded-3xl text-[1rem] text-white font-medium shadow-[0px_0px_10px_gray] hover:scale-105 active:scale-100  active:shadow-[0px_0px_12px_black]"
                     type="button"
-                    onClick={(prev) =>
-                      setProjectDetails({
-                        ...prev,
-                        projectApproval: false,
-                      })
-                    }
+                    onClick={handleRejected }
                     style={{
                       backgroundColor:
                         projectDetails.projectApproval === true
@@ -333,7 +396,7 @@ export function TeamProfile() {
                 <input
                   className="w-[75%] h-[80%] px-2 mr-1 font-[400] text-lg outline-none border border-slate-400 rounded-md capitalize"
                   placeholder="Full Name"
-                  defaultValue={studentDetailsOne.fullNameOne}
+                  value={studentDetailsOne.fullNameOne}
                   readOnly
                   type="text"
                   name="fullNameOne"
@@ -352,7 +415,7 @@ export function TeamProfile() {
                 <input
                   className="w-[75%] h-[80%] px-2 mr-1 font-[400] text-lg outline-none border border-slate-400 rounded-md"
                   placeholder="Email"
-                  defaultValue={studentDetailsOne.emailOne}
+                  value={studentDetailsOne.emailOne}
                   readOnly
                   type="text"
                   name="emailOne"
@@ -371,7 +434,7 @@ export function TeamProfile() {
                 <input
                   className="w-[75%] h-[80%] px-2 mr-1 font-[400] text-lg outline-none border border-slate-400 rounded-md"
                   placeholder="Reg no."
-                  defaultValue={studentDetailsOne.regNoOne}
+                  value={studentDetailsOne.regNoOne}
                   readOnly
                   type="text"
                   name="regNoOne"
@@ -390,7 +453,7 @@ export function TeamProfile() {
                 <input
                   className="w-[75%] h-[80%] px-2 mr-1 font-[400] text-lg outline-none border border-slate-400 rounded-md"
                   placeholder="Section"
-                  defaultValue={studentDetailsOne.secOne}
+                  value={studentDetailsOne.secOne}
                   readOnly
                   type="text"
                   name="secOne"
@@ -409,7 +472,7 @@ export function TeamProfile() {
                 <input
                   className="w-[75%] h-[80%] px-2 mr-1 font-[400] text-lg outline-none border border-slate-400 rounded-md"
                   placeholder="Mobile no."
-                  defaultValue={studentDetailsOne.mobileNoOne}
+                  value={studentDetailsOne.mobileNoOne}
                   readOnly
                   type="text"
                   name="mobileNoOne"
@@ -454,7 +517,7 @@ export function TeamProfile() {
                   <input
                     className="w-[75%] h-[80%] px-2 mr-1 font-[400] text-lg outline-none border border-slate-400 rounded-md capitalize"
                     placeholder="Full Name"
-                    defaultValue={studentDetailsTwo.fullNameTwo}
+                    value={studentDetailsTwo.fullNameTwo}
                     readOnly
                     type="text"
                     name="fullNameTwo"
@@ -473,7 +536,7 @@ export function TeamProfile() {
                   <input
                     className="w-[75%] h-[80%] px-2 mr-1 font-[400] text-lg outline-none border border-slate-400 rounded-md"
                     placeholder="Email"
-                    defaultValue={studentDetailsTwo.emailTwo}
+                    value={studentDetailsTwo.emailTwo}
                     readOnly
                     type="text"
                     name="emailTwo"
@@ -492,7 +555,7 @@ export function TeamProfile() {
                   <input
                     className="w-[75%] h-[80%] px-2 mr-1 font-[400] text-lg outline-none border border-slate-400 rounded-md"
                     placeholder="Reg no."
-                    defaultValue={studentDetailsTwo.regNoTwo}
+                    value={studentDetailsTwo.regNoTwo}
                     readOnly
                     type="text"
                     name="regNoTwo"
@@ -511,7 +574,7 @@ export function TeamProfile() {
                   <input
                     className="w-[75%] h-[80%] px-2 mr-1 font-[400] text-lg outline-none border border-slate-400 rounded-md"
                     placeholder="Section"
-                    defaultValue={studentDetailsTwo.secTwo}
+                    value={studentDetailsTwo.secTwo}
                     readOnly
                     type="text"
                     name="secTwo"
@@ -530,7 +593,7 @@ export function TeamProfile() {
                   <input
                     className="w-[75%] h-[80%] px-2 mr-1 font-[400] text-lg outline-none border border-slate-400 rounded-md"
                     placeholder="Mobile no."
-                    defaultValue={studentDetailsTwo.mobileNoTwo}
+                    value={studentDetailsTwo.mobileNoTwo}
                     readOnly
                     type="text"
                     name="mobileNoTwo"
@@ -551,3 +614,4 @@ export function TeamProfile() {
     </>
   );
 }
+

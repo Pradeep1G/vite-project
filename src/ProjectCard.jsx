@@ -1,3 +1,5 @@
+import { Navigate, useNavigate } from "react-router-dom";
+
 /* eslint-disable react/prop-types */
 export const ProjectCard = ({
   team,
@@ -12,7 +14,7 @@ export const ProjectCard = ({
   studentTwo,
 }) => {
 
-
+ const navigate = useNavigate();
 
   // Simulate data fetching
 setTimeout(() => {
@@ -68,12 +70,16 @@ setTimeout(() => {
         {projectDomain}
       </p>
       <div className="w-full flex justify-center items-center">
-        <a
-          href="/staff_dashboard/profile_details"
+        <button
+          //  href="/staff_dashboard/profile_details"
+          onClick={()=>{
+            localStorage.setItem("projectId",projectId)
+            navigate('/staff_dashboard/profile_details')
+          }}
           className="bg-[#d06a0f] h-8 w-[90%] flex justify-center items-center text-white font-bold rounded mb-2"
         >
           Profile Details
-        </a>
+        </button>
       </div>
     </div>
   );

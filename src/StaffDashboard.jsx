@@ -12,12 +12,13 @@ import { projectDetails } from './projectDetails';
 
 const StaffDashboard = () => {
 
-  // const serverPath1 = "http://127.0.0.1:5000"
-  const serverPath1 = "https://gpaserver2.onrender.com";
+  const serverPath1 = "http://127.0.0.1:5000"
+  // const serverPath1 = "https://gpaserver2.onrender.com";
 
   const[open, setOpen] = useState(false)
 
   const navigate = useNavigate();
+  const userEmail = localStorage.getItem("guideMailId");
 
 
   useEffect(() => {
@@ -110,7 +111,7 @@ const StaffDashboard = () => {
           alt="Faculty"
         />
         <div className="hidden md:flex md:items-center md:justify-center relative">
-          <h3 className="text-white">SHIVA KUMAR VANAMALA</h3>
+          <h3 className="text-white">{userEmail}</h3>
           &nbsp;&nbsp;&nbsp;
           <span
             className="rounded-full flex items-center justify-center"
