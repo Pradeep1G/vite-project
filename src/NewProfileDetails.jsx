@@ -1,5 +1,5 @@
-import { useState } from "react";
-
+import { useState , useEffect} from "react";
+import axios from "axios";
 import tick_mark from "./assets/svgs/tick_mark.svg";
 import cross_mark from "./assets/svgs/cross_mark.png";
 import link from "./assets/svgs/link.svg";
@@ -12,6 +12,11 @@ import log_out from "./assets/svgs/log_out.svg";
 import back_arrow from "./assets/svgs/back_arrow.svg";
 
 export const NewProfileDetails = () => {
+
+  const serverPath1 = "http://127.0.0.1:5000"
+  // const serverPath1 = "https://gpaserver2.onrender.com";
+
+
   const [open, setOpen] = useState(false);
 
   const [projectDetails, setProjectDetails] = useState({
@@ -32,8 +37,8 @@ export const NewProfileDetails = () => {
   });
 
   const [projectMarks, setProjectMarks] = useState({
-    studentOneMarks: "",
-    studentTwoMarks: "",
+    studentOneMarks: "0",
+    studentTwoMarks: "0",
   });
 
   const [links, setLinks] = useState({
@@ -54,14 +59,14 @@ export const NewProfileDetails = () => {
   });
 
   const [comments, setComments] = useState({
-    prevComments: "previous comments here",
+    prevComments: "",
     addComments: "",
   });
 
   const handleAddComments = (eve) => {
     (prev) =>
       setComments({
-        ...prev,
+        ...comments,
         [eve.target.name]: eve.target.value,
       });
     console.log(comments.addComments);
@@ -70,13 +75,43 @@ export const NewProfileDetails = () => {
   };
 
   const handleProjectMarks = (eve) => {
-    (prev) =>
+    (projectMarks) =>
       setProjectMarks({
-        ...prev,
+        ...projectMarks,
         [eve.target.name]: [eve.target.value],
       });
     // console.log(eve.target.name, eve.target.value);
   };
+
+const teamId= localStorage.getItem("projectId")
+  useEffect(() => {
+  
+    const teamId= localStorage.getItem("projectId")
+    const fetchData = async () => {
+      try {
+        const response = await axios.post(`${serverPath1}/staffLogin/getProfileData/${teamId}`);
+        console.warn(response.data)
+        setProjectDetails(response.data.projectDetails)
+        setProjectMarks(response.data.projectMarks)
+        setLinks(response.data.links)
+        setDocumentation(response.data.documentation.documentation)
+        setPpt(response.data.ppt.ppt)
+        setResearchPaper(response.data.researchPaper.researchPaper.approval)
+        setGuideApproval(response.data.guideApproval.guideApproval)
+        setIsChecked(response.data.isChecked.researchPaper)
+        setComments(response.data.comments)
+
+
+       
+      } catch (error) {
+        console.error('Error fetching team details:', error.message);
+        // Handle the error as needed
+      }
+    };
+
+    fetchData();
+  }, []);
+
 
   const handleFinalSubmit = () => {};
 
@@ -201,7 +236,7 @@ export const NewProfileDetails = () => {
             <form className="w-fit h-fit flex flex-col justify-center items-center rounded bg-[#f4eeee] ">
               <div className="w-[95vw] md:w-[35vw] h-[20vh] flex flex-col justify-center items-center">
                 <span className="w-full flex justify-center items-center text-xl font-medium">
-                  {projectDetails.projectId}
+                  {/* {projectDetails.projectId} */}
                 </span>
                 <br />
                 <span className="w-full flex justify-center items-center capitalize text-xl font-semibold">
@@ -285,6 +320,7 @@ export const NewProfileDetails = () => {
                     {projectDetails.studentOneRegNo}
                   </div>
                   <div className="mb-5 w-full h-1/2 flex flex-col justify-center items-center break-before-all">
+                  <h3 className="p-2">Assigned Marks:{projectMarks.studentOneMarks}</h3>
                     <div>
                       <label htmlFor="studentOneMarks" className="font-normal">
                         Enter Marks : &nbsp;
@@ -321,6 +357,7 @@ export const NewProfileDetails = () => {
                       {projectDetails.studentTwoRegNo}
                     </div>
                     <div className="mb-5 w-full h-1/2 flex flex-col justify-center items-center break-before-all">
+                    <h3 className="p-2">Assigned Marks:{projectMarks.studentTwoMarks}</h3>
                       <div>
                         <label
                           htmlFor="studentTwoMarks"
@@ -483,7 +520,8 @@ export const NewProfileDetails = () => {
                   <li className="flex items-center gap-3">
                     <input
                       type="checkbox"
-                      defaultChecked={isChecked.communicated}
+                      checked={isChecked.communicated}
+                      
                       id="communicated"
                       name="communicated"
                       className="form-checkbox h-4 w-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500 cursor-pointer"
@@ -504,7 +542,7 @@ export const NewProfileDetails = () => {
                   <li className="flex items-center gap-3">
                     <input
                       type="checkbox"
-                      defaultChecked={isChecked.accepted}
+                      checked={isChecked.accepted}
                       id="accepted"
                       name="accepted"
                       className="form-checkbox h-4 w-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500 cursor-pointer"
@@ -525,7 +563,7 @@ export const NewProfileDetails = () => {
                   <li className="flex items-center gap-3">
                     <input
                       type="checkbox"
-                      defaultChecked={isChecked.paymentDone}
+                      checked={isChecked.paymentDone}
                       id="paymentDone"
                       name="paymentDone"
                       className="form-checkbox h-4 w-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500 cursor-pointer"
@@ -649,7 +687,7 @@ export const NewProfileDetails = () => {
                 name="prevComments"
                 placeholder="Previous Comments"
                 readOnly
-                defaultValue={comments.prevComments}
+                value={comments.prevComments}
                 style={{ resize: "none" }}
               ></textarea>
             </form>

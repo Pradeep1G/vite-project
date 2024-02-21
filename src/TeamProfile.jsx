@@ -56,8 +56,9 @@ export function TeamProfile() {
     mobileNoTwo: "0123456789",
   });
   const teamId = localStorage.getItem("projectId") // Replace with the actual team ID;
-
   useEffect(() => {
+  
+
     const fetchData = async () => {
       try {
         const response = await axios.post(`${serverPath1}/staffLogin/getProfileData/profile_details/${teamId}`);
@@ -65,6 +66,7 @@ export function TeamProfile() {
         console.warn(response.data.studentDetailsOne)
         setStudentDetailsOne(response.data.studentDetailsOne);
         setStudentDetailsTwo(response.data.studentDetailsTwo || {});
+        setTeam(response.data.studentDetailsOne.team);
         setProjectDetails(response.data.projectdetails);
         setGuideDetails(response.data.guidedetails);
         // console.warn(studentDetailsOne)
@@ -78,15 +80,11 @@ export function TeamProfile() {
   }, []);
 
 
-
-
-
-
   const handleApproval = async (status) => {
 
     setProjectDetails({
       ...projectDetails,
-      projectApproval: true,
+      projectApproval: false,
     })
     try {
       const response = await axios.post(`${serverPath1}/staffLogin/updateProjectDetails/${teamId}`, {
@@ -103,7 +101,7 @@ export function TeamProfile() {
 
     setProjectDetails({
       ...projectDetails,
-      projectApproval: false,
+      projectApproval: true,
     })
     try {
       const response = await axios.post(`${serverPath1}/staffLogin/updateProjectDetails/${teamId}`, {
@@ -114,9 +112,6 @@ export function TeamProfile() {
       
     }
   };
-
-
-
 
 
   return (
@@ -333,12 +328,12 @@ export function TeamProfile() {
                     onClick={handleApproval}
                     style={{
                       backgroundColor:
-                        projectDetails.projectApproval === false
+                        projectDetails.projectApproval === true
                           ? "gray"
                           : "#2e8a2e",
                     }}
                   >
-                    {projectDetails.projectApproval === true
+                    {projectDetails.projectApproval === false
                       ? "Approved"
                       : "Approve"}
                   </button>
@@ -348,12 +343,12 @@ export function TeamProfile() {
                     onClick={handleRejected }
                     style={{
                       backgroundColor:
-                        projectDetails.projectApproval === true
+                        projectDetails.projectApproval === false
                           ? "gray"
                           : "#ac3f2c",
                     }}
                   >
-                    {projectDetails.projectApproval === false
+                    {projectDetails.projectApproval === true
                       ? "Rejected"
                       : "Reject"}
                   </button>
@@ -363,11 +358,11 @@ export function TeamProfile() {
           </article>
         </section>
         <section className="w-full md:w-[97%] h-fit flex flex-col md:flex-row justify-center items-center gap-[0.1rem] md:gap-5">
-          <form
-            className={
-              `${"h-fit w-full flex flex-col gap-1 justify-center items-center rounded shadow-[0px_0px_10px_gray] mb-4"}${" "}${
-                !team ? "md:w-[60%]" : "md:w-[49.5%]"
-              }`
+        <form
+    className={
+      `${"h-fit w-full flex flex-col gap-1 justify-center items-center rounded shadow-[0px_0px_10px_gray] mb-4"}${" "}${
+        !team ? "md:w-full" : "md:w-[49.5%]"
+      }`
               // +
               // " " +
               // !team
@@ -484,18 +479,13 @@ export function TeamProfile() {
             </div>
           </form>
           {team && (
-            <form
-              className={
-                `${"h-fit w-full flex flex-col gap-1 justify-center items-center rounded shadow-[0px_0px_10px_gray] mb-4"}${" "}${
-                  !team ? "md:w-full" : "md:w-[49.5%]"
-                }`
-                // +
-                // " " +
-                // !team
-                //   ? "md:w-full"
-                //   : "md:w-[48%]"
-              }
-            >
+    <form
+      className={
+        `${"h-fit w-full flex flex-col gap-1 justify-center items-center rounded shadow-[0px_0px_10px_gray] mb-4"}${" "}${
+          !team ? "md:w-full" : "md:w-[49.5%]"
+        }`
+      }
+    >
               <div className="w-full h-[3.5rem] bg-[#831238e8] text-white text-2xl font-medium flex flex-col justify-center items-center ">
                 Student Details
               </div>
