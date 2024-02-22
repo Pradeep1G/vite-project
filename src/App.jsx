@@ -15,6 +15,7 @@ import StaffLogin from "./Stafflogin";
 import StaffDashboard from './StaffDashboard';
 import { NewProfileDetails } from './NewProfileDetails';
 import { TeamProfile } from './TeamProfile';
+import ChangePassword from './ChangePassword';
 
 function App() {
   return (
@@ -29,6 +30,8 @@ function App() {
 
           <Route path="/staff_dashboard/profile_details" element={<NewProfileDetails />} />
           <Route path="/staff_dashboard/profile_details/team_profile" element={<TeamProfile />} />
+          <Route path="/staff_dashboard/change_password" element={<ChangePassword />} />
+
 
 
 

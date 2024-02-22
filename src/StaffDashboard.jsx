@@ -80,6 +80,13 @@ const StaffDashboard = () => {
     }
   };
 
+  const staffLogout = () => {
+    // Remove token from local storage
+    localStorage.removeItem("token");
+    localStorage.removeItem("guideMailId");
+    // Redirect to login page
+    navigate("/staff_login");
+  };
 
 
   return (
@@ -138,7 +145,7 @@ const StaffDashboard = () => {
               </div>
               <div className="w-full flex items-center justify-center h-2/5 bg-slate-100 text-[#6C757D]  hover:bg-slate-200">
                 <a
-                  href="#"
+                  href="/staff_dashboard/change_password"
                   className="w-full flex justify-start items-center gap-1 pl-2"
                 >
                   <img className="h-4 w-4" src={lock} alt="Lock" />
@@ -147,7 +154,7 @@ const StaffDashboard = () => {
               </div>
               <div className="w-full flex justify-center items-center h-2/5 bg-slate-100 text-[#6C757D] hover:bg-slate-200">
                 <a
-                  href="/"
+                  onClick={staffLogout}
                   className=" w-full flex justify-start items-center gap-1 pl-2"
                 >
                   <img className="h-4 w-4" src={log_out} alt="LogOut" />

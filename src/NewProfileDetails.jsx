@@ -8,15 +8,16 @@ import hum_berger from "./assets/svgs/hum_berger.svg";
 
 import home from "./assets/svgs/home.svg";
 import log_out from "./assets/svgs/log_out.svg";
-
+import { useNavigate } from "react-router-dom";
 import back_arrow from "./assets/svgs/back_arrow.svg";
+// import StaffDashboard from "./StaffDashboard";
 
 export const NewProfileDetails = () => {
 
   const serverPath1 = "http://127.0.0.1:5000"
   // const serverPath1 = "https://gpaserver2.onrender.com";
 
-
+const navigate=useNavigate()
   const [open, setOpen] = useState(false);
 
   const [projectDetails, setProjectDetails] = useState({
@@ -84,6 +85,7 @@ export const NewProfileDetails = () => {
   };
 
 const teamId= localStorage.getItem("projectId")
+const guidemailId = localStorage.getItem("guideMailId")
   useEffect(() => {
   
     const teamId= localStorage.getItem("projectId")
@@ -97,10 +99,35 @@ const teamId= localStorage.getItem("projectId")
         setDocumentation(response.data.documentation.documentation)
         setPpt(response.data.ppt.ppt)
         setResearchPaper(response.data.researchPaper.researchPaper.approval)
-        setGuideApproval(response.data.guideApproval.guideApproval)
+        setGuideApproval(!response.data.guideApproval.guideApproval)
         setIsChecked(response.data.isChecked.researchPaper)
-        setComments(response.data.comments)
 
+        seteditedDocumentationApproval(response.data.documentation.documentation)
+        seteditedPptApproval(response.data.ppt.ppt)
+        seteditedResearchApproval(response.data.researchPaper.researchPaper.approval)
+        seteditedCommunicationApproval(response.data.isChecked.researchPaper.communicated)
+        seteditedPaymentApproval(response.data.isChecked.researchPaper.paymentDone)
+        seteditedAcceptedApproval(response.data.isChecked.researchPaper.accepted)
+        seteditedGuideApproval(response.data.guideApproval.guideApproval)
+        seteditedStudentOneMarks(response.data.projectMarks.studentOneMarks)
+        seteditedStudentTwoMarks(response.data.projectMarks.studentTwoMarks || null)
+        const formattedComments = response.data.comments.map(item => {
+
+          if (item.date && item.comment) {
+            return { date: item.date, comment: item.comment };
+          }
+          const key = Object.keys(item)[0];
+          if (key) {
+            return { date: key, comment: item[key] || '' };
+          }
+    
+          return { date: '', comment: '' };
+        });
+        
+    
+        console.warn('Formatted Comments:', formattedComments);
+    
+        setComments({ prevComments: formattedComments });
 
        
       } catch (error) {
@@ -113,7 +140,58 @@ const teamId= localStorage.getItem("projectId")
   }, []);
 
 
-  const handleFinalSubmit = () => {};
+  const handleFinalSubmit = async() => {
+
+    const editedData = {
+      "editedDocumentationApproval":editedDocumentationApproval,
+      "editedPptApproval":editedPptApproval,
+      "editedResearchApproval":editedResearchApproval,
+      "editedCommunicationApproval":editedCommunicationApproval,
+      "editedPaymentApproval":editedPaymentApproval,
+      "editedAcceptedApproval":editedAcceptedApproval,
+      "editedGuideApproval":editedGuideApproval,
+      "editedStudentOneMarks":editedStudentOneMarks,
+      "editedStudentTwoMarks":editedStudentTwoMarks,
+      "editedComments":editedComments
+    }
+
+    const response = await axios.post(serverPath1+"/staffLogin/profiledetails/updatestatusDetails/"+teamId, editedData );
+    console.warn(response.data);
+    console.warn(editedData);
+  };
+
+
+
+
+
+
+
+  const [editedDocumentationApproval, seteditedDocumentationApproval] = useState();
+  const [editedPptApproval, seteditedPptApproval] = useState();
+  const [editedResearchApproval, seteditedResearchApproval] = useState();
+  const [editedCommunicationApproval, seteditedCommunicationApproval] = useState();
+  const [editedPaymentApproval, seteditedPaymentApproval] = useState();
+  const [editedAcceptedApproval, seteditedAcceptedApproval] = useState();
+  const [editedGuideApproval, seteditedGuideApproval] = useState();
+  const [editedStudentOneMarks, seteditedStudentOneMarks] = useState();
+  const [editedStudentTwoMarks, seteditedStudentTwoMarks] = useState();
+  const [editedComments, seteditedComments] = useState();
+
+
+  const staffLogout = () => {
+    // Remove token from local storage
+    localStorage.removeItem("token");
+    localStorage.removeItem("guideMailId");
+    localStorage.removeItem("projectId");
+    // Redirect to login page
+    navigate("/staff_login");
+  };
+  const removeprojectid=()=>{
+    localStorage.removeItem("projectId")
+    navigate('/staff_dashboard')
+  }
+
+
 
   return (
     <>
@@ -140,7 +218,7 @@ const teamId= localStorage.getItem("projectId")
             alt="Faculty"
           />
           <div className="hidden md:flex md:items-center md:justify-center relative">
-            <h3 className="text-white">SHIVA KUMAR VANAMALA</h3>
+            <h3 className="text-white">{guidemailId}</h3>
             &nbsp;&nbsp;&nbsp;
             <span
               className="rounded-full flex items-center justify-center"
@@ -176,7 +254,7 @@ const teamId= localStorage.getItem("projectId")
                 </div>
                 <div className="w-full flex justify-center items-center h-2/5 bg-slate-100 text-[#6C757D] hover:bg-slate-200">
                   <a
-                    href="/"
+                    onClick={staffLogout}
                     className=" w-full flex justify-start items-center gap-1 pl-2"
                   >
                     <img className="h-4 w-4" src={log_out} alt="LogOut" />
@@ -222,8 +300,9 @@ const teamId= localStorage.getItem("projectId")
         onClick={() => setOpen(false)}
       >
         <div className="hidden md:fixed md:w-fit md:h-full md:left-1 md:top-[5rem] md:flex md:items-center md:justify-center md:cursor-pointer">
-          <a href="/" className="w-fit h-fit">
+          <a  className="w-fit h-fit">
             <img
+            onClick={removeprojectid}
               className="bg-slate-200 m-4 p-2 w-10 rounded-full hover:bg-slate-300 hover:shadow-md"
               src={back_arrow}
               alt="⬅️"
@@ -332,7 +411,7 @@ const teamId= localStorage.getItem("projectId")
                         id="studentOneMarks"
                         name="studentOneMarks"
                         defaultValue={projectMarks.studentOneMarks}
-                        onChange={(eve) => handleProjectMarks(eve)}
+                        onChange={(eve) => {handleProjectMarks(eve); seteditedStudentOneMarks(eve.target.value)}}
                         required
                         style={{
                           WebkitAppearance: "none" /* for Safari */,
@@ -372,7 +451,7 @@ const teamId= localStorage.getItem("projectId")
                           id="studentTwoMarks"
                           name="studentTwoMarks"
                           defaultValue={projectMarks.studentTwoMarks}
-                          onChange={(eve) => handleProjectMarks(eve)}
+                          onChange={(eve) => {handleProjectMarks(eve); seteditedStudentTwoMarks(eve.target.value)}}
                           required
                           style={{
                             WebkitAppearance: "none" /* for Safari */,
@@ -420,7 +499,7 @@ const teamId= localStorage.getItem("projectId")
                 <div className="flex gap-4 mb-4">
                   <button
                     type="button"
-                    onClick={() => setDocumentation(true)}
+                    onClick={() => {setDocumentation(true); seteditedDocumentationApproval(true)}}
                     className="bg-green-500 w-24 h-10 rounded-3xl text-white font-medium hover:shadow-[0px_0px_10px_gray] hover:scale-105"
                     style={{
                       boxShadow:
@@ -434,7 +513,7 @@ const teamId= localStorage.getItem("projectId")
                   </button>
                   <button
                     type="button"
-                    onClick={() => setDocumentation(false)}
+                    onClick={() => {setDocumentation(false); seteditedDocumentationApproval(false)}}
                     className="bg-red-500 w-24 h-10 rounded-3xl text-white font-medium hover:shadow-[0px_0px_10px_gray] hover:scale-105"
                     style={{
                       boxShadow:
@@ -468,7 +547,7 @@ const teamId= localStorage.getItem("projectId")
                 <div className="flex gap-4 mb-4">
                   <button
                     type="button"
-                    onClick={() => setPpt(true)}
+                    onClick={() => {setPpt(true); seteditedPptApproval(true)}}
                     className="bg-green-500 w-24 h-10 rounded-3xl text-white font-medium hover:shadow-[0px_0px_10px_gray] hover:scale-105"
                     style={{
                       boxShadow:
@@ -480,7 +559,7 @@ const teamId= localStorage.getItem("projectId")
                   </button>
                   <button
                     type="button"
-                    onClick={() => setPpt(false)}
+                    onClick={() => {setPpt(false); seteditedPptApproval(false)}}
                     className="bg-red-500 w-24 h-10 rounded-3xl text-white font-medium hover:shadow-[0px_0px_10px_gray] hover:scale-105"
                     style={{
                       boxShadow:
@@ -521,7 +600,7 @@ const teamId= localStorage.getItem("projectId")
                     <input
                       type="checkbox"
                       checked={isChecked.communicated}
-                      
+                      onChange={(event) => {seteditedCommunicationApproval(event.target.checked); setIsChecked({...isChecked, "communicated":event.target.checked}) }}
                       id="communicated"
                       name="communicated"
                       className="form-checkbox h-4 w-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500 cursor-pointer"
@@ -539,10 +618,12 @@ const teamId= localStorage.getItem("projectId")
                       Communicated
                     </label>
                   </li>
+                  {/* <input type="checkbox"/> */}
                   <li className="flex items-center gap-3">
                     <input
                       type="checkbox"
                       checked={isChecked.accepted}
+                      onChange={(event) => {seteditedAcceptedApproval(event.target.checked); setIsChecked({...isChecked, "accepted":event.target.checked })}}
                       id="accepted"
                       name="accepted"
                       className="form-checkbox h-4 w-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500 cursor-pointer"
@@ -564,6 +645,7 @@ const teamId= localStorage.getItem("projectId")
                     <input
                       type="checkbox"
                       checked={isChecked.paymentDone}
+                      onChange={(event) => {seteditedPaymentApproval(event.target.checked); setIsChecked({...isChecked, "paymentDone":event.target.checked })}}
                       id="paymentDone"
                       name="paymentDone"
                       className="form-checkbox h-4 w-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500 cursor-pointer"
@@ -585,7 +667,7 @@ const teamId= localStorage.getItem("projectId")
                 <div className="flex gap-4 mb-4">
                   <button
                     type="button"
-                    onClick={() => setResearchPaper(true)}
+                    onClick={() => {setResearchPaper(true); seteditedResearchApproval(true)}}
                     className="bg-green-500 w-24 h-10 rounded-3xl text-white font-medium hover:shadow-[0px_0px_10px_gray] hover:scale-105"
                     style={{
                       boxShadow:
@@ -599,7 +681,7 @@ const teamId= localStorage.getItem("projectId")
                   </button>
                   <button
                     type="button"
-                    onClick={() => setResearchPaper(false)}
+                    onClick={() => {setResearchPaper(false); seteditedResearchApproval(false)}}
                     className="bg-red-500 w-24 h-10 rounded-3xl text-white font-medium hover:shadow-[0px_0px_10px_gray] hover:scale-105"
                     style={{
                       boxShadow:
@@ -631,7 +713,7 @@ const teamId= localStorage.getItem("projectId")
                 <div className="flex gap-4 my-4">
                   <button
                     type="button"
-                    onClick={() => setGuideApproval(true)}
+                    onClick={() => {setGuideApproval(true); seteditedGuideApproval(true)}}
                     className="bg-green-500 w-24 h-10 rounded-3xl text-white font-medium hover:shadow-[0px_0px_10px_gray] hover:scale-105"
                     style={{
                       boxShadow:
@@ -645,7 +727,7 @@ const teamId= localStorage.getItem("projectId")
                   </button>
                   <button
                     type="button"
-                    onClick={() => setGuideApproval(false)}
+                    onClick={() => {setGuideApproval(false); seteditedGuideApproval(false)}}
                     className="bg-red-500 w-24 h-10 rounded-3xl text-white font-medium hover:shadow-[0px_0px_10px_gray] hover:scale-105"
                     style={{
                       boxShadow:
@@ -687,7 +769,7 @@ const teamId= localStorage.getItem("projectId")
                 name="prevComments"
                 placeholder="Previous Comments"
                 readOnly
-                value={comments.prevComments}
+                value={comments.prevComments ? comments.prevComments.map(comment => `${comment.date}: ${comment.comment}`).join('\n') : ''}
                 style={{ resize: "none" }}
               ></textarea>
             </form>
@@ -704,7 +786,7 @@ const teamId= localStorage.getItem("projectId")
                 name="addComments"
                 placeholder="Add Comments here"
                 defaultValue={comments.addComments}
-                onChange={(eve) => handleAddComments(eve)}
+                onChange={(eve) => {handleAddComments(eve); seteditedComments(eve.target.value)}}
                 style={{ resize: "none" }}
               ></textarea>
             </form>

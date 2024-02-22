@@ -4,6 +4,9 @@ import axios from 'axios';
 import jwtDecode from 'jwt-decode';
 import sist_logo_login from "./assets/sist_logo_login.png";
 import log_out from "./assets/svgs/log_out.svg";
+import LoadingScreen from "./shared/Loader";
+import Alert from "./shared/Alert";
+
 const Dashboard = () => {
   const navigate = useNavigate();
   const userEmail = localStorage.getItem("userEmail");
@@ -12,8 +15,12 @@ const Dashboard = () => {
 
   // Function to handle input changes for guide comments
 
-  // const serverPath1 = "http://127.0.0.1:5000"
-   const serverPath1 = "https://gpaserver2.onrender.com";
+  const serverPath1 = "http://127.0.0.1:5000"
+  //  const serverPath1 = "https://gpaserver2.onrender.com";
+  const [isLoading, setisLoading] = useState(false);
+  const [alert, setAlert]  = useState(false);
+  const [alertMessage, setAlertMessage] = useState();
+  const [alertType, setAlertType] = useState();
 
   // Simulate user data
   const studentDetails = {
@@ -105,13 +112,26 @@ const Dashboard = () => {
       };
 
       
-
+      setisLoading(true);
       const response = await axios.post(
         `${serverPath1}/studentLogin/updateProjectDetails/${userEmail}`,
         updatedData
       );
+      setisLoading(false)
+      // console.warn(response.data);
+      
 
-      console.warn(response.data);
+      if(response.data.message==="Success"){
+        setAlert(true);
+        setAlertMessage("Project Details Updated Successfully!")
+        setAlertType("success")
+      }else{
+        setAlert(true);
+        setAlertMessage("Failed to Update Project Details!")
+        setAlertType("fail")
+      }
+      alertDelay();
+      
 
       // setProjectDetails([editedProjectDetails]);
       // setIsEditable(false);
@@ -161,7 +181,9 @@ const Dashboard = () => {
         'Authorization': `${token}`
       };
       const func=async()=>{
+        setisLoading(true)
         const response = await axios.get(serverPath1+"/checkAuthentication/"+userEmail, {headers});
+        setisLoading(false)
         if (response.data.message=="Authenticated"){
           // console.warn(("hiii"))
         }
@@ -186,27 +208,28 @@ const Dashboard = () => {
       const token = localStorage.getItem("token");
       if (token) {
         try {
+          setisLoading(true)
           const response = await axios.post(`${serverPath1}/studentLogin/getStudentData/${userEmail}`, {
             headers: {
               Authorization: `Bearer ${token}`,
             },
           });
-
-          console.warn(response.data)
+          setisLoading(false);
+          // console.warn(response.data)
         
           // Assuming the server response contains a property named 'userName'
           setStudentData(response.data.studentData);
-          console.warn(StudentData);
+          // console.warn(StudentData);
           seteditProjectDetails(response.data.studentData[0].editProjectDetails);
           setprojectDetails(response.data.projectDetails);
           setProjectStatus(response.data.projectStatus[0]);
-          console.warn(response.data.projectStatus);
+          // console.warn(response.data.projectStatus);
           setDocumentation(response.data.documentation);
           setGuideimg(response.data.guideImage);
           setGuideComments(response.data.comments);
           // setTeamid(response.data.teamId);
-          console.warn(guideComments);
-          console.warn(projectStatus);
+          // console.warn(guideComments);
+          // console.warn(projectStatus);
           // setstudentimg(response.data.studentImage);
         } catch (error) {
           console.error("Error fetching user details:", error);
@@ -244,35 +267,93 @@ const Dashboard = () => {
 
 
 
-  const [projectDocLink, setProjectDocLink] = useState('');
-  const [researchPaperLink, setResearchPaperLink] = useState('');
-  const [projectpptlink , setProjectPPTLink]=useState('');
-  const validateLinks = () => {
-    // Validate Google Drive link using regular expression
-    const googleDriveLinkRegex = /^https:\/\/drive\.google\.com\/(file\/d\/[^/]+|open\?id=[^&]+)&?/;
-    
-    if (!googleDriveLinkRegex.test(projectpptlink)) {
-      alert('Invalid Google Drive link for PPT  Document');
-      return;
-    }
-    if (!googleDriveLinkRegex.test(projectDocLink)) {
-      alert('Invalid Google Drive link for Project Document');
-      return;
+
+  const [projectpptFile, setProjectPPTFile] = useState(null);
+  const [projectDocFile, setProjectDocFile] = useState(null);
+  const [researchPaperFile, setResearchPaperFile] = useState(null);
+
+
+  const sendPptFile = async() =>{
+    const data =  new FormData();
+    data.append("ppt", projectpptFile)
+    data.append("teamId", StudentData[0]["teamId"])
+    if(projectpptFile){
+      setisLoading(true)
+      const res = await axios.put(serverPath1+"/studentLogin/uploadppt/"+StudentData[0]["teamId"], data);
+      setisLoading(false);
+      setAlert(true);
+      // console.warn(res.data)
+      if(res.data.message==="Success"){
+        setAlertMessage("PPT Uploaded Successfully!")
+        setAlertType("success")
+      }else{
+        setAlertMessage("Failed to Upload PPT!")
+        setAlertType("fail")
+      }
+      alertDelay();
     }
 
-    if (!googleDriveLinkRegex.test(researchPaperLink)) {
-      alert('Invalid Google Drive link for Research Paper Document');
-      return;
-    }
-    
+  } 
 
-    // Links are valid, you can proceed with further actions or submit
-    alert('Links are valid. Proceed with submission.');
+  const sendDocFile = async() =>{
+    const data =  new FormData();
+    data.append("documentation", projectDocFile)
+    data.append("teamId", StudentData[0]["teamId"])
+    if(projectDocFile){
+      setisLoading(true)
+      const res = await axios.put(serverPath1+"/studentLogin/uploaddoc/"+StudentData[0]["teamId"], data);
+      setisLoading(false);
+      setAlert(true);
+      // console.warn(res.data)
+      if(res.data.message==="Success"){
+        setAlertMessage("Document Uploaded Successfully!")
+        setAlertType("success")
+      }else{
+        setAlertMessage("Failed to Upload Document!")
+        setAlertType("fail")
+      }
+      alertDelay();
+    }
+  } 
+
+
+  const sendRspaperFile = async() =>{
+    const data =  new FormData();
+    data.append("researchPaper", researchPaperFile)
+    if(researchPaperFile){
+      data.append("teamId", StudentData[0]["teamId"])
+      setisLoading(true)
+      const res = await axios.put(serverPath1+"/studentLogin/uploadrspaper/"+StudentData[0]["teamId"], data);
+      setisLoading(false)
+      setAlert(true);
+      // console.warn(res.data)
+      if(res.data.message==="Success"){
+        setAlertMessage("Research Paper Uploaded Successfully!")
+        setAlertType("success")
+      }else{
+        setAlertMessage("Failed to Upload Research Paper!")
+        setAlertType("fail")
+      }
+      alertDelay();
+    }
+  } 
+
+  const alertDelay = () => {
+    setTimeout(() => {
+      setAlert(false);
+      setAlertMessage("");
+    }, 3000); // 3000 milliseconds = 3 seconds
   };
 
  
   return (
+    <>
+    <div className={`flex items-center justify-center ${alert ? "":"hidden"} `}>
+    <Alert type={alertType} message={alertMessage}/>
+    </div>
     <div className="">
+    
+    {isLoading && <LoadingScreen />}
   <nav className="bg-[#9e1c3f] text-white p-4">
       <div className="container mx-auto flex justify-between items-center">
         <div className="flex items-center">
@@ -523,47 +604,47 @@ const Dashboard = () => {
 <div className="mx-4 bg-white rounded-xl shadow-xl mb-4 overflow-hidden">
       <h1 className="bg-[#9e1c3f] text-white p-4 rounded-t-xl mb-4 font-semibold">Project Submissions</h1>
       <div className="flex flex-col gap-4 m-4">
-      <h4><b>PPT document</b></h4>
-      <div className="flex  space-x-4">
-        <input
-          type="text"
-          placeholder="Enter Google Drive link for PPT Document"
-          value={projectpptlink}
-          onChange={(e) => setProjectPPTLink(e.target.value)}
-          className="w-full p-2 border rounded focus:outline-none focus:border-blue-500"
-        />
-        <button onClick={() => validateLinks()} className="p-2 bg-blue-500 text-white rounded">
-         Send
-        </button>
+        <h4><b>PPT document</b></h4>
+        <div className="flex space-x-4">
+          <input
+            type="file"
+            accept=".ppt, .pptx"
+            onChange={(e) => {setProjectPPTFile(e.target.files[0])}}
+            className="w-full p-2 border rounded focus:outline-none focus:border-blue-500"
+          />
+          <button onClick={sendPptFile} className="p-2 bg-blue-500 text-white rounded">
+            Send
+          </button>
         </div>
         <h4><b>Project document</b></h4>
-        <div className="flex  space-x-4">
-        <input
-          type="text"
-          placeholder="Enter Google Drive link for Project Document"
-          value={projectDocLink}
-          onChange={(e) => setProjectDocLink(e.target.value)}
-          className="w-full p-2 border rounded focus:outline-none focus:border-blue-500"
-        />
-        <button onClick={() => validateLinks()} className="p-2 bg-blue-500 text-white rounded">
-         Send
-        </button>
+        <div className="flex space-x-4">
+          <input
+            type="file"
+            accept=".doc, .docx, .pdf"
+            onChange={(e) => {setProjectDocFile(e.target.files[0])}}
+            className="w-full p-2 border rounded focus:outline-none focus:border-blue-500"
+          />
+          <button onClick={sendDocFile} className="p-2 bg-blue-500 text-white rounded">
+            Send
+          </button>
         </div>
         <h4><b>Research paper document</b></h4>
-        <div className="flex  space-x-4">
-        <input
-          type="text"
-          placeholder="Enter Google Drive link for Research Paper Document"
-          value={researchPaperLink}
-          onChange={(e) => setResearchPaperLink(e.target.value)}
-          className="w-full p-2 border rounded focus:outline-none focus:border-blue-500"
-        />
-        <button onClick={() => validateLinks()} className="p-2 bg-blue-500 text-white rounded">
-         Send
-        </button>
+        <div className="flex space-x-4">
+          <input
+            type="file"
+            accept=".pdf"
+            onChange={(e) => {setResearchPaperFile(e.target.files[0])}}
+            className="w-full p-2 border rounded focus:outline-none focus:border-blue-500"
+          />
+          <button onClick={sendRspaperFile} className="p-2 bg-blue-500 text-white rounded">
+            Send
+          </button>
         </div>
       </div>
     </div>
+
+
+
     <div className="mx-4 bg-white rounded-xl shadow-xl mb-4 overflow-hidden">
   <h1 className="bg-[#9e1c3f] text-white p-4 rounded-t-xl mb-4 font-semibold">Guide Comments</h1>
 <div className="md:overflow-auto m-2">
@@ -584,6 +665,7 @@ const Dashboard = () => {
 
 
       </div>
+      </>
   
   );
 }

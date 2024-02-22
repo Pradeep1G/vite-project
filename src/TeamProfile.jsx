@@ -56,6 +56,8 @@ export function TeamProfile() {
     mobileNoTwo: "0123456789",
   });
   const teamId = localStorage.getItem("projectId") // Replace with the actual team ID;
+  const guidemailId = localStorage.getItem("guideMailId")
+
   useEffect(() => {
   
 
@@ -112,6 +114,14 @@ export function TeamProfile() {
       
     }
   };
+  const staffLogout = () => {
+    // Remove token from local storage
+    localStorage.removeItem("token");
+    localStorage.removeItem("guideMailId");
+    localStorage.removeItem("projectId");
+    // Redirect to login page
+    navigate("/staff_login");
+  };
 
 
   return (
@@ -139,7 +149,7 @@ export function TeamProfile() {
             alt="Faculty"
           />
           <div className="hidden md:flex md:items-center md:justify-center relative">
-            <h3 className="text-white">SHIVA KUMAR VANAMALA</h3>
+            <h3 className="text-white">{guidemailId}</h3>
             &nbsp;&nbsp;&nbsp;
             <span
               className="rounded-full flex items-center justify-center"
@@ -175,7 +185,7 @@ export function TeamProfile() {
                 </div>
                 <div className="w-full flex justify-center items-center h-2/5 bg-slate-100 text-[#6C757D] hover:bg-slate-200">
                   <a
-                    href="/"
+                    onClick={staffLogout}
                     className=" w-full flex justify-start items-center gap-1 pl-2"
                   >
                     <img className="h-4 w-4" src={log_out} alt="LogOut" />
@@ -221,7 +231,7 @@ export function TeamProfile() {
         onClick={() => setOpen(false)}
       >
         <div className="hidden md:fixed md:w-fit md:h-full md:left-1 md:top-[5rem] md:flex md:items-center md:justify-center md:cursor-pointer">
-          <a href="/" className="w-fit h-fit">
+          <a href="/staff_dashboard/profile_details" className="w-fit h-fit">
             <img
               className="bg-slate-200 m-4 p-2 w-10 rounded-full hover:bg-slate-300 hover:shadow-md"
               src={back_arrow}
