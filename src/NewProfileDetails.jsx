@@ -100,7 +100,7 @@ const guidemailId = localStorage.getItem("guideMailId")
         setisLoading(true);
         const response = await axios.post(`${serverPath1}/staffLogin/getProfileData/${teamId}`);
         setisLoading(false);
-        console.warn(response.data)
+        // console.warn(response.data)
         setProjectDetails(response.data.projectDetails)
         setProjectMarks(response.data.projectMarks)
         setLinks(response.data.links)
