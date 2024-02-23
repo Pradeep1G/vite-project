@@ -13,15 +13,16 @@ import LoadingScreen from './shared/Loader';
 
 const StaffDashboard = () => {
 
-  const serverPath1 = "http://127.0.0.1:5000"
-  // const serverPath1 = "https://gpaserver2.onrender.com";
+  // const serverPath1 = "http://127.0.0.1:5000"
+  const serverPath1 = "https://gpaserver2.onrender.com";
   const [isLoading, setisLoading] = useState(false);
 
   const[open, setOpen] = useState(false)
 
   const navigate = useNavigate();
   const userEmail = localStorage.getItem("guideMailId");
-
+  // const tkn = localStorage.getItem("token")
+  // const token = "token"
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -171,7 +172,7 @@ const [guideImg, setGuideImg] = useState();
               </div>
               <div className="w-full flex items-center justify-center h-2/5 bg-slate-100 text-[#6C757D]  hover:bg-slate-200">
                 <a
-                  href="/staff_dashboard/change_password"
+                  href={`/staff_dashboard/change_password`}
                   className="w-full flex justify-start items-center gap-1 pl-2"
                 >
                   <img className="h-4 w-4" src={lock} alt="Lock" />
@@ -201,7 +202,7 @@ const [guideImg, setGuideImg] = useState();
             </div>
             <div className="w-full flex items-center justify-center h-2/5 bg-slate-100 text-[#6C757D]  hover:bg-slate-200">
               <a
-                href="#"
+                href={`/staff_dashboard/change_password`}
                 className="w-full flex justify-start items-center gap-1 pl-2"
               >
                 <img className="h-4 w-4" src={lock} alt="Lock" />

@@ -16,8 +16,8 @@ import Alert from "./shared/Alert";
 
 export const NewProfileDetails = () => {
 
-  const serverPath1 = "http://127.0.0.1:5000"
-  // const serverPath1 = "https://gpaserver2.onrender.com";
+  // const serverPath1 = "http://127.0.0.1:5000"
+  const serverPath1 = "https://gpaserver2.onrender.com";
   const [isLoading, setisLoading] = useState(false);
   const [alert, setAlert]  = useState(false);
   const [alertMessage, setAlertMessage] = useState();
@@ -49,9 +49,9 @@ const navigate=useNavigate()
   });
 
   const [links, setLinks] = useState({
-    documentation: "#",
-    ppt: "#",
-    researchPaper: "#",
+    documentation: "",
+    ppt: "",
+    researchPaper: "",
   });
 
   const [documentation, setDocumentation] = useState("notYetValidated");
@@ -100,10 +100,11 @@ const guidemailId = localStorage.getItem("guideMailId")
         setisLoading(true);
         const response = await axios.post(`${serverPath1}/staffLogin/getProfileData/${teamId}`);
         setisLoading(false);
-        // console.warn(response.data)
+        console.warn(response.data)
         setProjectDetails(response.data.projectDetails)
         setProjectMarks(response.data.projectMarks)
         setLinks(response.data.links)
+        // console.warn(links)
         setDocumentation(response.data.documentation.documentation)
         setPpt(response.data.ppt.ppt)
         setResearchPaper(response.data.researchPaper.researchPaper.approval)
@@ -539,6 +540,7 @@ const guidemailId = localStorage.getItem("guideMailId")
                 <div className="text-[#831238] w-[95vw] md:w-[17.5vw] h-[5rem] text-xl flex items-center justify-center font-medium gap-2">
                   <a
                     href={links.documentation}
+                    target="blank"
                     className="flex items-center gap-1"
                     title="Open Drive link"
                   >
@@ -589,6 +591,7 @@ const guidemailId = localStorage.getItem("guideMailId")
                 <div className="text-[#831238]  w-[95vw] md:w-[17.5vw] h-[5rem] text-xl flex items-center justify-center font-medium gap-2">
                   <a
                     href={links.ppt}
+                    target="blank"
                     className="flex items-center gap-1"
                     title="Open Drive link"
                   >
@@ -638,6 +641,7 @@ const guidemailId = localStorage.getItem("guideMailId")
                 <div className="text-[#831238]  w-[95vw] md:w-[17.5vw] h-[5rem] text-xl flex items-center justify-center font-medium gap-2">
                   <a
                     href={links.researchPaper}
+                    target="blank"
                     className="flex items-center gap-1"
                     title="Open Drive link"
                   >
