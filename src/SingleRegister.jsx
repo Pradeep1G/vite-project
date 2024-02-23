@@ -9,37 +9,7 @@ import DisplayGuide from "./DisplayGuide";
 import LoginNavBar from "./LoginNavBar";
 import Footer from "./shared/Footer";
 
-function LoadingScreen() {
-  return (
-    <div
-      style={{
-        position: "fixed",
-        top: 0,
-        left: 0,
-        width: "100vw",
-        height: "100vh",
-        backdropFilter: "blur(1px)",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        zIndex: 9999,
-        flexDirection: "column",
-      }}
-    >
-      <div
-        style={{
-          width: "100px",
-          height: "100px",
-          border: "15px solid #D8D9DA",
-          borderTopColor: "grey",
-          borderRadius: "50%",
-          animation: "spin 1s linear infinite",
-        }}
-      ></div>
-      <p>Please Wait</p>
-    </div>
-  );
-}
+import LoadingScreen from "./shared/Loader";
 
 export default function SingleRegister() {
   // const serverPath1 = "http://127.0.0.1:5000"
@@ -119,7 +89,7 @@ export default function SingleRegister() {
       localStorage.removeItem("userEmail");
       navigate("/login");
     }
-  }, [navigate]);
+  }, []);
 
 
 

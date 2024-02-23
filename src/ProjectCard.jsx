@@ -20,9 +20,26 @@ export const ProjectCard = ({
 setTimeout(() => {
   // Replace this with your actual data fetching logic
   const contentDiv = document.getElementById('content');
-  contentDiv.classList.remove('loading-content'); // Remove the loading animation class
+  // contentDiv.classList.remove('loading-content'); // Remove the loading animation class
   // contentDiv.textContent = 'Data loaded'; // Display fetched data or appropriate message
 }, 2000); // Simulate 2 seconds delay, replace with actual data loading time
+
+
+
+function getDirectLinkFromShareableLinkStudent(shareableLink) {
+  try {
+    const fileIdMatch = shareableLink.match(/\/file\/d\/(.*?)\//);
+    if (fileIdMatch && fileIdMatch[1]) {
+      const fileId = fileIdMatch[1];
+      return `https://drive.google.com/thumbnail?id=${fileId}`;
+    } else {
+      throw new Error("Invalid shareable link format");
+    }
+  } catch (error) {
+    // console.error("Error processing shareable link:", error.message);
+    return null;
+  }
+}
 
 
 
@@ -36,14 +53,14 @@ setTimeout(() => {
     <div className={`space-y-2 w-full md:w-[27rem] rounded-md shadow-[0px_0px_30px_gray] hover:shadow-[0px_0px_10px_gray] hover:scale transition-shadow ${projectId ? '' : 'loading-content'}`} id="loading">
       <div className="flex w-full h-[13rem] bg-[#cf6e90] justify-center items-center  p-4 mb-4">
         <img
-          className="w-[9rem]  border-2 border-slate-400 rounded-full mr-4 relative"
-          src={studentOneImg}
+          className="w-40 h-40  border-2 border-slate-400 rounded-full mr-4 relative"
+          src={getDirectLinkFromShareableLinkStudent(studentOneImg)}
           alt="Student One"
         />
         {team && (
           <img
-            className="w-[9rem] border-2 border-slate-400 rounded-full relative"
-            src={studentTwoImg}
+            className="w-40 h-40  border-2 border-slate-400 rounded-full relative"
+            src={getDirectLinkFromShareableLinkStudent(studentTwoImg)}
             alt="Student Two"
           />
         )}

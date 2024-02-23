@@ -7,37 +7,7 @@ import jwtDecode from "jwt-decode";
 import LoginNavBar from "./LoginNavBar";
 import Footer from "./shared/Footer";
 
-function LoadingScreen() {
-  return (
-    <div
-      style={{
-        position: "fixed",
-        top: 0,
-        left: 0,
-        width: "100vw",
-        height: "100vh",
-        backdropFilter: "blur(1px)",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        zIndex: 9999,
-        flexDirection: "column",
-      }}
-    >
-      <div
-        style={{
-          width: "100px",
-          height: "100px",
-          border: "15px solid #D8D9DA",
-          borderTopColor: "grey",
-          borderRadius: "50%",
-          animation: "spin 1s linear infinite",
-        }}
-      ></div>
-      <p>Please Wait</p>
-    </div>
-  );
-}
+import LoadingScreen from "./shared/Loader";
 
 export default function SingleRegisterForm() {
   // const serverPath1 = "http://127.0.0.1:5000"
@@ -142,7 +112,7 @@ export default function SingleRegisterForm() {
   const checkRegistered = async () => {
     try {
       const response = await axios.get(serverPath1 + "/api/check/" + userEmail);
-      console.warn(response.data);
+      // console.warn(response.data);
       setIsNotRegistered(response.data.first_time);
     } catch (err) {
       console.warn(err);
@@ -153,7 +123,7 @@ export default function SingleRegisterForm() {
     e.preventDefault();
 
     setIsLoading(true);
-    console.warn("1")
+    // console.warn("1")
     if (parseInt(getVacancies["vacancies"]) > 0 && isNotRegistered) {
       const data4 = {
         email: userEmail,
@@ -161,13 +131,13 @@ export default function SingleRegisterForm() {
         guideMailId: guideMailId,
         update_vacancies_data : true
       };
-      console.warn("2")
+      // console.warn("2")
       try {
         const response = await axios.put(
           serverPath1 + "/add_registered_data",
           data4
         );
-        console.warn(response.data);
+        // console.warn(response.data);
         if (response.data["message"] === "No Vacancies"){
           setIsNotRegistered(false);
           alert("No Vacancies");

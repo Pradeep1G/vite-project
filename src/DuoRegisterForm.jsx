@@ -5,24 +5,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import LoginNavBar from "./LoginNavBar";
 import Footer from "./shared/Footer";
 
-function LoadingScreen() {
-  return (
-    <div className="fixed top-0 left-0 w-screen h-screen backdrop-blur flex justify-center items-center z-[9999] flex-col">
-      <div
-        // style={{
-        //   width: "100px",
-        //   height: "100px",
-        //   border: "15px solid #D8D9DA",
-        //   borderTopColor: "grey",
-        //   borderRadius: "50%",
-        //   animation: "spin 1s linear infinite",
-        // }}
-        className="w-[100px] h-[100px] border-15 border-gray-300 border-t-gray-500 rounded-full animate-spin"
-      ></div>
-      <p>Please Wait</p>
-    </div>
-  );
-}
+import LoadingScreen from "./shared/Loader";
 
 export default function DuoRegisterForm() {
   // const serverPath1 = "http://127.0.0.1:5000"
@@ -168,7 +151,7 @@ export default function DuoRegisterForm() {
         const response = await axios.get(
           serverPath1 + "/check_second_mail/" + secondUserEmail
         );
-        console.warn(response.data);
+        // console.warn(response.data);
         if (response.data.firstTime) {
           startResendTimer();
           setReceivedOTP(response.data.otp);
@@ -207,7 +190,7 @@ export default function DuoRegisterForm() {
   const checkPersonOneRegistered = async () => {
     try {
       const response = await axios.get(serverPath1 + "/api/check/" + userEmail);
-      console.warn(response.data);
+      // console.warn(response.data);
       setIsPersonOneNotRegistered(response.data.first_time);
     } catch (err) {
       console.warn("not found");
@@ -245,9 +228,9 @@ export default function DuoRegisterForm() {
 
     setIsLoading(true);
 
-    console.warn("isSecondMailVerified   "+isSecondMailVerified)
-    console.warn("isPersonOneNotRegistered   "+isPersonOneNotRegistered)
-    console.warn("getVacancies   "+getVacancies["vacancies"])
+    // console.warn("isSecondMailVerified   "+isSecondMailVerified)
+    // console.warn("isPersonOneNotRegistered   "+isPersonOneNotRegistered)
+    // console.warn("getVacancies   "+getVacancies["vacancies"])
 
 
 
@@ -267,7 +250,7 @@ export default function DuoRegisterForm() {
             update_vacancies_data : false
           }
         );
-        console.warn(response1.data);
+        // console.warn(response1.data);
         if (response1.data["message"] === "No Vacancies"){
           setIsPersonOneNotRegistered(false);
           alert("No Vacancies");
@@ -275,7 +258,7 @@ export default function DuoRegisterForm() {
           setIsPersonOneNotRegistered(false);
           alert("Account already Registered");
           navigate("/");
-          console.warn(isPersonOneNotRegistered);
+          // console.warn(isPersonOneNotRegistered);
         } else if (
           response1.data["error"] === "An error occurred during registration"
         ) {
@@ -305,7 +288,7 @@ export default function DuoRegisterForm() {
                 });
                 alert("Second Member Account already Registered\nIf not try after a minute.");
                 navigate("/");
-                console.warn(isNotRegistered);
+                // console.warn(isNotRegistered);
               } else if (
                 response.data["error"] ==
                 "An error occurred during registration"

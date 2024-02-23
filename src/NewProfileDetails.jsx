@@ -11,11 +11,17 @@ import log_out from "./assets/svgs/log_out.svg";
 import { useNavigate } from "react-router-dom";
 import back_arrow from "./assets/svgs/back_arrow.svg";
 // import StaffDashboard from "./StaffDashboard";
+import LoadingScreen from "./shared/Loader";
+import Alert from "./shared/Alert";
 
 export const NewProfileDetails = () => {
 
   const serverPath1 = "http://127.0.0.1:5000"
   // const serverPath1 = "https://gpaserver2.onrender.com";
+  const [isLoading, setisLoading] = useState(false);
+  const [alert, setAlert]  = useState(false);
+  const [alertMessage, setAlertMessage] = useState();
+  const [alertType, setAlertType] = useState();
 
 const navigate=useNavigate()
   const [open, setOpen] = useState(false);
@@ -91,8 +97,10 @@ const guidemailId = localStorage.getItem("guideMailId")
     const teamId= localStorage.getItem("projectId")
     const fetchData = async () => {
       try {
+        setisLoading(true);
         const response = await axios.post(`${serverPath1}/staffLogin/getProfileData/${teamId}`);
-        console.warn(response.data)
+        setisLoading(false);
+        // console.warn(response.data)
         setProjectDetails(response.data.projectDetails)
         setProjectMarks(response.data.projectMarks)
         setLinks(response.data.links)
@@ -125,7 +133,7 @@ const guidemailId = localStorage.getItem("guideMailId")
         });
         
     
-        console.warn('Formatted Comments:', formattedComments);
+        // console.warn('Formatted Comments:', formattedComments);
     
         setComments({ prevComments: formattedComments });
 
@@ -137,7 +145,7 @@ const guidemailId = localStorage.getItem("guideMailId")
     };
 
     fetchData();
-  }, []);
+  }, [alertMessage]);
 
 
   const handleFinalSubmit = async() => {
@@ -154,16 +162,30 @@ const guidemailId = localStorage.getItem("guideMailId")
       "editedStudentTwoMarks":editedStudentTwoMarks,
       "editedComments":editedComments
     }
-
+    setisLoading(true);
     const response = await axios.post(serverPath1+"/staffLogin/profiledetails/updatestatusDetails/"+teamId, editedData );
-    console.warn(response.data);
-    console.warn(editedData);
+    setisLoading(false);
+    // console.warn(response.data);
+    // console.warn(editedData);
+    setAlert(true);
+      // console.warn(res.data)
+      if(response.data.message==="Success"){
+        setAlertMessage("Submitted Successfully!")
+        setAlertType("success")
+      }else{
+        setAlertMessage("Failed to Submit!")
+        setAlertType("fail")
+      }
+      alertDelay();
+      setComments({...comments, "addComments":""})
   };
 
-
-
-
-
+  const alertDelay = () => {
+    setTimeout(() => {
+      setAlert(false);
+      setAlertMessage("");
+    }, 3000); // 3000 milliseconds = 3 seconds
+  };
 
 
   const [editedDocumentationApproval, seteditedDocumentationApproval] = useState();
@@ -177,6 +199,21 @@ const guidemailId = localStorage.getItem("guideMailId")
   const [editedStudentTwoMarks, seteditedStudentTwoMarks] = useState();
   const [editedComments, seteditedComments] = useState();
 
+  function getDirectLinkFromShareableLinkStudent(shareableLink) {
+    try {
+      const fileIdMatch = shareableLink.match(/\/file\/d\/(.*?)\//);
+      if (fileIdMatch && fileIdMatch[1]) {
+        const fileId = fileIdMatch[1];
+        return `https://drive.google.com/thumbnail?id=${fileId}`;
+      } else {
+        throw new Error("Invalid shareable link format");
+      }
+    } catch (error) {
+      // console.error("Error processing shareable link:", error.message);
+      return null;
+    }
+  }
+  
 
   const staffLogout = () => {
     // Remove token from local storage
@@ -191,10 +228,31 @@ const guidemailId = localStorage.getItem("guideMailId")
     navigate('/staff_dashboard')
   }
 
+  const guideImg = localStorage.getItem("guideImg")
+  function getDirectLinkFromShareableLink(shareableLink) {
+    try {
+      const fileIdMatch = shareableLink.match(/\/uc\?id=(.*?)(&|$)/);
+      if (fileIdMatch && fileIdMatch[1]) {
+        const fileId = fileIdMatch[1];
+        return `https://drive.google.com/thumbnail?id=${fileId}`;
+      } else {
+        throw new Error("Invalid shareable link format");
+      }
+    } catch (error) {
+      // console.error("Error processing shareable link:", error.message);
+      return null;
+    }
+  }
+
 
 
   return (
     <>
+        {isLoading && <LoadingScreen />}
+
+    <div className={`flex items-center justify-center ${alert ? "":"hidden"} `}>
+    <Alert type={alertType} message={alertMessage}/>
+    </div>
       <header className="h-fit bg-[#831238] flex items-center justify-between px-16">
         <div className="flex justify-center items-center sm:max-md:justify-self-start ">
           <a href="#">
@@ -213,8 +271,8 @@ const guidemailId = localStorage.getItem("guideMailId")
           }}
         >
           <img
-            className="h-auto w-9 rounded-full"
-            src="https://sathyabama-erp-s3.s3.ap-south-1.amazonaws.com/admission/profile/606036-1706720845384-ErpUpload.png"
+            className=" w-12 h-12 rounded-full border-2"
+            src={getDirectLinkFromShareableLink(guideImg)}
             alt="Faculty"
           />
           <div className="hidden md:flex md:items-center md:justify-center relative">
@@ -315,7 +373,7 @@ const guidemailId = localStorage.getItem("guideMailId")
             <form className="w-fit h-fit flex flex-col justify-center items-center rounded bg-[#f4eeee] ">
               <div className="w-[95vw] md:w-[35vw] h-[20vh] flex flex-col justify-center items-center">
                 <span className="w-full flex justify-center items-center text-xl font-medium">
-                  {/* {projectDetails.projectId} */}
+                  {projectDetails.projectId}
                 </span>
                 <br />
                 <span className="w-full flex justify-center items-center capitalize text-xl font-semibold">
@@ -333,9 +391,9 @@ const guidemailId = localStorage.getItem("guideMailId")
                   }${" "}${"h-full flex flex-col justify-center items-center border-r-2 border-r-white"}`}
                 >
                   <img
-                    src={projectDetails.studentOneImg}
+                    src={getDirectLinkFromShareableLinkStudent(projectDetails.studentOneImg)}
                     alt="Student1"
-                    className="w-[10rem] rounded-full border border-black p-1"
+                    className="w-40 h-40 rounded-full border border-black p-1"
                   />
                   <br />
                   <div className="w-full h-[20vh] flex flex-col items-center justify-center">
@@ -357,9 +415,9 @@ const guidemailId = localStorage.getItem("guideMailId")
                     }${" "}${"h-full flex flex-col justify-center items-center"}`}
                   >
                     <img
-                      src={projectDetails.studentTwoImg}
+                      src={getDirectLinkFromShareableLinkStudent(projectDetails.studentTwoImg)}
                       alt="Student1"
-                      className="w-[10rem] rounded-full border border-black p-1"
+                      className="w-40 h-40 rounded-full border border-black p-1"
                     />
                     <br />
                     <div className="w-full h-[20vh] flex flex-col items-center justify-center">
@@ -785,7 +843,8 @@ const guidemailId = localStorage.getItem("guideMailId")
                 id="addComments"
                 name="addComments"
                 placeholder="Add Comments here"
-                defaultValue={comments.addComments}
+                // defaultValue={comments.addComments}
+                value={comments.addComments}
                 onChange={(eve) => {handleAddComments(eve); seteditedComments(eve.target.value)}}
                 style={{ resize: "none" }}
               ></textarea>

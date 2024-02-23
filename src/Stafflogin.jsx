@@ -4,38 +4,8 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import Footer from './shared/Footer';
 import LoginNavBar from './LoginNavBar';
 import jwtDecode from 'jwt-decode';
+import LoadingScreen from './shared/Loader';
 
-function LoadingScreen() {
-  return (
-    <div
-      style={{
-        position: "fixed",
-        top: 0,
-        left: 0,
-        width: "100vw",
-        height: "100vh",
-        backdropFilter: "blur(1px)",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        zIndex: 9999,
-        flexDirection: "column"
-      }}
-    >
-      <div
-        style={{
-          width: "100px",
-          height: "100px",
-          border: "15px solid #D8D9DA",
-          borderTopColor: "grey",
-          borderRadius: "50%",
-          animation: "spin 1s linear infinite",
-        }}
-      ></div>
-      <b>Please Wait</b>
-    </div>
-  );
-}
 
 const StaffLogin = () => {
 
@@ -55,7 +25,14 @@ const StaffLogin = () => {
   const [newConfirmPassword, setNewConfirmPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [openLogin, setOpenLogin] = useState(true);
+  const [Error1, setError1] = useState();
 
+
+  const alertDelay = () => {
+    setTimeout(() => {
+      setError1("");
+    }, 3000); // 3000 milliseconds = 3 seconds
+  };
 
 
   useEffect(() => {
@@ -67,7 +44,9 @@ const StaffLogin = () => {
         'Authorization': `${token}`
       };
       const func=async()=>{
+        setIsLoading(true);
         const response = await axios.get(serverPath1+"/checkAuthentication/"+userEmail, {headers});
+        setIsLoading(false)
         if (response.data.message=="Authenticated"){
           // navigate("/dashboard");
         }
@@ -89,11 +68,13 @@ const StaffLogin = () => {
 
   const handleStaffLogin = async (e) => {
     e.preventDefault();
-    setIsLoading(true);
       try {
+    setIsLoading(true);
+
         const response = await axios.get(
           `${serverPath1}/staffLogin/check/${formData.email}/${formData.password}`
         );
+        setIsLoading(false);
 
         if (response.data.is_account_available === "true") {
           setIsLoading(false);
@@ -103,13 +84,16 @@ const StaffLogin = () => {
             localStorage.setItem('guideMailId', formData.email);
             navigate("/staff_dashboard")
           } else {
-            alert("Password is not correct");
+            // alert("Password is not correct");
+            setError1("Incorrect Password!")
+            alertDelay();
           }
         } else {
-          alert("Enter a valid user account");
+          // alert("Enter a valid user account");
+          setError1("Enter a valid user details!")
+          alertDelay();
         }
       } catch (error) {
-        setIsLoading(false);
         console.warn(error);
       }
     }
@@ -142,13 +126,16 @@ const StaffLogin = () => {
                   required
                   onChange={(e) => setFormData({ ...formData, password: e.target.value })}
                 />
-                <div className=' flex justify-center'>
+                <div className=' flex flex-col justify-center'>
                   <button
                     className={'bg-red-900 text-white px-6 py-2 rounded-md my-2 text-lg'}
                     type="submit"
                   >
                     Submit
                   </button>
+                  <div className="flex justify-around pb-2">
+                            {Error1 && <p style={{ color: 'black' }} className="font-bold text-lg">{Error1}</p>}
+                  </div>
                 </div>
               </form>
             </div>

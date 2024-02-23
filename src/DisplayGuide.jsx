@@ -40,7 +40,7 @@ export default function DisplayGuide(props) {
         throw new Error("Invalid shareable link format");
       }
     } catch (error) {
-      console.error("Error processing shareable link:", error.message);
+      // console.error("Error processing shareable link:", error.message);
       return null;
     }
   }

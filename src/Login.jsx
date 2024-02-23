@@ -8,37 +8,8 @@ import "./index.css";
 import LoginNavBar from "./LoginNavBar";
 import Footer from "./shared/Footer";
 
-function LoadingScreen() {
-  return (
-    <div
-      style={{
-        position: "fixed",
-        top: 0,
-        left: 0,
-        width: "100vw",
-        height: "100vh",
-        backdropFilter: "blur(1px)",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        zIndex: 9999,
-        flexDirection: "column",
-      }}
-    >
-      <div
-        style={{
-          width: "100px",
-          height: "100px",
-          border: "15px solid #D8D9DA",
-          borderTopColor: "grey",
-          borderRadius: "50%",
-          animation: "spin 1s linear infinite",
-        }}
-      ></div>
-      <b>Please Wait</b>
-    </div>
-  );
-}
+import LoadingScreen from "./shared/Loader";
+
 
 const Login = () => {
   // const serverPath1 = "http://127.0.0.1:5000"
@@ -60,6 +31,9 @@ const Login = () => {
   const [newConfirmPassword, setNewConfirmPassword] = useState("");
 
   const [isLoading, setIsLoading] = useState(false);
+  const [Error1, setError1] = useState();
+  const [Error2, setError2] = useState();
+  const [Error3, setError3] = useState();
 
   // FRONTEND
 
@@ -110,7 +84,7 @@ const Login = () => {
     setIsLoading(true);
 
     if (!verifyOTP) {
-      console.warn(serverPath1 + "/api/check/" + formData["email"]);
+      // console.warn(serverPath1 + "/api/check/" + formData["email"]);
       try {
         const response = await axios.get(
           serverPath1 +
@@ -119,30 +93,34 @@ const Login = () => {
             "/" +
             formData["password"]
         );
-        console.warn(response.data);
+        // console.warn(response.data);
 
         if (response.data.is_account_available == "false") {
-          console.warn("enter valid user account");
+          // console.warn("enter valid user account");
           setIsLoading(false);
-          alert("enter valid user account");
+          // alert("enter valid user account");
+          setError1("Enter valid user details!");
+          alertDelay();
         } else if (
           response.data.first_time == "false" &&
           response.data.is_account_available == "true" &&
           response.data.is_password_correct == "false"
         ) {
           setIsLoading(false);
-          console.warn("password incorrect");
-          alert("password incorrect");
+          // console.warn("password incorrect");
+          setError1("Incorrect Password!")
+          alertDelay();
+          // alert("password incorrect");
         } else if (
           response.data.first_time == "false" &&
           response.data.is_account_available == "true" &&
           response.data.is_password_correct == "true"
         ) {
           setIsLoading(false);
-          console.warn("Login Success");
+          // console.warn("Login Success");
           // alert("Login Success");
           setUserToken(response.data.token);
-          console.warn(response.data.token);
+          // console.warn(response.data.token);
 
           localStorage.setItem("token", response.data.token);
           localStorage.setItem("teamId", response.data.teamId);
@@ -155,7 +133,7 @@ const Login = () => {
           response.data.is_account_available == "true"
         ) {
           setIsLoading(false);
-          console.warn("I am  called");
+          // console.warn("I am  called");
           const o = { _id: response.data._id };
 
           if (response.data.Is_Email_sent == "true");
@@ -165,7 +143,7 @@ const Login = () => {
             setReceivedOTP(response.data.OTP);
             setUserToken(response.data.token);
             const token = response.data.token_for_first_time;
-            console.warn(token);
+            // console.warn(token);
             localStorage.setItem("token_for_first_time", token);
             localStorage.setItem("userEmail", formData["email"]);
             localStorage.setItem("userName", response.data.name);
@@ -224,23 +202,40 @@ const Login = () => {
   //   }
   // };
 
+
+  const alertDelay = () => {
+    setTimeout(() => {
+      setError1("");
+      setError2("");
+      setError3("");
+    }, 5000); // 3000 milliseconds = 3 seconds
+  };
+
+
+
   const checkOTP = (e) => {
     e.preventDefault();
 
     if (userOTP) {
       if (userOTP == receivedOTP) {
-        console.warn("LCorrect otp entered");
+        // console.warn("LCorrect otp entered");
 
         setVerifyOTP(false);
 
         setOpenNewPasswordContainer(true);
       } else {
         console.warn(openNewPasswordContainer);
-        alert("You have entered wrong OTP");
-        console.warn("Wrong OTP");
+        // alert("You have entered wrong OTP");
+        setError2("Incorect OTP!")
+        alertDelay();
+
+        // console.warn("Wrong OTP");
       }
     } else {
-      alert("Enter correct OTP");
+      // alert("Enter correct OTP");
+      setError2("Enter OTP!");
+      alertDelay();
+
     }
   };
 
@@ -251,7 +246,10 @@ const Login = () => {
       localStorage.setItem("newPassword", newPassword);
       navigate("/login/select_team");
     } else {
-      console.warn("both are not same");
+      // console.warn("both are not same");
+      setError3("Password doesn't match!")
+      alertDelay();
+
     }
   };
 
@@ -292,7 +290,7 @@ const Login = () => {
                     }
                   />
 
-                  <div className=" flex justify-center">
+                  <div className=" flex flex-col justify-center">
                     <button
                       className={
                         verifyOTP
@@ -303,6 +301,9 @@ const Login = () => {
                     >
                       Submit
                     </button>
+                    <div className="flex justify-around pb-2">
+                            {Error1 && <p style={{ color: 'red' }} className="font-bold text-lg">{Error1}</p>}
+                  </div>
                   </div>
                 </form>
               </div>
@@ -324,7 +325,7 @@ const Login = () => {
                   />
                 </div>
 
-                <div className=" flex justify-center">
+                <div className=" flex flex-col justify-center">
                   <button
                     onClick={checkOTP}
                     className="bg-red-900 text-white px-6 py-2 rounded-md my-2 text-lg"
@@ -332,6 +333,9 @@ const Login = () => {
                   >
                     Submit
                   </button>
+                  <div className="flex justify-around pb-2">
+                            {Error2 && <p style={{ color: 'red' }} className="font-bold text-lg">{Error2}</p>}
+                  </div>
                 </div>
               </form>
             </div>
@@ -360,7 +364,7 @@ const Login = () => {
                   onChange={(e) => setNewConfirmPassword(e.target.value)}
                 />
 
-                <div className=" flex justify-center">
+                <div className=" flex flex-col justify-center">
                   <button
                     onClick={continueRegister}
                     className="bg-red-900 text-white px-6 py-2 rounded-md my-2 text-lg"
@@ -368,6 +372,9 @@ const Login = () => {
                   >
                     Submit
                   </button>
+                  <div className="flex justify-around pb-2">
+                            {Error3 && <p style={{ color: 'red' }} className="font-bold text-lg">{Error3}</p>}
+                  </div>
                 </div>
               </form>
             </div>

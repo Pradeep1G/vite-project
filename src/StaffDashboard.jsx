@@ -8,12 +8,14 @@ import lock from "./assets/svgs/lock.svg"
 import hum_berger from "./assets/svgs/hum_berger.svg"
 import { ProjectCard  } from './ProjectCard';
 import { projectDetails } from './projectDetails';
+import LoadingScreen from './shared/Loader';
 
 
 const StaffDashboard = () => {
 
   const serverPath1 = "http://127.0.0.1:5000"
   // const serverPath1 = "https://gpaserver2.onrender.com";
+  const [isLoading, setisLoading] = useState(false);
 
   const[open, setOpen] = useState(false)
 
@@ -30,7 +32,9 @@ const StaffDashboard = () => {
         'Authorization': `${token}`
       };
       const func=async()=>{
+        setisLoading(true);
         const response = await axios.get(serverPath1+"/checkAuthentication/"+userEmail, {headers});
+        setisLoading(false);
         if (response.data.message=="Authenticated"){
           // navigate("/dashboard");
         }
@@ -65,20 +69,41 @@ const StaffDashboard = () => {
     "projectTitle":""
 
   }]);
+const [guideImg, setGuideImg] = useState();
   const fetchStudentsData = async () => {
     try {
       
       const userEmail = localStorage.getItem("guideMailId"); 
+      setisLoading(true);
       const response = await axios.post(serverPath1+"/staffLogin/getStudentsData/"+userEmail);
-
-      console.warn(response.data);
+      setisLoading(false);
+      // console.warn(response.data);
       setStudentsData(response.data.allStudentsData);
+      setGuideImg(response.data.guideImg);
+      localStorage.setItem("guideImg", response.data.guideImg);
      
     } catch (error) {
       setError(error.message || 'An error occurred while fetching data.');
-      
     }
   };
+
+
+  function getDirectLinkFromShareableLink(shareableLink) {
+    try {
+      const fileIdMatch = shareableLink.match(/\/uc\?id=(.*?)(&|$)/);
+      if (fileIdMatch && fileIdMatch[1]) {
+        const fileId = fileIdMatch[1];
+        return `https://drive.google.com/thumbnail?id=${fileId}`;
+      } else {
+        throw new Error("Invalid shareable link format");
+      }
+    } catch (error) {
+      // console.error("Error processing shareable link:", error.message);
+      return null;
+    }
+  }
+
+
 
   const staffLogout = () => {
     // Remove token from local storage
@@ -94,6 +119,7 @@ const StaffDashboard = () => {
 
 
     <>
+    {isLoading && <LoadingScreen />}
     {/*  <div className="w-fit flex flex-col gap-4"> */}
     <header className="h-fit bg-[#831238] flex items-center justify-between px-16 mb-5">
       <div className="flex justify-center items-center sm:max-md:justify-self-start ">
@@ -113,8 +139,8 @@ const StaffDashboard = () => {
         }}
       >
         <img
-          className="h-auto w-9 rounded-full"
-          src="https://sathyabama-erp-s3.s3.ap-south-1.amazonaws.com/admission/profile/606036-1706720845384-ErpUpload.png"
+          className=" w-12 h-12 rounded-full border-2"
+          src={getDirectLinkFromShareableLink(guideImg)}
           alt="Faculty"
         />
         <div className="hidden md:flex md:items-center md:justify-center relative">
@@ -212,7 +238,7 @@ const StaffDashboard = () => {
         </div>
       </div> */}
     <main
-      className="w-[90%] h-fit mx-auto grid place-items-center grid-cols-1 lg:grid-cols-3 gap-3 mb-5"
+      className="w-[90%] h-fit mx-auto  place-items-center flex  flex-wrap gap-8 mb-5"
       onClick={() => setOpen(false)}
     >
       {studentsData.map((project) => (
