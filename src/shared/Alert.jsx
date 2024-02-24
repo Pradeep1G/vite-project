@@ -9,7 +9,7 @@ export default function Alert(props){
     return(
         <>
 
-            <div className="flex items-center justify-center  fixed top-4 w-fit bg-[#FEFBF6] rounded-md shadow-lg">
+            <div className="flex items-center justify-center  fixed top-4 w-fit bg-[#FEFBF6] rounded-md shadow-lg z-50">
                 <div className="flex items-center justify-center px-10 py-4 text-red-700 text-lg font-semibold space-x-5">
                 <img src={cross_mark} height={20} width={20}></img><p>{props.message}</p>
                 </div>
@@ -20,7 +20,7 @@ export default function Alert(props){
     }else{
         return(
             <>
-                <div className="flex items-center justify-center  fixed top-4 w-fit bg-[#E9F8F9] rounded-md shadow-lg">
+                <div className="flex items-center justify-center  fixed top-4 w-fit bg-[#E9F8F9] rounded-md shadow-lg z-50">
                     <div className="flex items-center justify-center px-10 py-4 text-green-700 text-lg font-semibold space-x-5">
                     <img src={tick_mark} height={20} width={20}></img><p>{props.message}</p>
                     </div>
