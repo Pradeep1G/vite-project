@@ -16,7 +16,7 @@ const Login = () => {
   const serverPath1 = "https://gpaserver2.onrender.com";
 
   const navigate = useNavigate();
-  const location = useLocation();
+  // const location = useLocation();
 
   const [formData, setFormData] = useState({ email: "", password: "" });
 
@@ -39,17 +39,17 @@ const Login = () => {
 
   const [loginOpen, setLoginOpen] = useState(true);
 
-  useEffect(() => {
-    const token = localStorage.getItem("token_for_first_time");
-    if (location.pathname === "/login" && token) {
-      localStorage.removeItem("token_for_first_time");
-      localStorage.removeItem("token");
-      localStorage.removeItem("GuideName");
-      localStorage.removeItem("GuideMailId");
-      localStorage.removeItem("userMailId");
-      console.log("Token removed from local storage");
-    }
-  }, [location]);
+  // useEffect(() => {
+  //   const token = localStorage.getItem("token_for_first_time");
+  //   if (location.pathname === "/login" && token) {
+  //     localStorage.removeItem("token_for_first_time");
+  //     localStorage.removeItem("token");
+  //     localStorage.removeItem("GuideName");
+  //     localStorage.removeItem("GuideMailId");
+  //     localStorage.removeItem("userMailId");
+  //     console.log("Token removed from local storage");
+  //   }
+  // }, [location]);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -76,7 +76,7 @@ const Login = () => {
       localStorage.removeItem("userEmail");
       navigate("/login");
     }
-  }, [location]);
+  }, []);
 
   const handleFirstLogin = async (e) => {
     e.preventDefault();
@@ -381,74 +381,6 @@ const Login = () => {
           </div>
         </div>
 
-        {/* <h1>geddadavenkatapradeep@gmail.com</h1> */}
-        {/* <h1>govinduraju3288@gmail.com</h1> */}
-
-        {/* <form onSubmit={handleFirstLogin}>
-    
-
-        <input
-        className='border-2'
-          type="email"
-          placeholder="Email"
-          value={formData.email}
-          required
-          onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-        />
-        <input
-        className='border-2'
-          type="text"
-          placeholder="password"
-          value={formData.password}
-          required
-          onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-        />
-        <button className={verifyOTP ? 'hidden p-3':'h-10 p-2 bg-red-600 text-black'} type="submit">Submit</button>
-      </form> */}
-
-        {/* <div className={verifyOTP ? 'visible':'hidden'}>
-      <form >
-      <input
-        className='border-2'
-
-          type="number"
-          placeholder="o  t  p"
-          value={formData.otp}
-          onChange={(e) => setUserOTP(e.target.value )}
-        />
-          <button onClick={checkOTP} className="h-10 p-2 bg-red-600 text-black" type="submit">Submit</button>
-
-      </form>
-      </div> */}
-
-        {/* <div className={openNewPasswordContainer ? "visible":"hidden"}>
-        <form>
-
-        <input
-        className='border-2'
-
-          type="text"
-          placeholder="new password"
-          value={newPassword}
-          required
-          onChange={(e) => setNewPassword(e.target.value )}
-        />
-
-        <input
-        className='border-2'
-
-          type="text"
-          placeholder="confirm password"
-          value={newConfirmPassword}
-          required
-          onChange={(e) => setNewConfirmPassword(e.target.value )}
-        />
-
-        <button onClick={continueRegister} className='h-10 p-2 bg-red-600 text-black' type="submit">Submit</button>
-
-
-        </form>
-      </div> */}
 
         <Footer />
       </>
