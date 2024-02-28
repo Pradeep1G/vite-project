@@ -11,13 +11,15 @@ import { TfiHelpAlt } from "react-icons/tfi";
 const Dashboard = () => {
   const navigate = useNavigate();
   const userEmail = localStorage.getItem("userEmail");
+  const teamId = localStorage.getItem("teamId");
+
   const [guideComments, setGuideComments] = useState([]);
 //  const [Teamid,setTeamid]=useState();
 
   // Function to handle input changes for guide comments
 
-  const serverPath1 = "http://127.0.0.1:5000"
-  //  const serverPath1 = "https://gpaserver2.onrender.com";
+  // const serverPath1 = "http://127.0.0.1:5000"
+   const serverPath1 = "https://gpaserver2.onrender.com";
   const [isLoading, setisLoading] = useState(false);
   const [alert, setAlert]  = useState(false);
   const [alertMessage, setAlertMessage] = useState();
@@ -194,6 +196,8 @@ const Dashboard = () => {
   useEffect(() => {
     const token = localStorage.getItem("token");
     const userEmail = localStorage.getItem("userEmail");
+    const teamId = localStorage.getItem("teamid");
+
     
     if (token) {
       const headers = {
@@ -232,7 +236,9 @@ const Dashboard = () => {
       if (token) {
         try {
           setisLoading(true)
-          const response = await axios.post(`${serverPath1}/studentLogin/getStudentData/${userEmail}`, {
+    const teamId = localStorage.getItem("teamId");
+
+          const response = await axios.post(`${serverPath1}/studentLogin/getStudentData/${teamId}`, {
             headers: {
               Authorization: `Bearer ${token}`,
             },
