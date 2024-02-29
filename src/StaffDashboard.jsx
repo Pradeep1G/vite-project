@@ -172,13 +172,28 @@ const [guideImg, setGuideImg] = useState();
               </div>
               <div className="w-full flex items-center justify-center h-2/5 bg-slate-100 text-[#6C757D]  hover:bg-slate-200">
                 <a
-                  href={`/staff_dashboard/change_password`}
+                  href={`/staff_dashboard/add_problem_statement`}
                   className="w-full flex justify-start items-center gap-1 pl-2"
                 >
                   <img className="h-4 w-4" src={lock} alt="Lock" />
                   Change Password
                 </a>
               </div>
+
+              {/* Option to add problem statements */}
+              <div className="w-full flex items-center justify-center h-2/5 bg-slate-100 text-[#6C757D]  hover:bg-slate-200">
+                <a
+                  href={`/staff_dashboard/change_password`}
+                  className="w-full flex justify-start items-center gap-1 pl-2"
+                >
+                  <img className="h-4 w-4" src={lock} alt="Lock" />
+                  Add Problem Statement
+                </a>
+              </div>
+              {/* Option to add problem statements */}
+
+
+
               <div className="w-full flex justify-center items-center h-2/5 bg-slate-100 text-[#6C757D] hover:bg-slate-200">
                 <a
                   onClick={staffLogout}
@@ -209,6 +224,22 @@ const [guideImg, setGuideImg] = useState();
                 Change Password
               </a>
             </div>
+
+            
+              {/* Option to add problem statements */}
+              <div className="w-full flex items-center justify-center h-2/5 bg-slate-100 text-[#6C757D]  hover:bg-slate-200">
+                <a
+                  href={`/staff_dashboard/add_problem_statement`}
+                  className="w-full flex justify-start items-center gap-1 pl-2"
+                >
+                  <img className="h-4 w-4" src={lock} alt="Lock" />
+                  Add Problem Statement
+                </a>
+              </div>
+              {/* Option to add problem statements */}
+
+
+
             <div className="w-full flex justify-center items-center h-2/5 bg-slate-100 text-[#6C757D] hover:bg-slate-200">
               <a
                 href="/"
