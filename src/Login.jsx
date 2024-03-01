@@ -256,9 +256,10 @@ const Login = () => {
   if (localStorage.getItem("token") == null) {
     return (
       <>
+        {isLoading && <LoadingScreen />}
+
         <LoginNavBar />
 
-        {isLoading && <LoadingScreen />}
 
         <div className="login_bg px-10 xs:px-10">
           <div className="lg:w-1/4 md:w-2/4 s:w-2/4 xs:w-3/4 border bg-white bg-opacity-40 backdrop-filter p-6 rounded-lg shadow-lg">

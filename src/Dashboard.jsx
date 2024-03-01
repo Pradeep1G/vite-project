@@ -7,6 +7,7 @@ import log_out from "./assets/svgs/log_out.svg";
 import LoadingScreen from "./shared/Loader";
 import Alert from "./shared/Alert";
 import { TfiHelpAlt } from "react-icons/tfi";
+import lock from "./assets/svgs/lock.svg";
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -407,11 +408,20 @@ const Dashboard = () => {
           </button>
           {isDropdownOpen && (
             <div className="absolute top-10 right-0 bg-white text-gray-800 p-2 rounded shadow-md">
-            <div className="flex flex-row justify-center space-x-4 items-center hover:bg-gray-200">
+            <div className="flex flex-row justify-center space-x-2 items-center hover:bg-gray-200">
               <TfiHelpAlt height={4} width={4}/>
               <button onClick={handleHelp} className="block p-2 ">
                 Help
               </button>
+              </div>
+              <div className="w-full flex items-center justify-center h-2/5 hover:bg-slate-200">
+                <a
+                  href={`/dashboard/student_Password_change`}
+                  className="w-full flex justify-start items-center gap-1 p-2"
+                >
+                  <img className="h-4 w-4" src={lock} alt="Lock" />
+                  Change Password
+                </a>
               </div>
               <div className="flex flex-row justify-center items-center hover:bg-gray-200">
               <img className="h-4 w-4" src={log_out} alt="LogOut" />
@@ -420,6 +430,7 @@ const Dashboard = () => {
               </button>
               </div>
             </div>
+
           )}
         </div>
       </div>

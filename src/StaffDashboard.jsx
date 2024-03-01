@@ -9,7 +9,7 @@ import hum_berger from "./assets/svgs/hum_berger.svg"
 import { ProjectCard  } from './ProjectCard';
 import { projectDetails } from './projectDetails';
 import LoadingScreen from './shared/Loader';
-
+import { MdPostAdd } from "react-icons/md";
 
 const StaffDashboard = () => {
 
@@ -122,7 +122,7 @@ const [guideImg, setGuideImg] = useState();
     <>
     {isLoading && <LoadingScreen />}
     {/*  <div className="w-fit flex flex-col gap-4"> */}
-    <header className="h-fit bg-[#831238] flex items-center justify-between px-16 mb-5">
+    <header className="h-fit bg-[#831238] flex items-center justify-between px-6 md:px-16 mb-5">
       <div className="flex justify-center items-center sm:max-md:justify-self-start ">
         <a href="#">
           <img
@@ -183,10 +183,11 @@ const [guideImg, setGuideImg] = useState();
               {/* Option to add problem statements */}
               <div className="w-full flex items-center justify-center h-2/5 bg-slate-100 text-[#6C757D]  hover:bg-slate-200">
                 <a
-                  href={`/staff_dashboard/change_password`}
+                  href={`/staff_dashboard/add_problem_statement`}
                   className="w-full flex justify-start items-center gap-1 pl-2"
                 >
-                  <img className="h-4 w-4" src={lock} alt="Lock" />
+                  {/* <img className="h-4 w-4" src={lock} alt="Lock" /> */}
+                  <MdPostAdd className='size-8 p-0' />
                   Add Problem Statement
                 </a>
               </div>
@@ -207,7 +208,7 @@ const [guideImg, setGuideImg] = useState();
           )}
         </div>
         {/* HumBerger icon for sm to md*/}
-        <div className="h-5 w-5 md:hidden relative">
+        <div className="h-8 w-8 md:hidden relative">
           <img src={hum_berger} alt="HumBerger" />
         </div>
         {open && (
@@ -232,7 +233,9 @@ const [guideImg, setGuideImg] = useState();
                   href={`/staff_dashboard/add_problem_statement`}
                   className="w-full flex justify-start items-center gap-1 pl-2"
                 >
-                  <img className="h-4 w-4" src={lock} alt="Lock" />
+                  {/* <img className="h-4 w-4" src={lock} alt="Lock" /> */}
+                  <MdPostAdd className='size-8 p-0' />
+
                   Add Problem Statement
                 </a>
               </div>

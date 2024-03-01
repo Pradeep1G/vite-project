@@ -120,7 +120,7 @@ export default function AddProblemStatement(){
             <div className={`flex items-center justify-center ${alert ? "":"hidden"} `}>
     <Alert type={alertType} message={alertMessage}/>
     </div>
-            <div className="flex flex-row items-center justify-center pt-10">
+            <div className="flex flex-row items-center justify-center  p-10">
             <div className="py-10 md:px-20 px-10 border-2 border-black w-fit">
             <p className="flex flow-row items-center justify-center font-bold text-xl">Problem Statements</p>
                 <div className="">

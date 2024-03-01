@@ -208,7 +208,7 @@ export function TeamProfile() {
         <div className={`flex items-center justify-center ${alert ? "":"hidden"} `}>
     <Alert type={alertType} message={alertMessage}/>
     </div>
-      <header className="h-fit bg-[#831238] flex items-center justify-between px-16 ">
+      <header className="h-fit bg-[#831238] flex items-center justify-between px-6 md:px-16 ">
         <div className="flex justify-center items-center sm:max-md:justify-self-start ">
           <a href="#">
             <img
@@ -278,7 +278,7 @@ export function TeamProfile() {
             )}
           </div>
           {/* HumBerger icon for sm to md*/}
-          <div className="h-5 w-5 md:hidden relative">
+          <div className="h-8 w-8 md:hidden relative">
             <img src={hum_berger} alt="HumBerger" />
           </div>
           {open && (
