@@ -245,9 +245,10 @@ export default function SingleRegisterForm() {
 
   return (
     <>
+     {isLoading && <LoadingScreen />}
       <LoginNavBar />
 
-      {isLoading && <LoadingScreen />}
+     
 
       {/* <h1>REGISTRATION FORM</h1> */}
 

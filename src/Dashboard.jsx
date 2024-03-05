@@ -19,8 +19,8 @@ const Dashboard = () => {
 
   // Function to handle input changes for guide comments
 
-  // const serverPath1 = "http://127.0.0.1:5000"
-   const serverPath1 = "https://gpaserver2.onrender.com";
+  const serverPath1 = "http://127.0.0.1:5000"
+  //  const serverPath1 = "https://gpaserver2.onrender.com";
   const [isLoading, setisLoading] = useState(false);
   const [alert, setAlert]  = useState(false);
   const [alertMessage, setAlertMessage] = useState();
@@ -63,6 +63,7 @@ const Dashboard = () => {
   const [studentImg1,setstudentimg1]=useState("https://drive.google.com/uc?id=1XQIbsTt0GuT2PIqXFSmQXYux0Jcb543i")
   const [studentImg2,setstudentimg2]=useState("https://drive.google.com/uc?id=1XQIbsTt0GuT2PIqXFSmQXYux0Jcb543i")
 
+  const [problemStatements, setproblemStatements] = useState([])
 
 
 
@@ -192,6 +193,7 @@ const Dashboard = () => {
     }
   }
   
+  const [guideMailId, setGuideMailId] = useState("");
 
   // UseEffect to decode JWT token (if applicable)
   useEffect(() => {
@@ -220,6 +222,9 @@ const Dashboard = () => {
         }
       }
       func(); 
+
+      
+
     }else{
       localStorage.removeItem("token");
       localStorage.removeItem("userEmail");
@@ -227,7 +232,7 @@ const Dashboard = () => {
 
       navigate("/login");
     }
-  }, [navigate]);
+  }, []);
 
 
   // UseEffect to fetch the user's name from the server
@@ -249,6 +254,9 @@ const Dashboard = () => {
         
           // Assuming the server response contains a property named 'userName'
           setStudentData(response.data.studentData);
+          setproblemStatements(response.data.problemStatements)
+
+          // console.warn(guideMailId)
           // console.warn(StudentData);
           seteditProjectDetails(response.data.studentData[0].editProjectDetails);
           setprojectDetails(response.data.projectDetails);
@@ -478,6 +486,13 @@ const Dashboard = () => {
   )}
 
   {/* Third Card - Guide */}
+  <div className="group">
+
+<div className=" h-full w-full rounded-xl shadow-xl transition-all duration-500 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
+
+    <div className="inset-0">
+
+
  <div className="bg-white rounded-xl shadow-xl mb-4 overflow-hidden min-w-96 min-h-80">
   <div className="bg-[#9e1c3f] text-white py-2 rounded-t-xl mb-4 mx-0">
     <h1 className="text-2xl font-bold text-center">Guide Details</h1>
@@ -490,8 +505,58 @@ const Dashboard = () => {
   <div className="p-4">
     <p className="text-lg text-gray-600 text-center">Name: {StudentData[0]["selectedGuide"]}</p>
     <p className="text-lg text-gray-600 text-center">Email: {StudentData[0]["selectedGuideMailId"]}</p>
+    <a className="underline mt-2 text-sm text-blue-600 ">View Problem Statements</a>
   </div>
 </div>
+</div>
+
+<div className="absolute inset-0 rounded-xl bg-white [transform:rotateY(180deg)] [backface-visibility:hidden]">
+
+
+
+
+
+                            
+
+
+
+                <div className="bg-white rounded-xl shadow-xl mb-4 overflow-hidden min-w-96 min-h-80 ">
+                    <div className="bg-[#9e1c3f] text-white py-2 rounded-t-xl mb-4 mx-0">
+                        <h1 className="text-2xl font-bold text-center">Problem Statements</h1>
+                    </div>
+                    <div className="px-4 overflow-y-scroll max-h-64">
+                    <div
+                    className=" min-h-12 h-auto md:px-8 my-4 w-full ">
+                    {problemStatements.length>0 ?
+                        (problemStatements.map((item, index) =>{
+                            return(
+                            <p className="p-2 font-semibold capitalize">{parseInt(index)+1} . {item}</p>
+                            )
+                        }))
+                        :
+                        (
+                          <p className="p-2 text-3xl capitalize font-bold">No Problem Statements To Show!</p>
+                        )
+                    }
+
+                    </div>
+
+
+                    </div>
+                    </div>
+
+
+
+
+
+
+                </div>
+
+            </div>
+
+        </div>
+
+
 </div>
 </div>
 

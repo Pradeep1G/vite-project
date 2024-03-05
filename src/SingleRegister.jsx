@@ -105,9 +105,10 @@ export default function SingleRegister() {
 
   return (
     <>
+    {isLoading && <LoadingScreen />}
       <LoginNavBar />
       {/* {console.warn("dict" + guideDict)} */}
-      {isLoading && <LoadingScreen />}
+      
 
       {/* <h1>Single Registration Form</h1> */}
 

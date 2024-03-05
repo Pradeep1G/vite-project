@@ -126,12 +126,17 @@ export default function AddProblemStatement(){
                 <div className="">
                 <div
                     className="border-2 border-solid border-black min-h-12 h-auto md:px-8 my-4 w-full">
-                    {
-                        problemStatements.map((item, index) =>{
+                    {problemStatements.length>0 ?
+                        (problemStatements.map((item, index) =>{
                             return(
                             <p className="p-2 font-semibold capitalize pt-4">{parseInt(index)+1} . {item}</p>
                             )
-                        })
+                        }))
+                        :
+                        (
+                          <p className="p-2 text-2xl capitalize font-bold">Not added any Problem Statements!</p>
+
+                        )
                     }
                     </div>
 

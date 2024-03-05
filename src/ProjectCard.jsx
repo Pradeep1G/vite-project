@@ -80,10 +80,10 @@ function getDirectLinkFromShareableLinkStudent(shareableLink) {
           )}
         </p>
       </div>
-      <h2 className="font-medium flex justify-center items-center text-xl mb-2 p-4 capitalize">
+      <h2 className={`font-medium flex justify-center items-center text-xl mb-2 px-4 capitalize ${projectTitle ? "":"p-3"}`}>
         {projectTitle}
       </h2>
-      <p className="text-gray-700 text-base p-4 flex justify-center items-center capitalize">
+      <p className={`text-gray-700 text-base px-4 flex justify-center items-center capitalize ${projectDomain ? "":"p-3"}`}>
         {projectDomain}
       </p>
       <div className="w-full flex justify-center items-center">

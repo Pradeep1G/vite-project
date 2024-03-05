@@ -60,7 +60,7 @@ export default function StudentPasswordChange(){
         console.warn(res.data);
         setAlert(true);
       
-        if (res.data.message === "Success") {
+        if (res.data.message  === "Success") {
           setAlertMessage("Submitted Successfully!");
           setAlertType("success");
           setFormData({ "newPassword": "", "confirmPassword": "" });

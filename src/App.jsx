@@ -18,6 +18,8 @@ import { TeamProfile } from './TeamProfile';
 import ChangePassword from './ChangePassword';
 import AddProblemStatement from './AddProblemStatement';
 import StudentPasswordChange from './StudentPasswordChange';
+import Teambyguide from "./Teambyguide"
+import Practice from './practice';
 
 function App() {
   return (
@@ -25,6 +27,8 @@ function App() {
       <Router>
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/practice" element={<Practice />} />
+
           <Route path="/login" element={<Login />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/staff_login" element={<StaffLogin />} />
@@ -34,6 +38,8 @@ function App() {
           <Route path="/staff_dashboard/profile_details/team_profile" element={<TeamProfile />} />
           <Route path="/staff_dashboard/change_password" element={<ChangePassword />} />
           <Route path="/staff_dashboard/add_problem_statement" element={<AddProblemStatement />} />
+          <Route path="/staff_dashboard/select_student" element={<Teambyguide />} />
+
           <Route path="/dashboard/student_Password_change" element={<StudentPasswordChange />} />
 
 

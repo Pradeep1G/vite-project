@@ -434,9 +434,11 @@ export default function DuoRegisterForm() {
 
   return (
     <>
+
+{isLoading && <LoadingScreen />}
       <LoginNavBar />
 
-      {isLoading && <LoadingScreen />}
+
       {/* <h1>REGISTRATION FORM</h1> */}
 
       <form onSubmit={Submit}>
