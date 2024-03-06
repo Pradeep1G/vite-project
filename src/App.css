@@ -27,8 +27,8 @@ body, html {
 
 @media (max-width: 500px) {
   .login_bg {
-    background: url("./assets/login_bg_library_small.jpg");
-    min-height: 100vh;
+    background: url("./assets/slogin2.jpg");
+    min-height: 70vh;
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;

@@ -415,7 +415,7 @@ const Dashboard = () => {
             &#9660; {/* Down arrow */}
           </button>
           {isDropdownOpen && (
-            <div className="absolute top-10 right-0 bg-white text-gray-800 p-2 rounded shadow-md">
+            <div className="absolute top-10 right-0 bg-white text-gray-800 p-2 rounded shadow-md z-10">
             <div className="flex flex-row justify-center space-x-2 items-center hover:bg-gray-200">
               <TfiHelpAlt height={4} width={4}/>
               <button onClick={handleHelp} className="block p-2 ">
