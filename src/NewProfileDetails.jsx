@@ -16,7 +16,9 @@ import Alert from "./shared/Alert";
 
 export const NewProfileDetails = () => {
   // const serverPath1 = "http://127.0.0.1:5000"
-  const serverPath1 = "https://gpaserver2.onrender.com";
+  // const serverPath1 = "https://gpaserver2.onrender.com";
+  const serverPath1 = "https://guideselectionserver.onrender.com";
+
   const [isLoading, setisLoading] = useState(false);
   const [alert, setAlert] = useState(false);
   const [alertMessage, setAlertMessage] = useState();
