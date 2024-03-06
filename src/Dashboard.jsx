@@ -655,7 +655,7 @@ const Dashboard = () => {
     {/* Documentation */}
     <button
       onClick={() => toggleStatus("documentation")}
-      className={`text-lg animate-pulse font-bold p-2 rounded mb-2 md:mb-0 ${projectStatus.documentation ? 'bg-green-500 text-white' : 'bg-red-500 text-white'}`}
+      className={`text-lg font-bold p-2 rounded mb-2 md:mb-0 ${projectStatus.documentation ? 'bg-green-500 text-white' : 'bg-red-500 text-white'}`}
     >
       Documentation
     </button>
@@ -663,7 +663,7 @@ const Dashboard = () => {
     {/* PPT */}
     <button
       onClick={() => toggleStatus("ppt")}
-      className={`text-lg animate-bounce font-bold p-2 rounded ${projectStatus.ppt ? 'bg-green-500 text-white' : 'bg-red-500 text-white'}`}
+      className={`text-lg font-bold p-2 rounded ${projectStatus.ppt ? 'bg-green-500 text-white' : 'bg-red-500 text-white'}`}
     >
       PPT
     </button>
