@@ -490,7 +490,7 @@ const Dashboard = () => {
 
 <div className=" h-full w-full rounded-xl shadow-xl transition-all duration-500 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
 
-    <div className="inset-0">
+    <div className="inset-0"> 
 
 
  <div className="bg-white rounded-xl shadow-xl mb-4 overflow-hidden min-w-96 min-h-80">

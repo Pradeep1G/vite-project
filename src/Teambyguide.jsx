@@ -119,12 +119,13 @@ const navigate = useNavigate();
       setRegistrationNumber('');
       setPartnerRegNumber('');
       setPassword('');
-      setteamCount(teamcount-1);
+      
     //console.warn("ghvhgvghv")
       console.warn(response.data)
       setAlert(true);
         if(response.data.message=="Success"){
             setAlertMessage("Submitted Successfully!")
+            setteamCount(teamcount-1);
             setAlertType("success")
         }
         else{

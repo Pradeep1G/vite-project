@@ -1,4 +1,4 @@
-import { useState , useEffect} from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import tick_mark from "./assets/svgs/tick_mark.svg";
 import cross_mark from "./assets/svgs/cross_mark.png";
@@ -15,15 +15,14 @@ import LoadingScreen from "./shared/Loader";
 import Alert from "./shared/Alert";
 
 export const NewProfileDetails = () => {
-
   // const serverPath1 = "http://127.0.0.1:5000"
   const serverPath1 = "https://gpaserver2.onrender.com";
   const [isLoading, setisLoading] = useState(false);
-  const [alert, setAlert]  = useState(false);
+  const [alert, setAlert] = useState(false);
   const [alertMessage, setAlertMessage] = useState();
   const [alertType, setAlertType] = useState();
 
-const navigate=useNavigate()
+  const navigate = useNavigate();
   const [open, setOpen] = useState(false);
 
   const [projectDetails, setProjectDetails] = useState({
@@ -90,57 +89,66 @@ const navigate=useNavigate()
     // console.log(eve.target.name, eve.target.value);
   };
 
-const teamId= localStorage.getItem("projectId")
-const guidemailId = localStorage.getItem("guideMailId")
+  const teamId = localStorage.getItem("projectId");
+  const guidemailId = localStorage.getItem("guideMailId");
   useEffect(() => {
-  
-    const teamId= localStorage.getItem("projectId")
+    const teamId = localStorage.getItem("projectId");
     const fetchData = async () => {
       try {
         setisLoading(true);
-        const response = await axios.post(`${serverPath1}/staffLogin/getProfileData/${teamId}`);
+        const response = await axios.post(
+          `${serverPath1}/staffLogin/getProfileData/${teamId}`
+        );
         setisLoading(false);
         // console.warn(response.data)
-        setProjectDetails(response.data.projectDetails)
-        setProjectMarks(response.data.projectMarks)
-        setLinks(response.data.links)
+        setProjectDetails(response.data.projectDetails);
+        setProjectMarks(response.data.projectMarks);
+        setLinks(response.data.links);
         // console.warn(links)
-        setDocumentation(response.data.documentation.documentation)
-        setPpt(response.data.ppt.ppt)
-        setResearchPaper(response.data.researchPaper.researchPaper.approval)
-        setGuideApproval(!response.data.guideApproval.guideApproval)
-        setIsChecked(response.data.isChecked.researchPaper)
+        setDocumentation(response.data.documentation.documentation);
+        setPpt(response.data.ppt.ppt);
+        setResearchPaper(response.data.researchPaper.researchPaper.approval);
+        setGuideApproval(!response.data.guideApproval.guideApproval);
+        setIsChecked(response.data.isChecked.researchPaper);
 
-        seteditedDocumentationApproval(response.data.documentation.documentation)
-        seteditedPptApproval(response.data.ppt.ppt)
-        seteditedResearchApproval(response.data.researchPaper.researchPaper.approval)
-        seteditedCommunicationApproval(response.data.isChecked.researchPaper.communicated)
-        seteditedPaymentApproval(response.data.isChecked.researchPaper.paymentDone)
-        seteditedAcceptedApproval(response.data.isChecked.researchPaper.accepted)
-        seteditedGuideApproval(response.data.guideApproval.guideApproval)
-        seteditedStudentOneMarks(response.data.projectMarks.studentOneMarks)
-        seteditedStudentTwoMarks(response.data.projectMarks.studentTwoMarks || null)
-        const formattedComments = response.data.comments.map(item => {
-
+        seteditedDocumentationApproval(
+          response.data.documentation.documentation
+        );
+        seteditedPptApproval(response.data.ppt.ppt);
+        seteditedResearchApproval(
+          response.data.researchPaper.researchPaper.approval
+        );
+        seteditedCommunicationApproval(
+          response.data.isChecked.researchPaper.communicated
+        );
+        seteditedPaymentApproval(
+          response.data.isChecked.researchPaper.paymentDone
+        );
+        seteditedAcceptedApproval(
+          response.data.isChecked.researchPaper.accepted
+        );
+        seteditedGuideApproval(response.data.guideApproval.guideApproval);
+        seteditedStudentOneMarks(response.data.projectMarks.studentOneMarks);
+        seteditedStudentTwoMarks(
+          response.data.projectMarks.studentTwoMarks || null
+        );
+        const formattedComments = response.data.comments.map((item) => {
           if (item.date && item.comment) {
             return { date: item.date, comment: item.comment };
           }
           const key = Object.keys(item)[0];
           if (key) {
-            return { date: key, comment: item[key] || '' };
+            return { date: key, comment: item[key] || "" };
           }
-    
-          return { date: '', comment: '' };
-        });
-        
-    
-        // console.warn('Formatted Comments:', formattedComments);
-    
-        setComments({ prevComments: formattedComments });
 
-       
+          return { date: "", comment: "" };
+        });
+
+        // console.warn('Formatted Comments:', formattedComments);
+
+        setComments({ prevComments: formattedComments });
       } catch (error) {
-        console.error('Error fetching team details:', error.message);
+        console.error("Error fetching team details:", error.message);
         // Handle the error as needed
       }
     };
@@ -148,37 +156,38 @@ const guidemailId = localStorage.getItem("guideMailId")
     fetchData();
   }, [alertMessage]);
 
-
-  const handleFinalSubmit = async() => {
-
+  const handleFinalSubmit = async () => {
     const editedData = {
-      "editedDocumentationApproval":editedDocumentationApproval,
-      "editedPptApproval":editedPptApproval,
-      "editedResearchApproval":editedResearchApproval,
-      "editedCommunicationApproval":editedCommunicationApproval,
-      "editedPaymentApproval":editedPaymentApproval,
-      "editedAcceptedApproval":editedAcceptedApproval,
-      "editedGuideApproval":editedGuideApproval,
-      "editedStudentOneMarks":editedStudentOneMarks,
-      "editedStudentTwoMarks":editedStudentTwoMarks,
-      "editedComments":editedComments
-    }
+      editedDocumentationApproval: editedDocumentationApproval,
+      editedPptApproval: editedPptApproval,
+      editedResearchApproval: editedResearchApproval,
+      editedCommunicationApproval: editedCommunicationApproval,
+      editedPaymentApproval: editedPaymentApproval,
+      editedAcceptedApproval: editedAcceptedApproval,
+      editedGuideApproval: editedGuideApproval,
+      editedStudentOneMarks: editedStudentOneMarks,
+      editedStudentTwoMarks: editedStudentTwoMarks,
+      editedComments: editedComments,
+    };
     setisLoading(true);
-    const response = await axios.post(serverPath1+"/staffLogin/profiledetails/updatestatusDetails/"+teamId, editedData );
+    const response = await axios.post(
+      serverPath1 + "/staffLogin/profiledetails/updatestatusDetails/" + teamId,
+      editedData
+    );
     setisLoading(false);
     // console.warn(response.data);
     // console.warn(editedData);
     setAlert(true);
-      // console.warn(res.data)
-      if(response.data.message==="Success"){
-        setAlertMessage("Submitted Successfully!")
-        setAlertType("success")
-      }else{
-        setAlertMessage("Failed to Submit!")
-        setAlertType("fail")
-      }
-      alertDelay();
-      setComments({...comments, "addComments":""})
+    // console.warn(res.data)
+    if (response.data.message === "Success") {
+      setAlertMessage("Submitted Successfully!");
+      setAlertType("success");
+    } else {
+      setAlertMessage("Failed to Submit!");
+      setAlertType("fail");
+    }
+    alertDelay();
+    setComments({ ...comments, addComments: "" });
   };
 
   const alertDelay = () => {
@@ -188,11 +197,12 @@ const guidemailId = localStorage.getItem("guideMailId")
     }, 3000); // 3000 milliseconds = 3 seconds
   };
 
-
-  const [editedDocumentationApproval, seteditedDocumentationApproval] = useState();
+  const [editedDocumentationApproval, seteditedDocumentationApproval] =
+    useState();
   const [editedPptApproval, seteditedPptApproval] = useState();
   const [editedResearchApproval, seteditedResearchApproval] = useState();
-  const [editedCommunicationApproval, seteditedCommunicationApproval] = useState();
+  const [editedCommunicationApproval, seteditedCommunicationApproval] =
+    useState();
   const [editedPaymentApproval, seteditedPaymentApproval] = useState();
   const [editedAcceptedApproval, seteditedAcceptedApproval] = useState();
   const [editedGuideApproval, seteditedGuideApproval] = useState();
@@ -214,7 +224,6 @@ const guidemailId = localStorage.getItem("guideMailId")
       return null;
     }
   }
-  
 
   const staffLogout = () => {
     // Remove token from local storage
@@ -224,12 +233,12 @@ const guidemailId = localStorage.getItem("guideMailId")
     // Redirect to login page
     navigate("/staff_login");
   };
-  const removeprojectid=()=>{
-    localStorage.removeItem("projectId")
-    navigate('/staff_dashboard')
-  }
+  const removeprojectid = () => {
+    localStorage.removeItem("projectId");
+    navigate("/staff_dashboard");
+  };
 
-  const guideImg = localStorage.getItem("guideImg")
+  const guideImg = localStorage.getItem("guideImg");
   function getDirectLinkFromShareableLink(shareableLink) {
     try {
       const fileIdMatch = shareableLink.match(/\/uc\?id=(.*?)(&|$)/);
@@ -245,15 +254,15 @@ const guidemailId = localStorage.getItem("guideMailId")
     }
   }
 
-
-
   return (
     <>
-        {isLoading && <LoadingScreen />}
+      {isLoading && <LoadingScreen />}
 
-    <div className={`flex items-center justify-center ${alert ? "":"hidden"} `}>
-    <Alert type={alertType} message={alertMessage}/>
-    </div>
+      <div
+        className={`flex items-center justify-center ${alert ? "" : "hidden"} `}
+      >
+        <Alert type={alertType} message={alertMessage} />
+      </div>
       <header className="h-fit bg-[#831238] flex items-center justify-between px-6 md:px-16">
         <div className="flex justify-center items-center sm:max-md:justify-self-start ">
           <a href="#">
@@ -359,9 +368,9 @@ const guidemailId = localStorage.getItem("guideMailId")
         onClick={() => setOpen(false)}
       >
         <div className="hidden md:fixed md:w-fit md:h-full md:left-1 md:top-[5rem] md:flex md:items-center md:justify-center md:cursor-pointer">
-          <a  className="w-fit h-fit">
+          <a className="w-fit h-fit">
             <img
-            onClick={removeprojectid}
+              onClick={removeprojectid}
               className="bg-slate-200 m-4 p-2 w-10 rounded-full hover:bg-slate-300 hover:shadow-md"
               src={back_arrow}
               alt="⬅️"
@@ -392,7 +401,9 @@ const guidemailId = localStorage.getItem("guideMailId")
                   }${" "}${"h-full flex flex-col justify-center items-center border-r-2 border-r-white"}`}
                 >
                   <img
-                    src={getDirectLinkFromShareableLinkStudent(projectDetails.studentOneImg)}
+                    src={getDirectLinkFromShareableLinkStudent(
+                      projectDetails.studentOneImg
+                    )}
                     alt="Student1"
                     className="w-40 h-40 rounded-full border border-black p-1"
                   />
@@ -416,7 +427,9 @@ const guidemailId = localStorage.getItem("guideMailId")
                     }${" "}${"h-full flex flex-col justify-center items-center"}`}
                   >
                     <img
-                      src={getDirectLinkFromShareableLinkStudent(projectDetails.studentTwoImg)}
+                      src={getDirectLinkFromShareableLinkStudent(
+                        projectDetails.studentTwoImg
+                      )}
                       alt="Student1"
                       className="w-40 h-40 rounded-full border border-black p-1"
                     />
@@ -458,7 +471,9 @@ const guidemailId = localStorage.getItem("guideMailId")
                     {projectDetails.studentOneRegNo}
                   </div>
                   <div className="mb-5 w-full h-1/2 flex flex-col justify-center items-center break-before-all">
-                  <h3 className="p-2">Assigned Marks:{projectMarks.studentOneMarks}</h3>
+                    <h3 className="p-2">
+                      Assigned Marks:{projectMarks.studentOneMarks}
+                    </h3>
                     <div>
                       <label htmlFor="studentOneMarks" className="font-normal">
                         Enter Marks : &nbsp;
@@ -470,7 +485,10 @@ const guidemailId = localStorage.getItem("guideMailId")
                         id="studentOneMarks"
                         name="studentOneMarks"
                         defaultValue={projectMarks.studentOneMarks}
-                        onChange={(eve) => {handleProjectMarks(eve); seteditedStudentOneMarks(eve.target.value)}}
+                        onChange={(eve) => {
+                          handleProjectMarks(eve);
+                          seteditedStudentOneMarks(eve.target.value);
+                        }}
                         required
                         style={{
                           WebkitAppearance: "none" /* for Safari */,
@@ -495,7 +513,9 @@ const guidemailId = localStorage.getItem("guideMailId")
                       {projectDetails.studentTwoRegNo}
                     </div>
                     <div className="mb-5 w-full h-1/2 flex flex-col justify-center items-center break-before-all">
-                    <h3 className="p-2">Assigned Marks:{projectMarks.studentTwoMarks}</h3>
+                      <h3 className="p-2">
+                        Assigned Marks:{projectMarks.studentTwoMarks}
+                      </h3>
                       <div>
                         <label
                           htmlFor="studentTwoMarks"
@@ -510,7 +530,10 @@ const guidemailId = localStorage.getItem("guideMailId")
                           id="studentTwoMarks"
                           name="studentTwoMarks"
                           defaultValue={projectMarks.studentTwoMarks}
-                          onChange={(eve) => {handleProjectMarks(eve); seteditedStudentTwoMarks(eve.target.value)}}
+                          onChange={(eve) => {
+                            handleProjectMarks(eve);
+                            seteditedStudentTwoMarks(eve.target.value);
+                          }}
                           required
                           style={{
                             WebkitAppearance: "none" /* for Safari */,
@@ -559,7 +582,10 @@ const guidemailId = localStorage.getItem("guideMailId")
                 <div className="flex gap-4 mb-4">
                   <button
                     type="button"
-                    onClick={() => {setDocumentation(true); seteditedDocumentationApproval(true)}}
+                    onClick={() => {
+                      setDocumentation(true);
+                      seteditedDocumentationApproval(true);
+                    }}
                     className="bg-green-500 w-24 h-10 rounded-3xl text-white font-medium hover:shadow-[0px_0px_10px_gray] hover:scale-105"
                     style={{
                       boxShadow:
@@ -573,7 +599,10 @@ const guidemailId = localStorage.getItem("guideMailId")
                   </button>
                   <button
                     type="button"
-                    onClick={() => {setDocumentation(false); seteditedDocumentationApproval(false)}}
+                    onClick={() => {
+                      setDocumentation(false);
+                      seteditedDocumentationApproval(false);
+                    }}
                     className="bg-red-500 w-24 h-10 rounded-3xl text-white font-medium hover:shadow-[0px_0px_10px_gray] hover:scale-105"
                     style={{
                       boxShadow:
@@ -608,7 +637,10 @@ const guidemailId = localStorage.getItem("guideMailId")
                 <div className="flex gap-4 mb-4">
                   <button
                     type="button"
-                    onClick={() => {setPpt(true); seteditedPptApproval(true)}}
+                    onClick={() => {
+                      setPpt(true);
+                      seteditedPptApproval(true);
+                    }}
                     className="bg-green-500 w-24 h-10 rounded-3xl text-white font-medium hover:shadow-[0px_0px_10px_gray] hover:scale-105"
                     style={{
                       boxShadow:
@@ -620,7 +652,10 @@ const guidemailId = localStorage.getItem("guideMailId")
                   </button>
                   <button
                     type="button"
-                    onClick={() => {setPpt(false); seteditedPptApproval(false)}}
+                    onClick={() => {
+                      setPpt(false);
+                      seteditedPptApproval(false);
+                    }}
                     className="bg-red-500 w-24 h-10 rounded-3xl text-white font-medium hover:shadow-[0px_0px_10px_gray] hover:scale-105"
                     style={{
                       boxShadow:
@@ -662,7 +697,13 @@ const guidemailId = localStorage.getItem("guideMailId")
                     <input
                       type="checkbox"
                       checked={isChecked.communicated}
-                      onChange={(event) => {seteditedCommunicationApproval(event.target.checked); setIsChecked({...isChecked, "communicated":event.target.checked}) }}
+                      onChange={(event) => {
+                        seteditedCommunicationApproval(event.target.checked);
+                        setIsChecked({
+                          ...isChecked,
+                          communicated: event.target.checked,
+                        });
+                      }}
                       id="communicated"
                       name="communicated"
                       className="form-checkbox h-4 w-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500 cursor-pointer"
@@ -685,7 +726,13 @@ const guidemailId = localStorage.getItem("guideMailId")
                     <input
                       type="checkbox"
                       checked={isChecked.accepted}
-                      onChange={(event) => {seteditedAcceptedApproval(event.target.checked); setIsChecked({...isChecked, "accepted":event.target.checked })}}
+                      onChange={(event) => {
+                        seteditedAcceptedApproval(event.target.checked);
+                        setIsChecked({
+                          ...isChecked,
+                          accepted: event.target.checked,
+                        });
+                      }}
                       id="accepted"
                       name="accepted"
                       className="form-checkbox h-4 w-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500 cursor-pointer"
@@ -707,7 +754,13 @@ const guidemailId = localStorage.getItem("guideMailId")
                     <input
                       type="checkbox"
                       checked={isChecked.paymentDone}
-                      onChange={(event) => {seteditedPaymentApproval(event.target.checked); setIsChecked({...isChecked, "paymentDone":event.target.checked })}}
+                      onChange={(event) => {
+                        seteditedPaymentApproval(event.target.checked);
+                        setIsChecked({
+                          ...isChecked,
+                          paymentDone: event.target.checked,
+                        });
+                      }}
                       id="paymentDone"
                       name="paymentDone"
                       className="form-checkbox h-4 w-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500 cursor-pointer"
@@ -729,7 +782,10 @@ const guidemailId = localStorage.getItem("guideMailId")
                 <div className="flex gap-4 mb-4">
                   <button
                     type="button"
-                    onClick={() => {setResearchPaper(true); seteditedResearchApproval(true)}}
+                    onClick={() => {
+                      setResearchPaper(true);
+                      seteditedResearchApproval(true);
+                    }}
                     className="bg-green-500 w-24 h-10 rounded-3xl text-white font-medium hover:shadow-[0px_0px_10px_gray] hover:scale-105"
                     style={{
                       boxShadow:
@@ -743,7 +799,10 @@ const guidemailId = localStorage.getItem("guideMailId")
                   </button>
                   <button
                     type="button"
-                    onClick={() => {setResearchPaper(false); seteditedResearchApproval(false)}}
+                    onClick={() => {
+                      setResearchPaper(false);
+                      seteditedResearchApproval(false);
+                    }}
                     className="bg-red-500 w-24 h-10 rounded-3xl text-white font-medium hover:shadow-[0px_0px_10px_gray] hover:scale-105"
                     style={{
                       boxShadow:
@@ -775,7 +834,10 @@ const guidemailId = localStorage.getItem("guideMailId")
                 <div className="flex gap-4 my-4">
                   <button
                     type="button"
-                    onClick={() => {setGuideApproval(true); seteditedGuideApproval(true)}}
+                    onClick={() => {
+                      setGuideApproval(true);
+                      seteditedGuideApproval(true);
+                    }}
                     className="bg-green-500 w-24 h-10 rounded-3xl text-white font-medium hover:shadow-[0px_0px_10px_gray] hover:scale-105"
                     style={{
                       boxShadow:
@@ -789,7 +851,10 @@ const guidemailId = localStorage.getItem("guideMailId")
                   </button>
                   <button
                     type="button"
-                    onClick={() => {setGuideApproval(false); seteditedGuideApproval(false)}}
+                    onClick={() => {
+                      setGuideApproval(false);
+                      seteditedGuideApproval(false);
+                    }}
                     className="bg-red-500 w-24 h-10 rounded-3xl text-white font-medium hover:shadow-[0px_0px_10px_gray] hover:scale-105"
                     style={{
                       boxShadow:
@@ -831,7 +896,13 @@ const guidemailId = localStorage.getItem("guideMailId")
                 name="prevComments"
                 placeholder="Previous Comments"
                 readOnly
-                value={comments.prevComments ? comments.prevComments.map(comment => `${comment.date}: ${comment.comment}`).join('\n') : ''}
+                value={
+                  comments.prevComments
+                    ? comments.prevComments
+                        .map((comment) => `${comment.date}: ${comment.comment}`)
+                        .join("\n")
+                    : ""
+                }
                 style={{ resize: "none" }}
               ></textarea>
             </form>
@@ -849,7 +920,10 @@ const guidemailId = localStorage.getItem("guideMailId")
                 placeholder="Add Comments here"
                 // defaultValue={comments.addComments}
                 value={comments.addComments}
-                onChange={(eve) => {handleAddComments(eve); seteditedComments(eve.target.value)}}
+                onChange={(eve) => {
+                  handleAddComments(eve);
+                  seteditedComments(eve.target.value);
+                }}
                 style={{ resize: "none" }}
               ></textarea>
             </form>
