@@ -38,7 +38,7 @@ const LoginNavBar = () => {
             Student Login
           </a>
           <a className="text-white" href="/staff_login">
-            Staff Login
+            Faculty Login
           </a>
           <a className="text-white" href="/">
             About
@@ -61,7 +61,7 @@ const LoginNavBar = () => {
             Student Login
           </a>
           <a className="py-3" href="/staff_login">
-            Staff Login
+            Faculty Login
           </a>
           <a className="py-3" href="/">
             About

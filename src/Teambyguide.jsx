@@ -170,7 +170,9 @@ else if(teamcount==1){
     <Alert type={alertType} message={alertMessage}/>
     </div>
     <div className="container mx-auto p-8 border rounded-lg">
-    <div className="flex flex-row items-center justify-center pt-10">
+    <div className="flex flex-col items-center justify-center pt-10">
+    <p className='text-red-500 text-lg font-semibold'>Please click on the checkbox if you intend to have two members in your team.</p>
+
     <div className="py-10 px-20 border-2 border-black w-fit">
       <form onSubmit={handleSubmit} className="flex flex-col items-center">
         <label className="mb-4">
@@ -239,7 +241,9 @@ else if(teamcount==1){
         <Alert type={alertType} message={alertMessage}/>
         </div>
         <div className="container mx-auto pt-8 px-8 rounded-lg">
-        <div className="flex flex-row items-center justify-center pt-10">
+        <div className="flex flex-col items-center justify-center pt-10">
+        <p className='text-red-500 text-lg font-semibold'>Please click on the checkbox if you intend to have two members in your team.</p>
+
         <div className="py-10 px-20 border-2 border-black w-fit">
           <form onSubmit={handleSubmit} className="flex flex-col items-center">
             <label className="mb-4">
