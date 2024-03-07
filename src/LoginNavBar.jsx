@@ -34,9 +34,9 @@ const LoginNavBar = () => {
             showMenu ? "hidden" : "hidden"
           }`}
         >
-          <a className=" text-white " href="/login">
+          {/* <a className=" text-white " href="/login">
             Student Login
-          </a>
+          </a> */}
           <a className="text-white" href="/staff_login">
             Faculty Login
           </a>
@@ -57,9 +57,9 @@ const LoginNavBar = () => {
       {showMenu && (
         <div className={`lg:hidden flex flex-col items-center bg-[#9e1c3f] text-white ${showMenu ? '' : 'hidden'}`}>
 
-          <a className="py-3" href="/login">
+          {/* <a className="py-3" href="/login">
             Student Login
-          </a>
+          </a> */}
           <a className="py-3" href="/staff_login">
             Faculty Login
           </a>

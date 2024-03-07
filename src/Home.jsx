@@ -60,12 +60,12 @@ export default function Home() {
           <br></br>
 
           <div className=" flex justify-center">
-            <button
+            {/* <button
               onClick={GoLogin}
               className="bg-red-900 text-white px-6 py-2 rounded-md my-2 text-lg"
             >
               Student Login
-            </button>
+            </button> */}
           </div>
         </div>
       </div>

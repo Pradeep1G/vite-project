@@ -265,6 +265,8 @@ export const NewProfileDetails = () => {
       >
         <Alert type={alertType} message={alertMessage} />
       </div>
+
+
       <header className="h-fit bg-[#831238] flex items-center justify-between px-6 md:px-16">
         <div className="flex justify-center items-center sm:max-md:justify-self-start ">
           <a href="#">
@@ -365,204 +367,90 @@ export const NewProfileDetails = () => {
           )}
         </div>
       </header>
-      <main
-        className="w-[96%] md:w-[90%] mx-auto h-fit flex flex-col md:flex-row justify-center items-center my-4"
-        onClick={() => setOpen(false)}
-      >
-        <div className="hidden md:fixed md:w-fit md:h-full md:left-1 md:top-[5rem] md:flex md:items-center md:justify-center md:cursor-pointer">
-          <a className="w-fit h-fit">
+
+
+      <div className="flex items-center justify-center">
+        <div className="container mx-auto p-4 flex flex-wrap gap-4 w-fit items-center justify-center">
+          {/* student1  */}
+          <div className="bg-white rounded-xl shadow-xl mb-4 overflow-hidden  min-h-80">
+            <div className="bg-[#9e1c3f] text-white py-2 rounded-t-xl mb-4 mx-0">
+              <h1 className="text-2xl font-bold text-center">Student 1</h1>
+            </div>
             <img
-              onClick={removeprojectid}
-              className="bg-slate-200 m-4 p-2 w-10 rounded-full hover:bg-slate-300 hover:shadow-md"
-              src={back_arrow}
-              alt="⬅️"
-              title="Go back"
-            ></img>
-          </a>
+              src={getDirectLinkFromShareableLinkStudent(projectDetails.studentOneImg)}
+              alt="Profile"
+              className="w-32 h-32 rounded-full mx-auto mb-4"
+            />
+            <div className="p-4">
+              <p className="text-lg font-semibold text-gray-700">Name: {projectDetails.studentOneName}</p>
+              <p className="text-lg text-gray-600">Reg No: {projectDetails.studentOneRegNo}</p>
+              <p className="text-lg text-gray-600 ">Section: {projectDetails.studentOneSection}</p>
+            </div>
+          </div>
+
+
+          {/* student2  */}
+          {projectDetails.team && (
+            <div className="bg-white rounded-xl shadow-xl mb-4 overflow-hidden min-h-80">
+              <div className="bg-[#9e1c3f] text-white py-2 rounded-t-xl mb-4 mx-0">
+                <h1 className="text-2xl font-bold text-center">Student 2</h1>
+              </div>
+              <img
+                src={getDirectLinkFromShareableLinkStudent(projectDetails.studentTwoImg)}
+                alt="Profile"
+                className="w-32 h-32 rounded-full mx-auto mb-4"
+              />
+              <div className="p-4">
+                <p className="text-lg font-semibold text-gray-700">Name:  {projectDetails.studentTwoName}</p>
+                <p className="text-lg text-gray-600">Reg No: {projectDetails.studentTwoRegNo}</p>
+                <p className="text-lg text-gray-600">Section:  {projectDetails.studentTwoSection}</p>
+              </div>
+
+            </div>
+          )}
+
+
+          {/* Project details  */}
+          <div className="bg-white rounded-xl shadow-xl mb-4 overflow-hidden min-w-72 min-h-80">
+            <div className="bg-[#9e1c3f] text-white py-2 rounded-t-xl mb-4 mx-0">
+              <h1 className="text-2xl font-bold text-center">Project Details</h1>
+            </div>
+            <div className="p-4 pt-8 flex-col">
+              <p className="text-lg font-semibold text-gray-700 flex justify-center">{projectDetails.projectId}</p>
+              <p className="text-lg text-gray-600 flex justify-center">{projectDetails.projectTitle}</p>
+              <p className="text-lg text-gray-600 flex justify-center">{projectDetails.projectDomain}</p>
+            </div>
+            <div className="w-80% h-fit mt-2 flex justify-center items-center pt-6 px-5">
+              <a
+                href="/staff_dashboard/profile_details/team_profile"
+                className="w-[90%] h-[2.5rem] mb-3 flex items-center justify-center bg-[#d06a0f] rounded-md font-semibold text-white hover:scale-[1.01] active:scale-[0.99] hover:shadow-[0px_0px_10px_gray]  "
+              >
+                Team Profile
+              </a>
+            </div>
+
+          </div>
+
+
         </div>
-        <section className="w-fit h-fit flex flex-col md:flex-row justify-center items-center">
-          <article className="w-fit h-fit flex flex-col justify-center items-center gap-2">
-            <form className="w-fit h-fit flex flex-col justify-center items-center rounded bg-[#f4eeee] ">
-              <div className="w-[95vw] md:w-[35vw] h-[20vh] flex flex-col justify-center items-center">
-                <span className="w-full flex justify-center items-center text-xl font-medium">
-                  {projectDetails.projectId}
-                </span>
-                <br />
-                <span className="w-full flex justify-center items-center capitalize text-xl font-semibold">
-                  {projectDetails.projectTitle}
-                </span>
-                <br />
-                <span className="w-full flex justify-center items-center capitalize text-xl font-[400]">
-                  {projectDetails.projectDomain}
-                </span>
-              </div>
-              <div className="w-full h-[50vh] flex justify-center items-center gap-2 border-y-2 border-y-white">
-                <div
-                  className={`${
-                    projectDetails.team ? "w-1/2" : "w-full"
-                  }${" "}${"h-full flex flex-col justify-center items-center border-r-2 border-r-white"}`}
-                >
-                  <img
-                    src={getDirectLinkFromShareableLinkStudent(
-                      projectDetails.studentOneImg
-                    )}
-                    alt="Student1"
-                    className="w-40 h-40 rounded-full border border-black p-1"
-                  />
-                  <br />
-                  <div className="w-full h-[20vh] flex flex-col items-center justify-center">
-                    <span className="w-full m-auto text-center break-before-all text-xl font-medium">
-                      {projectDetails.studentOneRegNo}
-                    </span>
-                    <span className="w-full m-auto text-center break-before-all text-xl font-medium">
-                      {projectDetails.studentOneSection}
-                    </span>
-                    <span className="w-full m-auto text-center break-before-all text-xl font-bold capitalize">
-                      {projectDetails.studentOneName}
-                    </span>
-                  </div>
+      </div>
+
+
+      {/* update conatainer  */}
+      <div className="flex flex-wrap items-center justify-center space-x-2">
+        <div className="container mx-auto flex flex-wrap md:flex-row w-full items-center justify-center space-x-2">
+
+
+          {/* left two container  */}
+          <div className="flex flex-col lg:flex-row">
+            {/* project status  */}
+            <div className="flex flex-col px-2">
+              {/* documentation  */}
+              <div className="bg-white rounded-xl shadow-xl mb-4 overflow-hidden min-w-72 min-h-40">
+                <div className="bg-[#9e1c3f] text-white py-2 rounded-t-xl mb-4 mx-0">
+                  <h1 className="text-2xl font-bold text-center px-2">Project Status</h1>
                 </div>
-                {projectDetails.team && (
-                  <div
-                    className={`${
-                      projectDetails.team ? "w-1/2" : "w-full"
-                    }${" "}${"h-full flex flex-col justify-center items-center"}`}
-                  >
-                    <img
-                      src={getDirectLinkFromShareableLinkStudent(
-                        projectDetails.studentTwoImg
-                      )}
-                      alt="Student1"
-                      className="w-40 h-40 rounded-full border border-black p-1"
-                    />
-                    <br />
-                    <div className="w-full h-[20vh] flex flex-col items-center justify-center">
-                      <span className="w-full m-auto text-center break-before-all text-xl font-medium">
-                        {projectDetails.studentTwoRegNo}
-                      </span>
-                      <span className="w-full m-auto text-center break-before-all text-xl font-medium">
-                        {projectDetails.studentTwoSection}
-                      </span>
-                      <span className="w-full m-auto text-center break-before-all text-xl font-bold capitalize">
-                        {projectDetails.studentTwoName}
-                      </span>
-                    </div>
-                  </div>
-                )}
-              </div>
-              <div className="w-full h-fit mt-2 flex justify-center items-center">
-                <a
-                  href="/staff_dashboard/profile_details/team_profile"
-                  className="w-[90%] h-[2.5rem] mb-3 flex items-center justify-center bg-[#d06a0f] rounded-md font-semibold text-white hover:scale-[1.01] active:scale-[0.99] hover:shadow-[0px_0px_10px_gray] "
-                >
-                  Team Profile
-                </a>
-              </div>
-            </form>
-            <form className="w-fit h-fit flex flex-col justify-center items-center rounded-md gap-2 mt-2">
-              <div className="w-[95vw] md:w-[35vw] h-[4rem] text-xl font-medium text-white flex justify-center items-center bg-[#890632d7] ">
-                Project Marks
-              </div>
-              <div className="w-full h-[25vh] flex justify-center items-center gap-1">
-                <div
-                  className={`${
-                    projectDetails.team ? "w-1/2" : "w-full"
-                  }${" "}${"h-full flex flex-col justify-center items-center bg-[#e2e8f0] "}`}
-                >
-                  <div className="w-full h-1/2 flex justify-center items-center break-before-all text-lg font-semibold ">
-                    {projectDetails.studentOneRegNo}
-                  </div>
-                  <div className="mb-5 w-full h-1/2 flex flex-col justify-center items-center break-before-all">
-                    <h3 className="p-2">
-                      Assigned Marks:{projectMarks.studentOneMarks}
-                    </h3>
-                    <div>
-                      <label htmlFor="studentOneMarks" className="font-normal">
-                        Enter Marks : &nbsp;
-                      </label>
-                      <input
-                        className="text-center"
-                        placeholder="Marks"
-                        type="number"
-                        id="studentOneMarks"
-                        name="studentOneMarks"
-                        defaultValue={projectMarks.studentOneMarks}
-                        onChange={(eve) => {
-                          handleProjectMarks(eve);
-                          seteditedStudentOneMarks(eve.target.value);
-                        }}
-                        required
-                        style={{
-                          WebkitAppearance: "none" /* for Safari */,
-                          MozAppearance: "textfield" /* for Firefox */,
-                          appearance: "none" /* for other modern browsers */,
-                        }}
-                        min="0"
-                        max="15"
-                        maxLength="2"
-                      />
-                    </div>
-                    <span className="font-normal "> &#40;Out of 15&#41;</span>
-                  </div>
-                </div>
-                {projectDetails.team && (
-                  <div
-                    className={`${
-                      projectDetails.team ? "w-1/2" : "w-full"
-                    }${" "}${"h-full flex flex-col justify-center items-center bg-[#e2e8f0] "}`}
-                  >
-                    <div className="w-full h-1/2 flex justify-center items-center break-before-all text-lg font-semibold ">
-                      {projectDetails.studentTwoRegNo}
-                    </div>
-                    <div className="mb-5 w-full h-1/2 flex flex-col justify-center items-center break-before-all">
-                      <h3 className="p-2">
-                        Assigned Marks:{projectMarks.studentTwoMarks}
-                      </h3>
-                      <div>
-                        <label
-                          htmlFor="studentTwoMarks"
-                          className="font-normal"
-                        >
-                          Enter Marks : &nbsp;
-                        </label>
-                        <input
-                          className="text-center"
-                          placeholder="Marks"
-                          type="number"
-                          id="studentTwoMarks"
-                          name="studentTwoMarks"
-                          defaultValue={projectMarks.studentTwoMarks}
-                          onChange={(eve) => {
-                            handleProjectMarks(eve);
-                            seteditedStudentTwoMarks(eve.target.value);
-                          }}
-                          required
-                          style={{
-                            WebkitAppearance: "none" /* for Safari */,
-                            MozAppearance: "textfield" /* for Firefox */,
-                            appearance: "none" /* for other modern browsers */,
-                          }}
-                          min="0"
-                          max="15"
-                          maxLength="2"
-                        />
-                      </div>
-                      <span className="font-normal"> &#40;Out of 15&#41;</span>
-                    </div>
-                  </div>
-                )}
-              </div>
-            </form>
-          </article>
-        </section>
-        <section className="w-fit h-fit flex flex-col  justify-center items-center">
-          <article className="w-[96vw] md:w-[55vw] flex flex-col md:flex-row justify-center items-center gap-1 ">
-            <form className="flex flex-col justify-center items-center mt-4 ">
-              <div className="w-[95vw] md:w-[17.5vw] h-[5rem] text-xl font-medium text-white flex justify-center items-center bg-[#890632d7] mb-1">
-                Project Status
-              </div>
-              <div className=" w-[95vw] md:w-[17.5vw] h-fit bg-slate-200 flex flex-col justify-evenly items-center border-b-2 border-b-white">
-                <div className="text-[#831238] w-[95vw] md:w-[17.5vw] h-[5rem] text-xl flex items-center justify-center font-medium gap-2">
+                <div className="text-[#831238] text-xl flex items-center justify-center font-medium gap-2">
                   <a
                     href={links.documentation}
                     target="blank"
@@ -581,13 +469,10 @@ export const NewProfileDetails = () => {
                     <img src={cross_mark} className="h-6 w-6" />
                   )}
                 </div>
-                <div className="flex gap-4 mb-4">
+                <div className="flex justify-center space-x-2 pt-2">
                   <button
                     type="button"
-                    onClick={() => {
-                      setDocumentation(true);
-                      seteditedDocumentationApproval(true);
-                    }}
+                    onClick={() => { setDocumentation(true); seteditedDocumentationApproval(true) }}
                     className="bg-green-500 w-24 h-10 rounded-3xl text-white font-medium hover:shadow-[0px_0px_10px_gray] hover:scale-105"
                     style={{
                       boxShadow:
@@ -601,10 +486,7 @@ export const NewProfileDetails = () => {
                   </button>
                   <button
                     type="button"
-                    onClick={() => {
-                      setDocumentation(false);
-                      seteditedDocumentationApproval(false);
-                    }}
+                    onClick={() => { setDocumentation(false); seteditedDocumentationApproval(false) }}
                     className="bg-red-500 w-24 h-10 rounded-3xl text-white font-medium hover:shadow-[0px_0px_10px_gray] hover:scale-105"
                     style={{
                       boxShadow:
@@ -618,8 +500,12 @@ export const NewProfileDetails = () => {
                   </button>
                 </div>
               </div>
-              <div className=" w-[95vw] md:w-[17.5vw] h-fit bg-slate-200 flex flex-col justify-evenly items-center">
-                <div className="text-[#831238]  w-[95vw] md:w-[17.5vw] h-[5rem] text-xl flex items-center justify-center font-medium gap-2">
+              {/* ppt  */}
+              <div className="bg-white rounded-xl shadow-xl mb-4 overflow-hidden min-w-72 min-h-40">
+                <div className="bg-[#9e1c3f] text-white py-2 rounded-t-xl mb-4 mx-0">
+                  <h1 className="text-2xl font-bold text-center px-2">PPT Status</h1>
+                </div>
+                <div className="text-[#831238] text-xl flex items-center justify-center font-medium gap-2">
                   <a
                     href={links.ppt}
                     target="blank"
@@ -636,13 +522,10 @@ export const NewProfileDetails = () => {
                     <img src={cross_mark} className="h-6 w-6" />
                   )}
                 </div>
-                <div className="flex gap-4 mb-4">
+                <div className="flex justify-center space-x-2 pt-2">
                   <button
                     type="button"
-                    onClick={() => {
-                      setPpt(true);
-                      seteditedPptApproval(true);
-                    }}
+                    onClick={() => { setPpt(true); seteditedPptApproval(true) }}
                     className="bg-green-500 w-24 h-10 rounded-3xl text-white font-medium hover:shadow-[0px_0px_10px_gray] hover:scale-105"
                     style={{
                       boxShadow:
@@ -654,10 +537,7 @@ export const NewProfileDetails = () => {
                   </button>
                   <button
                     type="button"
-                    onClick={() => {
-                      setPpt(false);
-                      seteditedPptApproval(false);
-                    }}
+                    onClick={() => { setPpt(false); seteditedPptApproval(false) }}
                     className="bg-red-500 w-24 h-10 rounded-3xl text-white font-medium hover:shadow-[0px_0px_10px_gray] hover:scale-105"
                     style={{
                       boxShadow:
@@ -669,43 +549,38 @@ export const NewProfileDetails = () => {
                   </button>
                 </div>
               </div>
-            </form>
-            <form className="flex flex-col justify-center items-center mt-4 ">
-              <div className="w-[95vw] md:w-[17.5vw] h-[5rem] text-xl font-medium text-white flex justify-center items-center bg-[#890632d7] mb-1 ">
-                Research
+            </div>
+            {/* Research paper  */}
+            <div className="bg-white rounded-xl shadow-xl mb-4 overflow-hidden min-w-72 min-h-80">
+              <div className="bg-[#9e1c3f] text-white py-2 rounded-t-xl mb-4 mx-0">
+                <h1 className="text-2xl font-bold text-center px-2">Research Status</h1>
               </div>
-              <div className=" w-[95vw] md:w-[17.5vw] h-fit bg-slate-200 flex flex-col justify-evenly items-center">
-                <div className="text-[#831238]  w-[95vw] md:w-[17.5vw] h-[5rem] text-xl flex items-center justify-center font-medium gap-2">
-                  <a
-                    href={links.researchPaper}
-                    target="blank"
-                    className="flex items-center gap-1"
-                    title="Open Drive link"
-                  >
-                    <h3 className="hover:text-blue-800 hover:underline cursor-pointer">
-                      Research Paper
-                    </h3>
-                    <img src={link} alt="link" className="h-3 w-3" />
-                  </a>
-                  {researchPaper === true && (
-                    <img src={tick_mark} className="h-6 w-6" />
-                  )}
-                  {researchPaper === false && (
-                    <img src={cross_mark} className="h-6 w-6" />
-                  )}
-                </div>
+              <div className="text-[#831238]  text-xl flex items-center justify-center font-medium">
+                <a
+                  href={links.researchPaper}
+                  target="blank"
+                  className="flex items-center gap-1"
+                  title="Open Drive link"
+                >
+                  <h3 className="hover:text-blue-800 hover:underline cursor-pointer">
+                    Research Paper
+                  </h3>
+                  <img src={link} alt="link" className="h-3 w-3" />
+                </a>
+                {researchPaper === true && (
+                  <img src={tick_mark} className="h-6 w-6" />
+                )}
+                {researchPaper === false && (
+                  <img src={cross_mark} className="h-6 w-6" />
+                )}
+              </div>
+              <div className="flex justify-center pt-6">
                 <ul className="flex flex-col gap-4 mb-8">
                   <li className="flex items-center gap-3">
                     <input
                       type="checkbox"
                       checked={isChecked.communicated}
-                      onChange={(event) => {
-                        seteditedCommunicationApproval(event.target.checked);
-                        setIsChecked({
-                          ...isChecked,
-                          communicated: event.target.checked,
-                        });
-                      }}
+                      onChange={(event) => { seteditedCommunicationApproval(event.target.checked); setIsChecked({ ...isChecked, "communicated": event.target.checked }) }}
                       id="communicated"
                       name="communicated"
                       className="form-checkbox h-4 w-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500 cursor-pointer"
@@ -728,13 +603,7 @@ export const NewProfileDetails = () => {
                     <input
                       type="checkbox"
                       checked={isChecked.accepted}
-                      onChange={(event) => {
-                        seteditedAcceptedApproval(event.target.checked);
-                        setIsChecked({
-                          ...isChecked,
-                          accepted: event.target.checked,
-                        });
-                      }}
+                      onChange={(event) => { seteditedAcceptedApproval(event.target.checked); setIsChecked({ ...isChecked, "accepted": event.target.checked }) }}
                       id="accepted"
                       name="accepted"
                       className="form-checkbox h-4 w-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500 cursor-pointer"
@@ -756,13 +625,7 @@ export const NewProfileDetails = () => {
                     <input
                       type="checkbox"
                       checked={isChecked.paymentDone}
-                      onChange={(event) => {
-                        seteditedPaymentApproval(event.target.checked);
-                        setIsChecked({
-                          ...isChecked,
-                          paymentDone: event.target.checked,
-                        });
-                      }}
+                      onChange={(event) => { seteditedPaymentApproval(event.target.checked); setIsChecked({ ...isChecked, "paymentDone": event.target.checked }) }}
                       id="paymentDone"
                       name="paymentDone"
                       className="form-checkbox h-4 w-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500 cursor-pointer"
@@ -781,157 +644,174 @@ export const NewProfileDetails = () => {
                     </label>
                   </li>
                 </ul>
-                <div className="flex gap-4 mb-4">
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setResearchPaper(true);
-                      seteditedResearchApproval(true);
-                    }}
-                    className="bg-green-500 w-24 h-10 rounded-3xl text-white font-medium hover:shadow-[0px_0px_10px_gray] hover:scale-105"
-                    style={{
-                      boxShadow:
-                        researchPaper === true
-                          ? "0 0 10px rgba(0, 0, 0, 0.8)"
-                          : "none",
-                      backgroundColor: researchPaper === false ? "gray" : "",
-                    }}
-                  >
-                    {researchPaper === true ? "Approved" : "Approve"}
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setResearchPaper(false);
-                      seteditedResearchApproval(false);
-                    }}
-                    className="bg-red-500 w-24 h-10 rounded-3xl text-white font-medium hover:shadow-[0px_0px_10px_gray] hover:scale-105"
-                    style={{
-                      boxShadow:
-                        researchPaper === false
-                          ? "0 0 10px rgba(0, 0, 0, 0.8)"
-                          : "none",
-                      backgroundColor: researchPaper === true ? "gray" : "",
-                    }}
-                  >
-                    {researchPaper === false ? "Rejected" : "Reject"}
-                  </button>
-                </div>
+
               </div>
-            </form>
-            <form className="flex flex-col justify-center items-center mt-4 bg-slate-200 ">
-              <div className="w-[95vw] md:w-[17.5vw] h-[5.25rem] text-xl font-medium text-white flex justify-center items-center bg-[#890632d7] mb-0 border-b-4 border-b-white ">
-                Approval
-              </div>
-              <div className="w-full md:h-[36.5vh] flex flex-col justify-evenly items-center ">
-                <div className="text-[#831238]  w-[95vw] md:w-[17.5vw] h-[5rem] text-xl flex items-center justify-center font-medium gap-2">
-                  <h3>Guide Approval</h3>
-                  {guideApproval === true && (
-                    <img src={tick_mark} className="h-6 w-6" />
-                  )}
-                  {guideApproval === false && (
-                    <img src={cross_mark} className="h-6 w-6" />
-                  )}
-                </div>
-                <div className="flex gap-4 my-4">
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setGuideApproval(true);
-                      seteditedGuideApproval(true);
-                    }}
-                    className="bg-green-500 w-24 h-10 rounded-3xl text-white font-medium hover:shadow-[0px_0px_10px_gray] hover:scale-105"
-                    style={{
-                      boxShadow:
-                        guideApproval === true
-                          ? "0 0 10px rgba(0, 0, 0, 0.8)"
-                          : "none",
-                      backgroundColor: guideApproval === false ? "gray" : "",
-                    }}
-                  >
-                    {guideApproval === true ? "Approved" : "Approve"}
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setGuideApproval(false);
-                      seteditedGuideApproval(false);
-                    }}
-                    className="bg-red-500 w-24 h-10 rounded-3xl text-white font-medium hover:shadow-[0px_0px_10px_gray] hover:scale-105"
-                    style={{
-                      boxShadow:
-                        guideApproval === false
-                          ? "0 0 10px rgba(0, 0, 0, 0.8)"
-                          : "none",
-                      backgroundColor: guideApproval === true ? "gray" : "",
-                    }}
-                  >
-                    {guideApproval === false ? "Rejected" : "Reject"}
-                  </button>
-                </div>
-              </div>
-              {/* <div className="md:hidden w-full flex items-center justify-center mb-3 ">
-                <a
-                  href="#addComments"
-                  className="bg-orange-500 w-[8rem] h-10 rounded-3xl text-white font-medium flex justify-center items-center hover:shadow-[0px_0px_10px_gray] hover:scale-105 transition-transform"
+              <div className="flex justify-center space-x-2">
+                <button
+                  type="button"
+                  onClick={() => { setResearchPaper(true); seteditedResearchApproval(true) }}
+                  className="bg-green-500 w-24 h-10 rounded-3xl text-white font-medium hover:shadow-[0px_0px_10px_gray] hover:scale-105"
+                  style={{
+                    boxShadow:
+                      researchPaper === true
+                        ? "0 0 10px rgba(0, 0, 0, 0.8)"
+                        : "none",
+                    backgroundColor: researchPaper === false ? "gray" : "",
+                  }}
                 >
-                  Comments&nbsp;
-                  <span className="text-2xl font-bold">&darr;</span>
-                </a>
-              </div> */}
-            </form>
-          </article>
-          <article className="w-[96vw] md:w-[55vw] flex flex-col justify-center items-center mt-4 ">
-            <div className="w-full md:w-[96%] h-[4rem] text-xl font-medium text-white flex justify-center items-center bg-[#890632d7] ">
-              Comments
+                  {researchPaper === true ? "Approved" : "Approve"}
+                </button>
+                <button
+                  type="button"
+                  onClick={() => { setResearchPaper(false); seteditedResearchApproval(false) }}
+                  className="bg-red-500 w-24 h-10 rounded-3xl text-white font-medium hover:shadow-[0px_0px_10px_gray] hover:scale-105"
+                  style={{
+                    boxShadow:
+                      researchPaper === false
+                        ? "0 0 10px rgba(0, 0, 0, 0.8)"
+                        : "none",
+                    backgroundColor: researchPaper === true ? "gray" : "",
+                  }}
+                >
+                  {researchPaper === false ? "Rejected" : "Reject"}
+                </button>
+              </div>
+
+
             </div>
-            <form className="flex flex-col justify-center items-center mt-2 bg-[#e2e8f0] w-full md:w-[96%] ">
-              <label
-                htmlFor="prevComments"
-                className=" w-full h-[4rem] text-xl font-medium flex justify-start items-center text-[#831238] pl-2 "
-              >
-                Previous comments
-              </label>
-              <textarea
-                className="w-[99%] h-[7.85rem] rounded-lg p-2 mb-1 text-lg border-2 border-gray-400 outline-none whitespace-pre-wrap"
-                id="prevComments"
-                name="prevComments"
-                placeholder="Previous Comments"
-                readOnly
-                value={
-                  comments.prevComments
-                    ? comments.prevComments
-                        .map((comment) => `${comment.date}: ${comment.comment}`)
-                        .join("\n")
-                    : ""
-                }
-                style={{ resize: "none" }}
-              ></textarea>
-            </form>
-            <form className="flex flex-col justify-center items-center mt-0 border-t-4 border-t-white bg-[#e2e8f0] w-full md:w-[96%] ">
-              <label
-                htmlFor="addComments"
-                className=" w-full h-[4rem] text-xl font-medium flex justify-start items-center text-[#831238] pl-2 "
-              >
-                Add comments
-              </label>
-              <textarea
-                className="w-[99%] h-[7.85rem] rounded-lg p-2 mb-1 text-lg border-2 border-gray-400 outline-none focus:border-1 focus:border-black  whitespace-pre-wrap"
-                id="addComments"
-                name="addComments"
-                placeholder="Add Comments here"
-                // defaultValue={comments.addComments}
-                value={comments.addComments}
-                onChange={(eve) => {
-                  handleAddComments(eve);
-                  seteditedComments(eve.target.value);
-                }}
-                style={{ resize: "none" }}
-              ></textarea>
-            </form>
-          </article>
-        </section>
-      </main>
+          </div>
+
+
+          {/* right two containers  */}
+          <div className="flex flex-col lg:flex-row space-x-2">
+            {/* Project marks  */}
+            <div className="bg-white rounded-xl shadow-xl mb-4 overflow-hidden min-w-72 min-h-80">
+              <div className="bg-[#9e1c3f] text-white py-2 rounded-t-xl mb-4 mx-0">
+                <h1 className="text-2xl font-bold text-center px-2">Project Status</h1>
+              </div>
+
+              <div className="w-full flex flex-col justify-center items-center">
+                <div className="w-full h-1/2 flex justify-center items-center break-before-all text-lg font-semibold ">
+                  {projectDetails.studentOneRegNo}
+                </div>
+
+                <div className="mb-5 w-full h-1/2 flex flex-col justify-center items-center break-before-all">
+                  <h3 className="p-2">Assigned Marks: {projectMarks.studentOneMarks}</h3>
+                  <div>
+                    <label htmlFor="studentOneMarks" className="font-normal">
+                      Enter Marks: &nbsp;
+                    </label>
+                    <input
+                      className="text-center bg-[#e2e8f0]"
+                      placeholder="Marks"
+                      type="number"
+                      id="studentOneMarks"
+                      name="studentOneMarks"
+                      defaultValue={projectMarks.studentOneMarks}
+                      onChange={(eve) => {
+                        handleProjectMarks(eve);
+                        seteditedStudentOneMarks(eve.target.value);
+                      }}
+                      required
+                      style={{
+                        WebkitAppearance: "none",
+                        MozAppearance: "textfield",
+                        appearance: "none",
+                      }}
+                      min="0"
+                      max="15"
+                      maxLength="2"
+                    />
+                  </div>
+                  <span className="font-normal"> &#40;Out of 15&#41;</span>
+                </div>
+              </div>
+
+              {projectDetails.team && (
+                <div className="w-full flex flex-col justify-center items-center ">
+                  <div className="w-full h-1/2 flex justify-center items-center break-before-all text-lg font-semibold">
+                    {projectDetails.studentTwoRegNo}
+                  </div>
+
+                  <div className="mb-5 w-full h-1/2 flex flex-col justify-center items-center break-before-all">
+                    <h3 className="p-2">Assigned Marks: {projectMarks.studentTwoMarks}</h3>
+                    <div>
+                      <label htmlFor="studentTwoMarks" className="font-normal">
+                        Enter Marks: &nbsp;
+                      </label>
+                      <input
+                        className="text-center bg-[#e2e8f0]"
+                        placeholder="Marks"
+                        type="number"
+                        id="studentTwoMarks"
+                        name="studentTwoMarks"
+                        defaultValue={projectMarks.studentTwoMarks}
+                        onChange={(eve) => {
+                          handleProjectMarks(eve);
+                          seteditedStudentTwoMarks(eve.target.value);
+                        }}
+                        required
+                        style={{
+                          WebkitAppearance: "none",
+                          MozAppearance: "textfield",
+                          appearance: "none",
+                        }}
+                        min="0"
+                        max="15"
+                        maxLength="2"
+                      />
+                    </div>
+                    <span className="font-normal"> &#40;Out of 15&#41;</span>
+                  </div>
+                </div>
+              )}
+            </div>
+            {/* Comments  */}
+            <div className="bg-white rounded-xl shadow-xl mb-4 min-w-72 min-h-80 max-h-80">
+              <div className="bg-[#9e1c3f] text-white py-2 rounded-t-xl mb-4 mx-0">
+                <h1 className="text-2xl font-bold text-center">Comments</h1>
+              </div>
+              <div className="flex flex-col h-full">
+                <div className="overflow-auto h-[60%]">
+                  <div className="p-2 mb-1 text-lg border-b-2 border-gray-400 whitespace-pre-wrap overflow-y-scroll max-h-[calc(80% - 2rem)]">
+                    {/* Display previous comments */}
+                    {comments.prevComments &&
+                      comments.prevComments.map((comment, index) => (
+                        <div key={index} className="mb-2">
+                          <span className="font-bold">{comment.date}:</span> {comment.comment}
+                        </div>
+                      ))}
+                  </div>
+                </div>
+                <div className="flex items-center p-2">
+                  <textarea
+                    className="flex-grow h-[2.5rem] resize-none rounded-full p-2 text-lg border-2 border-gray-400 outline-none bg-[#e2e8f0] overflow-hidden"
+                    id="addComments"
+                    name="addComments"
+                    placeholder="Type a message..."
+                    value={comments.addComments}
+                    onChange={(eve) => {
+                      handleAddComments(eve);
+                      seteditedComments(eve.target.value);
+                    }}
+                  />
+                </div>
+              </div>
+            </div>
+
+
+
+
+          </div>
+
+
+
+        </div>
+      </div>
+
+
+
+      {/* Submit button  */}
       <section
         className="w-[96%] md:w-[90%] mx-auto h-fit flex flex-col md:flex-row justify-center items-center my-4"
         onClick={() => setOpen(false)}
@@ -943,10 +823,13 @@ export const NewProfileDetails = () => {
           Submit
         </button>
       </section>
+      {/* footer  */}
       <footer className="w-[99vw] h-8 bg-slate-100 text-black text-center ">
         &copy; {new Date().getFullYear()} Sathyabama University. All rights
         reserved.
       </footer>
+
+      
     </>
   );
 };

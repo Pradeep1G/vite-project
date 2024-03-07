@@ -409,8 +409,9 @@ export default function DuoRegisterForm() {
                 //   });
 
                 // alert("Success")
-                setIsLoading(false);
                 navigate(currentPath + "/success");
+                setIsLoading(false);
+
               } else {
                 alert("Something done wrong");
               }
