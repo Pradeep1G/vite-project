@@ -25,7 +25,7 @@ export default function AddProblemStatement(){
 
     const [openInputStatement, setopenInputStatement] = useState(true);
 
-    const [problemStatements, setproblemStatements] = useState(["tdftj yrud ytf rd fj ytf ytf iytr ytryt uy ", "yufty ytrd rd "])
+    const [problemStatements, setproblemStatements] = useState([])
 
     useEffect(() => {
         const token = localStorage.getItem("token");
