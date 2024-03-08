@@ -303,11 +303,14 @@ const [guideImg, setGuideImg] = useState();
           ))}
         </div>
       </div> */}
+
+      <div className='flex flex-col min-h-screen'>
+      <div className='flex-grow'>
     <main
-      className="w-[90%] h-fit mx-auto  place-items-center justify-center flex  flex-wrap gap-8 mb-5"
+      className="w-[90%] mx-auto flex-grow place-items-center justify-center flex  flex-wrap gap-8 mb-5"
       onClick={() => setOpen(false)}
     >
-      {studentsData.map((project) => (
+      {studentsData["projectId"] ? (studentsData.map((project) => (
         <ProjectCard
           key={project.projectId}
           team={project.team}
@@ -321,8 +324,12 @@ const [guideImg, setGuideImg] = useState();
           projectTitle={project.projectTitle}
           projectDomain={project.projectDomain}
         />
-      ))}
+      )))
+      :
+      (<p className='font-bold text-2xl'>*Students yet to be selected.</p>)
+      }
     </main>
+    </div>
 
     <footer
       className="w-full h-8 bg-slate-100 flex items-center justify-center text-black "
@@ -331,6 +338,7 @@ const [guideImg, setGuideImg] = useState();
       <b>&copy;</b>&nbsp;
       {new Date().getFullYear()} Sathyabama University. All rights reserved.
     </footer>
+    </div>
     {/* </div> */}
   </>
 

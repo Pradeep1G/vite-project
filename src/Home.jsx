@@ -17,11 +17,11 @@ export default function Home() {
       <div className="login_bg s:p-20 py-4">
         <div className=" border p-6 bg-white bg-opacity-80 backdrop-filter rounded-lg shadow-lg font-semibold">
         <br></br>
-          <p className="font-semibold text-center text-2xl p-0">Registration Process</p>
+          <p className="font-semibold text-center text-2xl p-0">Registration Process for Students</p>
           <br></br>
           <li>Register with the mail id which is given to placement cell and password is your register number.</li>
           <li>
-            You will recieve otp to your mail. Enter and submit. Kindly check in
+            You will recieve OTP to your mail. Enter and submit. Kindly check in
             your spam mails and inbox.
           </li>
           <li>Enter new password, confirm password and then submit.</li>
@@ -35,21 +35,19 @@ export default function Home() {
           <li>Enter second person mail id which is given to placement cell and click on verify.</li>
           <li>  You are not allowed to change your register number.</li>
           <li>
-            Otp is sent the second team member mail should be entered and
-            submit.
+          An OTP will be sent to the second team member's email, which should then be entered and submitted.
           </li>
           <br></br>
           <p>NOTE:</p>
           {/* <br></br> */}
           <li>
-            It will reject if the second member mailid is already registered.
+          Registration will not be processed if the second member's email is already registered.
           </li>
           <li>
-            While you click on submit, if any register in any device with the
-            any team member mail is noticed, then the registration is terminated. Restart again!.
+          When you click on submit, if a registration with the current team member's email is detected on any device, both registrations are terminated. You have to restart the process again.
           </li>
           <br></br>
-          <p  className="font-semibold text-center text-2xl p-0">Login Process</p>
+          <p  className="font-semibold text-center text-2xl p-0">Login Process for Students</p>
           <br></br>
           <li>Use the password that you setup in your registration process.</li>
           <li>You are redirected to your dashboard.</li>
