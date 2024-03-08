@@ -310,7 +310,7 @@ const [guideImg, setGuideImg] = useState();
       className="w-[90%] mx-auto flex-grow place-items-center justify-center flex  flex-wrap gap-8 mb-5"
       onClick={() => setOpen(false)}
     >
-      {studentsData["projectId"] ? (studentsData.map((project) => (
+      {studentsData.length!=0 ? (studentsData.map((project) => (
         <ProjectCard
           key={project.projectId}
           team={project.team}
