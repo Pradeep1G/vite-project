@@ -767,13 +767,13 @@ export const NewProfileDetails = () => {
               )}
             </div>
             {/* Comments  */}
-            <div className="bg-white rounded-xl shadow-xl mb-4 min-w-72 min-h-80 max-h-80">
+            <div className="bg-white rounded-xl shadow-xl mb-4 min-w-72 min-h-80 max-h-96">
               <div className="bg-[#9e1c3f] text-white py-2 rounded-t-xl mb-4 mx-0">
                 <h1 className="text-2xl font-bold text-center">Comments</h1>
               </div>
               <div className="flex flex-col h-full">
-                <div className="overflow-auto h-[60%]">
-                  <div className="p-2 mb-1 text-lg border-b-2 border-gray-400 whitespace-pre-wrap overflow-y-scroll max-h-[calc(80% - 2rem)]">
+                <div className="overflow-auto h-fit">
+                  <div className="p-2 mb-1 text-lg  whitespace-pre-wrap overflow-y-scroll max-h-52">
                     {/* Display previous comments */}
                     {comments.prevComments &&
                       comments.prevComments.map((comment, index) => (
@@ -796,7 +796,7 @@ export const NewProfileDetails = () => {
                 </div>
                 <div className="flex items-center p-2">
                   <textarea
-                    className="flex-grow h-[2.5rem] resize-none rounded-full p-2 text-lg border-2 border-gray-400 outline-none bg-[#e2e8f0] overflow-hidden"
+                    className="flex-grow h-[2.5rem] resize-none rounded-full p-2 text-lg border-2 border-gray-300 outline-none bg-[#e2e8f0] overflow-hidden"
                     id="addComments"
                     name="addComments"
                     placeholder="Type a message..."
