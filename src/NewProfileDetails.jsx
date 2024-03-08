@@ -778,7 +778,18 @@ export const NewProfileDetails = () => {
                     {comments.prevComments &&
                       comments.prevComments.map((comment, index) => (
                         <div key={index} className="mb-2">
-                          <span className="font-bold">{comment.date}:</span> {comment.comment}
+                        <div className="flex flex-col ">
+                          <p className="flex justify-end text-xs">
+                          {comment.date}
+                          </p>
+                          <div className="flex justify-end">
+                          <p className="bg-slate-300 rounded-xl p-2">
+                          {comment.comment}
+                          </p>
+                          </div>
+                          
+                          </div>
+                          {/* <span className="font-bold">{comment.date}:</span> {comment.comment} */}
                         </div>
                       ))}
                   </div>
