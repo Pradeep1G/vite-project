@@ -218,6 +218,7 @@ else if(teamcount==1){
             value={registrationNumber}
             onChange={(e) => setRegistrationNumber(e.target.value)}
             className="ml-2 p-2 border rounded"
+            autoComplete="off"
           />
         </label>
 
@@ -231,6 +232,7 @@ else if(teamcount==1){
               value={partnerRegNumber}
               onChange={(e) => setPartnerRegNumber(e.target.value)}
               className="ml-2 p-2 border rounded "
+              autoComplete="off"
             />
           </label>
           
@@ -244,6 +246,7 @@ else if(teamcount==1){
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             className="ml-2 p-2 border rounded"
+            autoComplete="off"
           />
         </label>
 
@@ -314,6 +317,7 @@ else if(teamcount==1){
                 value={registrationNumber}
                 onChange={(e) => setRegistrationNumber(e.target.value)}
                 className="ml-2 p-2 border rounded"
+                autoComplete="off"
               />
             </label>
     
@@ -327,6 +331,7 @@ else if(teamcount==1){
                   value={partnerRegNumber}
                   onChange={(e) => setPartnerRegNumber(e.target.value)}
                   className="ml-2 p-2 border rounded "
+                  autoComplete="off"
                 />
               </label>
               
@@ -340,6 +345,7 @@ else if(teamcount==1){
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 className="ml-2 p-2 border rounded"
+                autoComplete="off"
               />
             </label>
     
@@ -374,9 +380,10 @@ else if(teamcount==1){
               <input
                 type="text"
                 name="registrationNumber2"
-                value=""
+                value={registrationNumber2}
                 onChange={(e) => setRegistrationNumber2(e.target.value)}
                 className="ml-2 p-2 border rounded"
+                autoComplete="off"
               />
             </label>
     
@@ -387,9 +394,10 @@ else if(teamcount==1){
                 <input
                   type="number"
                   name="partnerRegNumber2"
-                  value=""
+                  value={partnerRegNumber2}
                   onChange={(e) => setPartnerRegNumber2(e.target.value)}
                   className="ml-2 p-2 border rounded "
+                  autoComplete="off"
                 />
               </label>
               
@@ -400,9 +408,10 @@ else if(teamcount==1){
               <input
                 type="password"
                 name="password2"
-                value=""
+                value={password2}
                 onChange={(e) => setPassword2(e.target.value)}
                 className="ml-2 p-2 border rounded"
+                autoComplete="off"
               />
             </label>
     
