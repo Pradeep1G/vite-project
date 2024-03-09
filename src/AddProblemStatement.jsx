@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import LoadingScreen from "./shared/Loader";
 import Alert from "./shared/Alert";
+import back_arrow from "./assets/svgs/back_arrow.svg";
+
 
 export default function AddProblemStatement(){
 
@@ -123,6 +125,16 @@ export default function AddProblemStatement(){
             <div className={`flex items-center justify-center ${alert ? "":"hidden"} `}>
     <Alert type={alertType} message={alertMessage}/>
     </div>
+    <div className="hidden md:fixed md:w-fit md:h-full md:left-1 md:top-[5rem] md:flex md:items-center md:justify-center md:cursor-pointer">
+          <a href="/staff_dashboard/" className="w-fit h-fit">
+            <img
+              className="bg-slate-200 m-4 p-2 w-10 rounded-full hover:bg-slate-300 hover:shadow-md"
+              src={back_arrow}
+              alt="⬅️"
+              title="Go back"
+            ></img>
+          </a>
+        </div>
             <div className="flex flex-row items-center justify-center  p-10">
             <div className="py-10 md:px-20 px-10 border-2 border-black w-fit">
             <p className="flex flow-row items-center justify-center font-bold text-xl">Problem Statements</p>
