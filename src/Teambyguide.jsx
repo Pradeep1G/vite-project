@@ -185,13 +185,19 @@ else if(teamcount==1){
     <div className="flex flex-col items-center justify-center pt-10">
     <p className=' text-2xl font-bold'>Select Your Teams</p>
 
-<div className='pb-2'>
+    <div className='pb-2'>
 <ul>
 <li className='font-semibold'>Instructions : </li>
-    <li>1.Faculties have the privilege to select the 1 or 2 teams under your guidance</li>
-    <li>2. Simply input the registered numbers of the team members, along with a password for their login access.</li>
-    <li>3. If you're registering a team with multiple members, check the appropriate box to reveal additional fields for entering additional student details.</li>
-    <li>4. Once registered, the team members' information will be seamlessly integrated into your dashboard.</li>
+    {/* <li>1. Faculties have the privilege to select the 1 or 2 teams under your guidance.</li> */}
+    <li>1.  Faculties are allowed to select  1 or 2 teams.</li>
+
+    {/* <li>2. Simply input the registered numbers of the team members, along with a password for their login access.</li> */}
+    <li>2. Enter register no and your own password for registration. check the team box for additional  register members. </li>
+    
+    {/* <li>3. If you're registering a team with multiple members, check the appropriate box to reveal additional fields for entering additional student details.</li> */}
+    <li>3. After registration student details will be displayed in the dashboard.</li>
+   
+    {/* <li>4. Once registered, the team members' information will be seamlessly integrated into your dashboard.</li> */}
 </ul>
 </div>
 
@@ -285,10 +291,16 @@ else if(teamcount==1){
 <div className='pb-2'>
 <ul>
 <li className='font-semibold'>Instructions : </li>
-    <li>1. Faculties have the privilege to select the 1 or 2 teams under your guidance.</li>
-    <li>2. Simply input the registered numbers of the team members, along with a password for their login access.</li>
-    <li>3. If you're registering a team with multiple members, check the appropriate box to reveal additional fields for entering additional student details.</li>
-    <li>4. Once registered, the team members' information will be seamlessly integrated into your dashboard.</li>
+    {/* <li>1. Faculties have the privilege to select the 1 or 2 teams under your guidance.</li> */}
+    <li>1.  Faculties are allowed to select  1 or 2 teams.</li>
+
+    {/* <li>2. Simply input the registered numbers of the team members, along with a password for their login access.</li> */}
+    <li>2. Enter register no and your own password for registration. check the team box for additional  register members. </li>
+    
+    {/* <li>3. If you're registering a team with multiple members, check the appropriate box to reveal additional fields for entering additional student details.</li> */}
+    <li>3. After registration student details will be displayed in the dashboard.</li>
+   
+    {/* <li>4. Once registered, the team members' information will be seamlessly integrated into your dashboard.</li> */}
 </ul>
 </div>
 
