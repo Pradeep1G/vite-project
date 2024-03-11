@@ -691,7 +691,7 @@ export function TeamProfile() {
           )}
         </section>
       </main>
-      <footer className="w-[99vw] h-8 bg-slate-100 text-black text-center ">
+      <footer className="w-full h-fit bg-slate-100 text-black text-center ">
         &copy; {new Date().getFullYear()} Sathyabama University. All rights
         reserved.
       </footer>

@@ -436,6 +436,19 @@ export const NewProfileDetails = () => {
       </div>
 
 
+
+      <div className="hidden md:fixed md:w-fit md:h-full md:left-1 md:top-[5rem] md:flex md:items-center md:justify-center md:cursor-pointer">
+          <a href="/staff_dashboard" className="w-fit h-fit">
+            <img
+              className="bg-slate-200 m-4 p-2 w-10 rounded-full hover:bg-slate-300 hover:shadow-md"
+              src={back_arrow}
+              alt="⬅️"
+              title="Go back"
+            ></img>
+          </a>
+        </div>
+
+
       {/* update conatainer  */}
       <div className="flex flex-wrap items-center justify-center space-x-2">
         <div className="container mx-auto flex flex-wrap md:flex-row w-full items-center justify-center space-x-2">
@@ -771,9 +784,9 @@ export const NewProfileDetails = () => {
               <div className="bg-[#9e1c3f] text-white py-2 rounded-t-xl mb-4 mx-0">
                 <h1 className="text-2xl font-bold text-center">Comments</h1>
               </div>
-              <div className="flex flex-col h-full">
+              <div className="flex flex-col  h-full">
                 <div className="overflow-auto h-fit">
-                  <div className="p-2 mb-1 text-lg  whitespace-pre-wrap overflow-y-scroll max-h-52">
+                  <div className="p-2 mb-1 text-lg  whitespace-pre-wrap overflow-y-scroll h-52">
                     {/* Display previous comments */}
                     {comments.prevComments &&
                       comments.prevComments.map((comment, index) => (
@@ -835,7 +848,7 @@ export const NewProfileDetails = () => {
         </button>
       </section>
       {/* footer  */}
-      <footer className="w-[99vw] h-8 bg-slate-100 text-black text-center ">
+      <footer className="w-full h-fit bg-slate-100 text-black text-center ">
         &copy; {new Date().getFullYear()} Sathyabama University. All rights
         reserved.
       </footer>
