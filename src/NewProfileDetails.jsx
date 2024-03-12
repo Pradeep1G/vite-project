@@ -317,7 +317,7 @@ export const NewProfileDetails = () => {
                 </div>
                 <div className="w-full flex items-center justify-center h-2/5 bg-slate-100 text-[#6C757D]  hover:bg-slate-200">
                   <a
-                    href="#"
+                    href="/staff_dashboard"
                     className="w-full flex justify-start items-center gap-1 pl-2"
                   >
                     <img className="h-4 w-4" src={home} alt="Home" />
@@ -347,7 +347,7 @@ export const NewProfileDetails = () => {
               </div>
               <div className="w-full flex items-center justify-center h-2/5 bg-slate-100 text-[#6C757D]  hover:bg-slate-200">
                 <a
-                  href="#"
+                  href="/staff_dashboard"
                   className="w-full flex justify-start items-center gap-1 pl-2"
                 >
                   <img className="h-4 w-4" src={home} alt="Home" />
@@ -837,15 +837,25 @@ export const NewProfileDetails = () => {
 
       {/* Submit button  */}
       <section
-        className="w-[96%] md:w-[90%] mx-auto h-fit flex flex-col md:flex-row justify-center items-center my-4"
+        className="w-[96%] md:w-[90%] mx-auto h-fit flex flex-col md:flex-row md:space-x-4 justify-center items-center my-4"
         onClick={() => setOpen(false)}
       >
+      <a href="/staff_dashboard" >
+      <button
+          className="bg-blue-600  h-10 p-2 rounded-3xl text-white font-semibold hidden md:block mb-1 hover:shadow-[0px_0px_10px_gray] hover:scale-105"
+          href="/staff_dashboard"
+        >
+          Dashboard
+        </button>
+      </a>
         <button
-          className="bg-blue-600 w-24 h-10 rounded-3xl text-white font-medium mb-1 hover:shadow-[0px_0px_10px_gray] hover:scale-105"
+          className="bg-blue-600 w-24 h-10 rounded-3xl text-white font-semibold mb-1 hover:shadow-[0px_0px_10px_gray] hover:scale-105"
           onClick={handleFinalSubmit}
         >
           Submit
         </button>
+
+        
       </section>
       {/* footer  */}
       <footer className="w-full h-fit bg-slate-100 text-black text-center ">

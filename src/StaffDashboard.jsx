@@ -151,13 +151,13 @@ const [guideImg, setGuideImg] = useState();
           <h3 className="text-white">{userEmail}</h3>
           &nbsp;&nbsp;&nbsp;
           <span
-            className="rounded-full flex items-center justify-center"
+            className={`rounded-full flex items-center justify-center ${open ? "":"animate-bounce"}`}
             onClick={() => {
               setOpen(!open);
             }}
           >
             <svg
-              className="h-5 w-5 text-gray-100"
+              className="h-8 w-8 text-gray-100"
               viewBox="0 0 20 20"
               fill="currentColor"
             >

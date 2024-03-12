@@ -260,7 +260,7 @@ export function TeamProfile() {
                 </div>
                 <div className="w-full flex items-center justify-center h-2/5 bg-slate-100 text-[#6C757D]  hover:bg-slate-200">
                   <a
-                    href="#"
+                    href="/staff_dashboard"
                     className="w-full flex justify-start items-center gap-1 pl-2"
                   >
                     <img className="h-4 w-4" src={home} alt="Home" />
@@ -290,7 +290,7 @@ export function TeamProfile() {
               </div>
               <div className="w-full flex items-center justify-center h-2/5 bg-slate-100 text-[#6C757D]  hover:bg-slate-200">
                 <a
-                  href="#"
+                  href="/staff_dashboard"
                   className="w-full flex justify-start items-center gap-1 pl-2"
                 >
                   <img className="h-4 w-4" src={home} alt="Home" />
