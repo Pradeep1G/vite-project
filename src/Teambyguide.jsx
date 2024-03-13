@@ -207,7 +207,7 @@ else if(teamcount==1){
       <form onSubmit={handleSubmit} className="flex flex-col items-center">
       <p  className='font-bold text-xl pb-2'>Team 1 Details</p>
         <label className="mb-4">
-          If Team:
+          Team Size 2:
           <input
             type="checkbox"
             checked={isTeam}
@@ -245,7 +245,7 @@ else if(teamcount==1){
         )}
 
         <label className="mb-4">
-          Password:
+          <b>Password:</b>
           <input
             type="password"
             name="password"
@@ -312,7 +312,7 @@ else if(teamcount==1){
       <p  className='font-bold text-xl pb-2'>Team 1 Details</p>
 
             <label className="mb-4">
-              If Team:
+              Team Size 2:
               <input
                 type="checkbox"
                 checked={isTeam}
@@ -350,7 +350,7 @@ else if(teamcount==1){
             )}
     
             <label className="mb-4">
-              Password:
+            <b>Password:</b>
               <input
                 type="password"
                 name="password"
@@ -378,7 +378,7 @@ else if(teamcount==1){
       <p  className='font-bold text-xl pb-2'>Team 2 Details</p>
 
             <label className="mb-4">
-              If Team:
+              Team Size 2:
               <input
                 type="checkbox"
                 checked={isTeam2}
@@ -416,7 +416,7 @@ else if(teamcount==1){
             )}
     
             <label className="mb-4">
-              Password:
+            <b>Password:</b>
               <input
                 type="password"
                 name="password2"
