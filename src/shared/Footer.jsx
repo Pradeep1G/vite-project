@@ -21,8 +21,14 @@ const Footer = () => {
             <p className="text-lg font-semibold pb-3.5">Visit us at:</p>
           </div>
           <div className="flex py-1">
-            <img src={Email} alt="Email" /> &nbsp;
-            <p> Mail</p>
+            <div className="cursor-pointer" onClick={()=>{
+            window.open('https://mail.google.com/mail/?view=cm&fs=1&to=guideselection.cse@sathyabama.ac.in');
+            }}>
+            <img src={Email} alt="Email" />
+            </div> &nbsp;
+            <p className="cursor-pointer" onClick={()=>{
+            window.open('https://mail.google.com/mail/?view=cm&fs=1&to=guideselection.cse@sathyabama.ac.in');
+            }}> Mail</p>
           </div>
           <div className="flex py-1">
             <img
