@@ -307,7 +307,7 @@ else if(teamcount==1){
         <div className="flex flex-col items-center justify-center pt-10">
         <p className=' text-2xl font-bold'>Select Your Teams</p>
 
-<div className='pb-2'>
+<div className='pb-8'>
 <ul>
 <li className='font-semibold'>Instructions : </li>
     {/* <li>1. Faculties have the privilege to select the 1 or 2 teams under your guidance.</li> */}
@@ -323,12 +323,12 @@ else if(teamcount==1){
 </ul>
 </div>
 
-        <p className='text-red-500 text-lg font-semibold'>Please click on the checkbox if you intend to have two members in your team.</p>
+        {/* <p className='text-red-500 text-lg font-semibold'>Please click on the checkbox if you intend to have two members in your team.</p> */}
 
         <div className="py-5 p px-20 border-2 border-black w-fit">
           <form onSubmit={handleSubmit} className="flex flex-col items-center">
 
-      <p  className='font-bold text-xl pb-2'>Team 1 Details</p>
+      <p  className='font-bold text-xl pb-8'>Team 1 Details</p>
 
             {/* <label className="mb-4">
               Team Size 2:
@@ -408,7 +408,7 @@ else if(teamcount==1){
         <div className="flex flex-row items-center justify-center pt-10">
         <div className="py-5 px-20 border-2 border-black w-fit">
           <form onSubmit={handleSubmit} className="flex flex-col items-center">
-      <p  className='font-bold text-xl pb-2'>Team 2 Details</p>
+      <p  className='font-bold text-xl pb-8'>Team 2 Details</p>
 
            
     
