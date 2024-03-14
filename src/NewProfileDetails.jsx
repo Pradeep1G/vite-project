@@ -509,7 +509,9 @@ export const NewProfileDetails = () => {
                       backgroundColor: documentation === true ? "gray" : "",
                     }}
                   >
-                    {documentation === false ? "Rejected" : "Reject"}
+                    {/* {documentation === false ? "Rejected" : "Reject"} */}
+                    {documentation === false ? "Reject" : "Reject"}
+
                   </button>
                 </div>
               </div>
@@ -558,7 +560,9 @@ export const NewProfileDetails = () => {
                       backgroundColor: ppt === true ? "gray" : "",
                     }}
                   >
-                    {ppt === false ? "Rejected" : "Reject"}
+                    {/* {ppt === false ? "Rejected" : "Reject"} */}
+                    {ppt === false ? "Reject" : "Reject"}
+
                   </button>
                 </div>
               </div>
@@ -686,7 +690,9 @@ export const NewProfileDetails = () => {
                     backgroundColor: researchPaper === true ? "gray" : "",
                   }}
                 >
-                  {researchPaper === false ? "Rejected" : "Reject"}
+                  {/* {researchPaper === false ? "Rejected" : "Reject"} */}
+                  {researchPaper === false ? "Reject" : "Reject"}
+
                 </button>
               </div>
 

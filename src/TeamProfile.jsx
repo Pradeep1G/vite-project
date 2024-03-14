@@ -442,8 +442,11 @@ export function TeamProfile() {
                           : "#ac3f2c",
                     }}
                   >
-                    {projectDetails.projectApproval === true
+                    {/* {projectDetails.projectApproval === true
                       ? "Rejected"
+                      : "Reject"} */}
+                      {projectDetails.projectApproval === true
+                      ? "Reject"
                       : "Reject"}
                   </button>
                 </div>
@@ -691,6 +694,16 @@ export function TeamProfile() {
           )}
         </section>
       </main>
+      <div className="flex flex-row items-center justify-center">
+      <a href="/staff_dashboard/profile_details" >
+      <button
+          className="bg-blue-600  h-10 p-2 rounded-3xl text-white font-semibold hidden md:block mb-1 hover:shadow-[0px_0px_10px_gray] hover:scale-105"
+          href="/staff_dashboard"
+        >
+          Dashboard
+        </button>
+      </a>
+      </div>
       <footer className="w-full h-fit bg-slate-100 text-black text-center ">
         &copy; {new Date().getFullYear()} Sathyabama University. All rights
         reserved.

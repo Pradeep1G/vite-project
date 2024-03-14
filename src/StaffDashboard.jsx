@@ -169,7 +169,7 @@ const [guideImg, setGuideImg] = useState();
             </svg>
           </span>
           {open && (
-            <div className="hidden absolute md:top-[3rem] md:right-[2px] h-[9rem] w-[10rem] bg-white text-black shadow-2xl  md:flex md:flex-col md:justify-center md:items-center md:gap-[3px] z-50">
+            <div className="hidden absolute md:top-[3rem] md:right-[2px] h-fit w-[10rem] bg-white text-black shadow-2xl  md:flex md:flex-col md:justify-center md:items-center md:gap-[3px] z-50">
               <div className=" w-full text-[0.8rem] text-[#6C757D] font-semibold h-1/5 bg-slate-100">
                 &nbsp;&nbsp;&nbsp; Welcome!
               </div>
