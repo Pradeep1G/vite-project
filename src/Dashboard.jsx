@@ -712,7 +712,7 @@ const Dashboard = () => {
 
 
 
-<div className="mx-4 bg-white rounded-xl shadow-xl mb-4 overflow-hidden">
+<div className="mx-4 hidden bg-white rounded-xl shadow-xl mb-4 overflow-hidden">
       <h1 className="bg-[#9e1c3f] text-white p-4 rounded-t-xl mb-4 font-semibold">Project Submissions</h1>
       <div className="flex flex-col gap-4 m-4 md:flex-row md:items-center">
         <div className="mb-4 md:flex md:items-center flex-grow">
