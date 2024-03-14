@@ -29,7 +29,7 @@ function App() {
           <Route path="/" element={<Home />} />
           {/* <Route path="/practice" element={<Practice />} /> */}
 
-          {/* <Route path="/login" element={<Login />} />  */}
+          <Route path="/login" element={<Login />} /> 
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/staff_login" element={<StaffLogin />} />
           <Route path="/staff_dashboard" element={<StaffDashboard />} />
@@ -38,7 +38,7 @@ function App() {
           <Route path="/staff_dashboard/profile_details/team_profile" element={<TeamProfile />} />
           <Route path="/staff_dashboard/change_password" element={<ChangePassword />} />
           <Route path="/staff_dashboard/add_problem_statement" element={<AddProblemStatement />} />
-          <Route path="/staff_dashboard/select_student" element={<Teambyguide />} />
+          {/* <Route path="/staff_dashboard/select_student" element={<Teambyguide />} /> */}
 
           <Route path="/dashboard/student_Password_change" element={<StudentPasswordChange />} />
 
