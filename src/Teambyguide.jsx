@@ -136,7 +136,7 @@ const navigate = useNavigate();
             setAlertType("success")
         }
         else{
-            setAlertMessage("Failed to Submit!")
+            setAlertMessage("Failed to Submit! The Student may have been already selected or try again")
             setAlertType("fail")
         }
         alertDelay();
