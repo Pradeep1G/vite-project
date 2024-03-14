@@ -44,6 +44,10 @@ const LoginNavBar = () => {
             About
           </a>
 
+          <p className="cursor-pointer" onClick={()=>{
+            window.open('https://mail.google.com/mail/?view=cm&fs=1&to=guideselection.cse@sathyabama.ac.in');
+            }}> Support</p>
+
         </div>
         <div className="lg:hidden flex items-center">
           <button
@@ -66,6 +70,10 @@ const LoginNavBar = () => {
           <a className="py-3" href="/">
             About
           </a>
+
+          <p className="cursor-pointer" onClick={()=>{
+            window.open('https://mail.google.com/mail/?view=cm&fs=1&to=guideselection.cse@sathyabama.ac.in');
+            }}> Support</p>
 
         </div>
       )}
