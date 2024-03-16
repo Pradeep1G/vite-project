@@ -73,8 +73,8 @@ const StaffLogin = () => {
       try {
     setIsLoading(true);
 
-        const response = await axios.get(
-          `${serverPath1}/staffLogin/check/${formData.email}/${formData.password}`
+        const response = await axios.post(
+          `${serverPath1}/staffLogin/check/${formData.email}/password`, {"passcode":formData["password"]}
         );
         setIsLoading(false);
 
