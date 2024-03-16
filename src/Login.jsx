@@ -93,7 +93,8 @@ const Login = () => {
             "/api/check/" +
             formData["email"] +
             "/" +
-            formData["password"]
+            "password",
+            {"passcode":formData["password"]}
         );
         // console.warn(response.data);
 
