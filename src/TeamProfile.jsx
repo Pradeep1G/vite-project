@@ -324,7 +324,7 @@ export function TeamProfile() {
             ></img>
           </a>
         </div>
-        <section className="w-full md:w-[98%] h-12 bg-[#890632d7] flex justify-center items-center text-white font-medium text-2xl  mb-2">
+        <section className="w-full md:w-[98%] h-12 bg-[#9e1c3f] flex justify-center items-center text-white font-medium text-2xl  mb-2">
           Team Profile
           {/* {projectDetails.projectApproval === true && (
             <img src={tick_mark} className="ml-2 mt-1 h-6 w-6" />
@@ -416,6 +416,7 @@ export function TeamProfile() {
                   spellCheck="off"
                 />
                 <div className="w-full h-fit flex justify-center md:justify-end items-center ">
+                <p className="text-red-500 text-sm">NOTE:- </p><p className="text-black text-sm">If you reject, this team will get an option to edit those project details in student dashboard.</p>
                   <button
                     className="mx-3 my-2 px-4 py-1 rounded-3xl text-[1rem] text-white font-medium shadow-[0px_0px_10px_gray] hover:scale-105 active:scale-100 active:shadow-[0px_0px_12px_black]"
                     type="button"
@@ -467,7 +468,7 @@ export function TeamProfile() {
               //   : "md:w-[48%]"
             }
           >
-            <div className="w-full h-[3.5rem] bg-[#831238e8] text-white text-2xl font-medium flex flex-col justify-center items-center ">
+            <div className="w-full h-[3.5rem] bg-[#9e1c3f] text-white text-2xl font-medium flex flex-col justify-center items-center ">
               Student Details
             </div>
             <div className="w-full h-fit py-5 bg-slate-100 flex justify-center items-center">
@@ -583,7 +584,7 @@ export function TeamProfile() {
         }`
       }
     >
-              <div className="w-full h-[3.5rem] bg-[#831238e8] text-white text-2xl font-medium flex flex-col justify-center items-center ">
+              <div className="w-full h-[3.5rem] bg-[#9e1c3f] text-white text-2xl font-medium flex flex-col justify-center items-center ">
                 Student Details
               </div>
               <div className="w-full h-fit py-5 bg-slate-100 flex justify-center items-center">
