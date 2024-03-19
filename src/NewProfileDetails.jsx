@@ -786,7 +786,7 @@ export const NewProfileDetails = () => {
               )}
             </div>
             {/* Comments  */}
-            <div className="bg-white rounded-xl shadow-xl mb-4 min-w-72 min-h-80 max-h-96">
+            <div className="bg-white rounded-xl shadow-xl mb-4 min-w-72 max-w-72 min-h-80 max-w-96 max-h-96">
               <div className="bg-[#9e1c3f] text-white py-2 rounded-t-xl mb-4 mx-0">
                 <h1 className="text-2xl font-bold text-center">Comments</h1>
               </div>
@@ -813,9 +813,9 @@ export const NewProfileDetails = () => {
                       ))}
                   </div>
                 </div>
-                <div className="flex items-center p-2">
+                <div className="flex flex-col items-center p-2">
                   <textarea
-                    className="flex-grow h-[2.5rem] resize-none rounded-full p-1 text-lg border-2 border-gray-300 outline-none bg-[#e2e8f0] overflow-hidden"
+                    className="flex-grow w-full resize-none max-h-36 rounded-3xl pt-2  px-4 border-2 border-gray-300 outline-none bg-[#e2e8f0] "
                     id="addComments"
                     name="addComments"
                     placeholder="Type a message..."
