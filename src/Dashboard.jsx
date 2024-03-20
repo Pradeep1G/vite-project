@@ -86,14 +86,15 @@ const Dashboard = () => {
     // Clear editedProjectDetails when entering edit mode
     if (!isEditable) {
       setEditedProjectDetails({
-        projectTitle: "",
-        projectDomain: "",
-        projectDesc: "",
+        projectTitle: projectDetails[0]["projectTitle"],
+        projectDomain: projectDetails[0]["projectDomain"],
+        projectDesc: projectDetails[0]["projectDesc"],
       });
     }
     setIsEditable(!isEditable);
   };
   const handleInputChange = (e) => {
+    setShowmsg(true);
     const { name, value } = e.target;
     setEditedProjectDetails((prevDetails) => ({
       ...prevDetails,
@@ -147,6 +148,7 @@ const Dashboard = () => {
       // Refresh the page after successful submission
       // window.location.reload();
       seteditProjectDetails(false);
+      setIsEditable(false);
 
     } catch (error) {
       // console.error('Error updating project details:', error);
@@ -262,6 +264,7 @@ const Dashboard = () => {
           // console.warn(StudentData);
           seteditProjectDetails(response.data.studentData[0].editProjectDetails);
           setprojectDetails(response.data.projectDetails);
+          setEditedProjectDetails({"projectDesc":projectDetails[0]["projectDesc"], "projectDomain":projectDetails[0]["projectDomain"], "projectTitle":projectDetails[0]["projectTitle"]});
           setProjectStatus(response.data.projectStatus[0]);
           // console.warn(response.data.projectStatus);
           setDocumentation(response.data.documentation);
@@ -387,6 +390,8 @@ const Dashboard = () => {
       setAlertMessage("");
     }, 3000); // 3000 milliseconds = 3 seconds
   };
+
+  const [showMsg, setShowmsg] = useState(false);
 
  
   return (
@@ -573,10 +578,18 @@ const Dashboard = () => {
               type="text"
               name="projectTitle"
               value={isEditable ? editedProjectDetails.projectTitle : projectDetails[0]['projectTitle']}
+              // value = {isEditable? projectDetails[0]['projectTitle'] : projectDetails[0]['projectTitle']}
+              // defaultValue={projectDetails[0]['projectTitle']}
+              content={projectDetails[0]['projectTitle']}
+              contentEditable
               onChange={handleInputChange}
               className="w-full p-2 border rounded focus:outline-none focus:border-blue-500"
               style={{ backgroundColor: '#f0f0f0', color: '#333' }}
               readOnly={!isEditable}
+              onClick={()=>{
+                  setShowmsg(true)
+              }}
+              title={`${editProjectDetails || showMsg ? "Click on Edit button below":""}`}
             />
           </div>
 
