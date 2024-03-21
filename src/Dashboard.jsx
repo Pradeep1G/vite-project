@@ -124,11 +124,11 @@ const Dashboard = () => {
         !editedProjectDetails.projectDesc ||
         !projectType
       ) {
-    console.warn("hii")
+    // console.warn("hii")
 
         // alert('Please fill in all the fields before submitting.');
         setAlert(true);
-        setAlertMessage("Select your project option")
+        setAlertMessage("Select Your Project Category")
         setAlertType("fail")
         alertDelay();
         return;
@@ -228,7 +228,10 @@ const Dashboard = () => {
         !editedProjectDetails2.projectDesc ||
         !projectType2
       ) {
-        alert('Please fill in all the fields before submitting.');
+        setAlert(true);
+        setAlertMessage("Select Your Project Category")
+        setAlertType("fail")
+        alertDelay();
         return;
       }
 
@@ -742,7 +745,7 @@ const Dashboard = () => {
           {isEditable && <div>
                 <button type="button" class="inline-flex w-fit justify-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50" 
                 onClick={()=>{setShowMenu(!showMenu)}}>
-            {projectType ? projectType : "Options"}
+            {projectType ? projectType : "Category"}
             <svg class="-mr-1 h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
               <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
             </svg>
@@ -847,7 +850,7 @@ const Dashboard = () => {
           {isEditable2 && <div>
                 <button type="button" class="inline-flex w-fit justify-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50" 
                 onClick={()=>{setShowMenu(!showMenu)}}>
-            {projectType2 ? projectType2 : "Options"}
+            {projectType2 ? projectType2 : "Category"}
             <svg class="-mr-1 h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
               <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
             </svg>
