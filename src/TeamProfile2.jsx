@@ -481,7 +481,7 @@ export function TeamProfile2() {
         <section className="w-full md:w-[97%] h-fit flex flex-col md:flex-row justify-center items-center gap-[0.1rem] md:gap-5">
         <form
     className={
-      `${"h-fit w-full flex flex-col gap-1 justify-center items-center rounded shadow-[0px_0px_10px_gray] mb-4"}${" "}${
+      `${"h-fit w-full hidden flex flex-col gap-1 justify-center items-center rounded shadow-[0px_0px_10px_gray] mb-4"}${" "}${
         !team ? "md:w-full" : "md:w-[49.5%]"
       }`
               // +
@@ -608,7 +608,7 @@ export function TeamProfile2() {
       }
     >
               <div className="w-full h-[3.5rem] bg-[#9e1c3f] text-white text-2xl font-medium flex flex-col justify-center items-center ">
-                Student Details
+                Student-2 Details
               </div>
               <div className="w-full h-fit py-5 bg-slate-100 flex justify-center items-center">
                 <img

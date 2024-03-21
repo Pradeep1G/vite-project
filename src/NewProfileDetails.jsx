@@ -463,7 +463,10 @@ export const NewProfileDetails = () => {
               <p className="text-lg font-semibold text-gray-700 flex justify-center">{projectDetails.projectId}</p>
               <p className="text-lg text-gray-600 flex justify-center">{projectDetails.projectTitle}</p>
               <p className="text-lg text-gray-600 flex justify-center">{projectDetails.projectDomain}</p>
+
             </div>
+            <p className="text-2xl text-gray-600 flex justify-center text-center font-bold text-black">Professional Training - 2<br></br>Feedback</p>
+
             <div className="w-80% h-fit mt-2 flex justify-center items-center pt-6 px-5">
               <a
                 href="/staff_dashboard/profile_details/team_profile"
