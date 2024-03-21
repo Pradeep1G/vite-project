@@ -15,13 +15,15 @@ const Dashboard = () => {
   const teamId = localStorage.getItem("teamId");
 
   const [guideComments, setGuideComments] = useState([]);
+  const [guideComments2, setGuideComments2] = useState([]);
+
 //  const [Teamid,setTeamid]=useState();
 
   // Function to handle input changes for guide comments
 
-  // const serverPath1 = "http://127.0.0.1:5000"
+  const serverPath1 = "http://127.0.0.1:5000"
   //  const serverPath1 = "https://gpaserver2.onrender.com";
-  const serverPath1 = "https://guideselectionserver.onrender.com";
+  // const serverPath1 = "https://guideselectionserver.onrender.com";
 
   const [isLoading, setisLoading] = useState(false);
   const [alert, setAlert]  = useState(false);
@@ -72,13 +74,25 @@ const Dashboard = () => {
   const [projectDetails, setprojectDetails] = useState([{
     "projectTitle":null,
     "projectDesc":null,
-    "projectDomain": null
+    "projectDomain": null,
+    "projectType":null
   }]);
+
+  const [projectDetails2, setprojectDetails2] = useState([{
+    "projectTitle":null,
+    "projectDesc":null,
+    "projectDomain": null,
+    "projectType":null
+  }]);
+
+
+  const [projectType, setprojectType] = useState(null);
   const [isEditable, setIsEditable] = useState(false);
   const [editedProjectDetails, setEditedProjectDetails] = useState({
     projectTitle: projectDetails[0]["projectTitle"],
     projectDomain: projectDetails[0]["projectDomain"],
     projectDesc: projectDetails[0]["projectDesc"],
+    projectType: projectType
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [editProjectDetails, seteditProjectDetails] = useState();
@@ -89,6 +103,7 @@ const Dashboard = () => {
         projectTitle: projectDetails[0]["projectTitle"],
         projectDomain: projectDetails[0]["projectDomain"],
         projectDesc: projectDetails[0]["projectDesc"],
+        projectType: null
       });
     }
     setIsEditable(!isEditable);
@@ -106,18 +121,124 @@ const Dashboard = () => {
       if (
         !editedProjectDetails.projectTitle ||
         !editedProjectDetails.projectDomain ||
-        !editedProjectDetails.projectDesc
+        !editedProjectDetails.projectDesc ||
+        !projectType
+      ) {
+    console.warn("hii")
+
+        // alert('Please fill in all the fields before submitting.');
+        setAlert(true);
+        setAlertMessage("Select your project option")
+        setAlertType("fail")
+        alertDelay();
+        return;
+      }
+
+      else{
+
+        setIsSubmitting(true);
+
+        const updatedData = {
+          projectTitle: editedProjectDetails.projectTitle,
+          projectDesc: editedProjectDetails.projectDesc,
+          projectDomain: editedProjectDetails.projectDomain,
+          projectType: projectType
+        };
+
+        
+        setisLoading(true);
+        const response = await axios.post(
+          `${serverPath1}/studentLogin/updateProjectDetails/${userEmail}`,
+          updatedData
+        );
+        setisLoading(false)
+        // console.warn(response.data);
+        
+
+        if(response.data.message==="Success"){
+          setAlert(true);
+          setAlertMessage("Project Details Updated Successfully!")
+          setAlertType("success")
+        }else{
+          setAlert(true);
+          setAlertMessage("Failed to Update Project Details!")
+          setAlertType("fail")
+        }
+        alertDelay();
+        
+
+        // setProjectDetails([editedProjectDetails]);
+        // setIsEditable(false);
+
+        // Refresh the page after successful submission
+        // window.location.reload();
+        seteditProjectDetails(false);
+        setIsEditable(false);
+     }
+
+    } catch (error) {
+      // console.error('Error updating project details:', error);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+
+
+
+
+
+  // Student2 UseStates
+  const [projectType2, setprojectType2] = useState(null);
+  const [isEditable2, setIsEditable2] = useState(false);
+  const [editedProjectDetails2, setEditedProjectDetails2] = useState({
+    projectTitle: projectDetails2[0]["projectTitle"] || null,
+    projectDomain: projectDetails2[0]["projectDomain"] || null,
+    projectDesc: projectDetails2[0]["projectDesc"] || null,
+    projectType: projectType || null
+  });
+  const [isSubmitting2, setIsSubmitting2] = useState(false);
+  const [editProjectDetails2, seteditProjectDetails2] = useState();
+  const toggleEdit2 = () => {
+    // Clear editedProjectDetails when entering edit mode
+    if (!isEditable2) {
+      setEditedProjectDetails2({
+        projectTitle: projectDetails2[0]["projectTitle"],
+        projectDomain: projectDetails2[0]["projectDomain"],
+        projectDesc: projectDetails2[0]["projectDesc"],
+        projectType: null
+      });
+    }
+    setIsEditable2(!isEditable2);
+  };
+  const handleInputChange2 = (e) => {
+    setShowmsg(true);
+    const { name, value } = e.target;
+    setEditedProjectDetails2((prevDetails) => ({
+      ...prevDetails,
+      [name]: value,
+    }));
+  };
+  const handleUpdateProjectDetails2 = async () => {
+    console.warn("hi")
+    try {
+      if (
+        !editedProjectDetails2.projectTitle ||
+        !editedProjectDetails2.projectDomain ||
+        !editedProjectDetails2.projectDesc ||
+        !projectType2
       ) {
         alert('Please fill in all the fields before submitting.');
         return;
       }
 
-      setIsSubmitting(true);
+      setIsSubmitting2(true);
 
       const updatedData = {
-        projectTitle: editedProjectDetails.projectTitle,
-        projectDesc: editedProjectDetails.projectDesc,
-        projectDomain: editedProjectDetails.projectDomain,
+        p2projectTitle: editedProjectDetails2.projectTitle,
+        p2projectDesc: editedProjectDetails2.projectDesc,
+        p2projectDomain: editedProjectDetails2.projectDomain,
+        p2projectType: projectType2
       };
 
       
@@ -147,15 +268,17 @@ const Dashboard = () => {
 
       // Refresh the page after successful submission
       // window.location.reload();
-      seteditProjectDetails(false);
-      setIsEditable(false);
+      seteditProjectDetails2(false);
+      setIsEditable2(false);
 
     } catch (error) {
       // console.error('Error updating project details:', error);
     } finally {
-      setIsSubmitting(false);
+      setIsSubmitting2(false);
     }
   };
+
+
   
   const [documentation, setDocumentation] = useState([{
     "researchPaper": null,
@@ -263,13 +386,18 @@ const Dashboard = () => {
           // console.warn(guideMailId)
           // console.warn(StudentData);
           seteditProjectDetails(response.data.studentData[0].editProjectDetails);
+          seteditProjectDetails2(response.data.studentData[0].editProjectDetails2);
+
           setprojectDetails(response.data.projectDetails);
+          setprojectDetails2(response.data.projectDetails2)
           setEditedProjectDetails({"projectDesc":projectDetails[0]["projectDesc"], "projectDomain":projectDetails[0]["projectDomain"], "projectTitle":projectDetails[0]["projectTitle"]});
           setProjectStatus(response.data.projectStatus[0]);
           // console.warn(response.data.projectStatus);
           setDocumentation(response.data.documentation);
           setGuideimg(response.data.guideImage);
           setGuideComments(response.data.comments);
+          setGuideComments2(response.data.comments2);
+
           // setTeamid(response.data.teamId);
           // console.warn(guideComments);
           // console.warn(projectStatus);
@@ -392,6 +520,8 @@ const Dashboard = () => {
   };
 
   const [showMsg, setShowmsg] = useState(false);
+
+  const [showMenu, setShowMenu] = useState(false);
 
  
   return (
@@ -568,7 +698,7 @@ const Dashboard = () => {
 </div>
 
 <div className="mx-4 bg-white rounded-xl shadow-xl mb-4 overflow-hidden">
-        <h1 className="bg-[#9e1c3f] text-white p-4 rounded-t-xl mb-4 font-semibold">Project Details</h1>
+        <h1 className="bg-[#9e1c3f] text-white p-4 rounded-t-xl mb-4 font-semibold">Student-1 Project Details</h1>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4 mx-2">
           {/* Title */}
@@ -606,6 +736,35 @@ const Dashboard = () => {
               readOnly={!isEditable}
             />
           </div>
+
+
+          {/* Project Option  */}
+          {isEditable && <div>
+                <button type="button" class="inline-flex w-fit justify-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50" 
+                onClick={()=>{setShowMenu(!showMenu)}}>
+            {projectType ? projectType : "Options"}
+            <svg class="-mr-1 h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+              <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+            </svg>
+          </button>
+                {showMenu && <div class=" w-56 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1">
+          <div class="py-1" role="none">
+          <button onClick={()=>{setShowMenu(!showMenu); setprojectType("HCL PT2 Internship")}} class="text-gray-700 block w-full px-4 py-2 text-left text-sm">HCL PT2 Internship</button>
+          <button onClick={()=>{setShowMenu(!showMenu); setprojectType("Pride Certification")}} class="text-gray-700 block w-full px-4 py-2 text-left text-sm" >Pride Certification</button>
+          <button onClick={()=>{setShowMenu(!showMenu); setprojectType("NPTEL")}} class="text-gray-700 block w-full px-4 py-2 text-left text-sm" >NPTEL</button>
+          <button onClick={()=>{setShowMenu(!showMenu); setprojectType("Own Project")}} class="text-gray-700 block w-full px-4 py-2 text-left text-sm" >Own Project</button>
+          <button onClick={()=>{setShowMenu(!showMenu); setprojectType("Oracle Internship")}} class="text-gray-700 block w-full px-4 py-2 text-left text-sm" >Oracle Internship</button>
+          <button onClick={()=>{setShowMenu(!showMenu); setprojectType("Private/Government Internship")}} class="text-gray-700 block w-full px-4 py-2 text-left text-sm" >Private/Government Internship</button>
+          <button onClick={()=>{setShowMenu(!showMenu); setprojectType("HCL System Engineering")}} class="text-gray-700 block w-full px-4 py-2 text-left text-sm"> HCL System Engineering</button>
+          <button onClick={()=>{setShowMenu(!showMenu); setprojectType("Any Other")}} class="text-gray-700 block w-full px-4 py-2 text-left text-sm" >Any Other</button>
+
+            
+          </div>
+            </div>}
+            </div> }
+          {/* Project Option  */}
+
+
         </div>
 
         {/* Description */}
@@ -637,6 +796,114 @@ const Dashboard = () => {
           <p></p>
         )}
       </div>
+
+
+
+
+
+{/* Person2 Project Details */}
+{StudentData[0]["p2name"] && <div className="mx-4 bg-white rounded-xl shadow-xl mb-4 overflow-hidden">
+        <h1 className="bg-[#9e1c3f] text-white p-4 rounded-t-xl mb-4 font-semibold">Student-2 Project Details</h1>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4 mx-2">
+          {/* Title */}
+          <div>
+            <label className="block text-lg font-semibold text-gray-700 mb-2">Title:</label>
+            <input
+              type="text"
+              name="projectTitle"
+              value={isEditable2 ? editedProjectDetails2.projectTitle : projectDetails2[0]['projectTitle']}
+              // value = {isEditable? projectDetails[0]['projectTitle'] : projectDetails[0]['projectTitle']}
+              // defaultValue={projectDetails[0]['projectTitle']}
+              content={projectDetails2[0]['projectTitle']}
+              contentEditable
+              onChange={handleInputChange2}
+              className="w-full p-2 border rounded focus:outline-none focus:border-blue-500"
+              style={{ backgroundColor: '#f0f0f0', color: '#333' }}
+              readOnly={!isEditable2}
+              onClick={()=>{
+                  setShowmsg(true)
+              }}
+              title={`${editProjectDetails2 || showMsg ? "Click on Edit button below":""}`}
+            />
+          </div>
+
+          {/* Domain */}
+          <div>
+            <label className="block text-lg font-semibold text-gray-700 mb-2">Domain:</label>
+            <input
+              type="text"
+              name="projectDomain"
+              value={isEditable2 ? editedProjectDetails2.projectDomain : projectDetails2[0]['projectDomain']}
+              onChange={handleInputChange2}
+              className="w-full p-2 border rounded focus:outline-none focus:border-blue-500"
+              style={{ backgroundColor: '#f0f0f0', color: '#333' }}
+              readOnly={!isEditable2}
+            />
+          </div>
+
+
+          {/* Project Option  */}
+          {isEditable2 && <div>
+                <button type="button" class="inline-flex w-fit justify-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50" 
+                onClick={()=>{setShowMenu(!showMenu)}}>
+            {projectType2 ? projectType2 : "Options"}
+            <svg class="-mr-1 h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+              <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+            </svg>
+          </button>
+                {showMenu && <div class=" w-56 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1">
+          <div class="py-1" role="none">
+          <button onClick={()=>{setShowMenu(!showMenu); setprojectType2("HCL PT2 Internship")}} class="text-gray-700 block w-full px-4 py-2 text-left text-sm">HCL PT2 Internship</button>
+          <button onClick={()=>{setShowMenu(!showMenu); setprojectType2("Pride Certification")}} class="text-gray-700 block w-full px-4 py-2 text-left text-sm" >Pride Certification</button>
+          <button onClick={()=>{setShowMenu(!showMenu); setprojectType2("NPTEL")}} class="text-gray-700 block w-full px-4 py-2 text-left text-sm" >NPTEL</button>
+          <button onClick={()=>{setShowMenu(!showMenu); setprojectType2("Own Project")}} class="text-gray-700 block w-full px-4 py-2 text-left text-sm" >Own Project</button>
+          <button onClick={()=>{setShowMenu(!showMenu); setprojectType2("Oracle Internship")}} class="text-gray-700 block w-full px-4 py-2 text-left text-sm" >Oracle Internship</button>
+          <button onClick={()=>{setShowMenu(!showMenu); setprojectType2("Private/Government Internship")}} class="text-gray-700 block w-full px-4 py-2 text-left text-sm" >Private/Government Internship</button>
+          <button onClick={()=>{setShowMenu(!showMenu); setprojectType2("HCL System Engineering")}} class="text-gray-700 block w-full px-4 py-2 text-left text-sm"> HCL System Engineering</button>
+          <button onClick={()=>{setShowMenu(!showMenu); setprojectType2("Any Other")}} class="text-gray-700 block w-full px-4 py-2 text-left text-sm" >Any Other</button>
+
+            
+          </div>
+            </div>}
+            </div> }
+          {/* Project Option  */}
+
+
+        </div>
+
+        {/* Description */}
+        <div className="py-4 mx-2">
+          <label className="block text-lg font-semibold text-gray-700">Description:</label>
+          <textarea
+            name="projectDesc"
+            value={isEditable2 ? editedProjectDetails2.projectDesc : projectDetails2[0]['projectDesc']}
+            onChange={handleInputChange2}
+            className="w-full p-2 border rounded focus:outline-none focus:border-blue-500 h-36"
+            style={{ backgroundColor: '#f0f0f0', color: '#333' }}
+            readOnly={!isEditable2}
+          />
+        </div>
+        <br></br>
+
+        {editProjectDetails2 ? (
+          <div className="flex justify-center space-x-4 mb-4">
+            <button onClick={toggleEdit2} className="bg-blue-500 text-white px-4  py-3 rounded focus:outline-none">
+              {isEditable2 ? 'Cancel' : 'Edit'}
+            </button>
+            {isEditable2 && !isSubmitting2 && (
+              <button onClick={handleUpdateProjectDetails2} className="bg-blue-500 text-white p-2 rounded focus:outline-none">
+                Submit
+              </button>
+            )}
+          </div>
+        ) : (
+          <p></p>
+        )}
+      </div>
+        }
+      {/* Person2 Project Details */}
+
 
 
 {/* <div>
@@ -828,7 +1095,7 @@ const Dashboard = () => {
 
 
     <div className="mx-4 bg-white rounded-xl shadow-xl mb-4 ">
-      <h1 className="bg-[#9e1c3f] text-white p-4 rounded-t-xl mb-4 font-semibold">Guide Comments</h1>
+      <h1 className="bg-[#9e1c3f] text-white p-4 rounded-t-xl mb-4 font-semibold">Guide Feedback on student 1 Project</h1>
       <div className="overflow-auto m-2 max-h-60"> {/* Adjust max height as needed */}
         {guideComments[0] ? (
           guideComments.map((comment, index) => {
@@ -846,6 +1113,29 @@ const Dashboard = () => {
         )}
       </div>
     </div>
+
+
+{ StudentData[0]["p2name"] && 
+    <div className="mx-4 bg-white rounded-xl shadow-xl mb-4 ">
+      <h1 className="bg-[#9e1c3f] text-white p-4 rounded-t-xl mb-4 font-semibold">Guide Feedback on Student 2 Project</h1>
+      <div className="overflow-auto m-2 max-h-60"> {/* Adjust max height as needed */}
+        {guideComments2[0] ? (
+          guideComments2.map((comment, index) => {
+            const date = Object.keys(comment)[0];
+            const text = comment[date];
+            return (
+              <div className="bg-gray-200 p-3 rounded mb-2" key={index}>
+                <p className="text-sm text-gray-600">Date: {date}</p>
+                <p className="text-base text-gray-800">Comment: {text}</p>
+              </div>
+            );
+          })
+        ) : (
+          <p className="p-4 flex justify-center">No comments yet</p>
+        )}
+      </div>
+    </div>
+    }
 
 
 

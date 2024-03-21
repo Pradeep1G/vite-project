@@ -15,9 +15,9 @@ import LoadingScreen from "./shared/Loader";
 import Alert from "./shared/Alert";
 
 export const NewProfileDetails = () => {
-  // const serverPath1 = "http://127.0.0.1:5000"
+  const serverPath1 = "http://127.0.0.1:5000"
   // const serverPath1 = "https://gpaserver2.onrender.com";
-  const serverPath1 = "https://guideselectionserver.onrender.com";
+  // const serverPath1 = "https://guideselectionserver.onrender.com";
 
   const [isLoading, setisLoading] = useState(false);
   const [alert, setAlert] = useState(false);
@@ -77,10 +77,30 @@ export const NewProfileDetails = () => {
         ...comments,
         [eve.target.name]: eve.target.value,
       });
-    console.log(comments.addComments);
+    // console.log(comments.addComments);
     // console.log(eve.target.value);
     // console.log(eve.target.name, eve.target.value);
   };
+
+
+
+
+  const [comments2, setComments2] = useState({
+    prevComments: "",
+    addComments: "",
+  });
+
+  const handleAddComments2 = (eve) => {
+    (prev) =>
+      setComments2({
+        ...comments,
+        [eve.target.name]: eve.target.value,
+      });
+  };
+
+
+
+
 
   const handleProjectMarks = (eve) => {
     (projectMarks) =>
@@ -146,9 +166,23 @@ export const NewProfileDetails = () => {
           return { date: "", comment: "" };
         });
 
+        const formattedComments2 = response.data.comments2.map((item) => {
+          if (item.date && item.comment) {
+            return { date: item.date, comment: item.comment };
+          }
+          const key = Object.keys(item)[0];
+          if (key) {
+            return { date: key, comment: item[key] || "" };
+          }
+
+          return { date: "", comment: "" };
+        });
+
         // console.warn('Formatted Comments:', formattedComments);
 
         setComments({ prevComments: formattedComments });
+        setComments2({ prevComments: formattedComments2 });
+
       } catch (error) {
         console.error("Error fetching team details:", error.message);
         // Handle the error as needed
@@ -170,6 +204,8 @@ export const NewProfileDetails = () => {
       editedStudentOneMarks: editedStudentOneMarks,
       editedStudentTwoMarks: editedStudentTwoMarks,
       editedComments: editedComments,
+      editedComments2: editedComments2,
+
     };
     setisLoading(true);
     const response = await axios.post(
@@ -190,6 +226,11 @@ export const NewProfileDetails = () => {
     }
     alertDelay();
     setComments({ ...comments, addComments: "" });
+    setComments2({ ...comments, addComments: "" });
+    seteditedComments("");
+    seteditedComments2("");
+
+
   };
 
   const alertDelay = () => {
@@ -211,6 +252,9 @@ export const NewProfileDetails = () => {
   const [editedStudentOneMarks, seteditedStudentOneMarks] = useState();
   const [editedStudentTwoMarks, seteditedStudentTwoMarks] = useState();
   const [editedComments, seteditedComments] = useState();
+
+  const [editedComments2, seteditedComments2] = useState();
+
 
   function getDirectLinkFromShareableLinkStudent(shareableLink) {
     try {
@@ -415,7 +459,7 @@ export const NewProfileDetails = () => {
             <div className="bg-[#9e1c3f] text-white py-2 rounded-t-xl mb-4 mx-0">
               <h1 className="text-2xl font-bold text-center">Project Details</h1>
             </div>
-            <div className="p-4 pt-8 flex-col">
+            <div className="hidden p-4 pt-8 flex-col">
               <p className="text-lg font-semibold text-gray-700 flex justify-center">{projectDetails.projectId}</p>
               <p className="text-lg text-gray-600 flex justify-center">{projectDetails.projectTitle}</p>
               <p className="text-lg text-gray-600 flex justify-center">{projectDetails.projectDomain}</p>
@@ -425,7 +469,16 @@ export const NewProfileDetails = () => {
                 href="/staff_dashboard/profile_details/team_profile"
                 className="w-[90%] h-[2.5rem] mb-3 flex items-center justify-center bg-[#d06a0f] rounded-md font-semibold text-white hover:scale-[1.01] active:scale-[0.99] hover:shadow-[0px_0px_10px_gray]  "
               >
-                Team Profile
+                Student-1 Project Details
+              </a>
+            </div>
+
+            <div className="w-80% h-fit mt-2 flex justify-center items-center pt-6 px-5">
+              <a
+                href="/staff_dashboard/profile_details/team_profile2"
+                className="w-[90%] h-[2.5rem] mb-3 flex items-center justify-center bg-[#d06a0f] rounded-md font-semibold text-white hover:scale-[1.01] active:scale-[0.99] hover:shadow-[0px_0px_10px_gray]  "
+              >
+                Student-2 Project Details
               </a>
             </div>
 
@@ -455,7 +508,7 @@ export const NewProfileDetails = () => {
 
 
           {/* left two container  */}
-          <div className="flex flex-col lg:flex-row">
+          <div className=" hidden flex flex-col lg:flex-row">
             {/* project status  */}
             <div className="flex flex-col px-2">
               {/* documentation  */}
@@ -701,6 +754,11 @@ export const NewProfileDetails = () => {
           </div>
 
 
+
+
+
+
+
           {/* right two containers  */}
           <div className="flex flex-col lg:flex-row space-x-2">
             {/* Project marks  */}
@@ -788,7 +846,7 @@ export const NewProfileDetails = () => {
             {/* Comments  */}
             <div className="bg-white rounded-xl shadow-xl mb-4 min-w-72 max-w-72 min-h-80 max-w-96 max-h-96">
               <div className="bg-[#9e1c3f] text-white py-2 rounded-t-xl mb-4 mx-0">
-                <h1 className="text-2xl font-bold text-center">Comments</h1>
+                <h1 className="text-2xl font-bold text-center px-4">Feedback on Student-1 Project</h1>
               </div>
               <div className="flex flex-col  h-full">
                 <div className="overflow-auto h-fit">
@@ -823,6 +881,61 @@ export const NewProfileDetails = () => {
                     onChange={(eve) => {
                       handleAddComments(eve);
                       seteditedComments(eve.target.value);
+                    }}
+                  />
+                </div>
+              </div>
+            </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+            <div className=" bg-white rounded-xl shadow-xl mb-4 min-w-72 max-w-72 min-h-80 max-w-96 max-h-96">
+              <div className="bg-[#9e1c3f] text-white py-2 rounded-t-xl mb-4 mx-0">
+                <h1 className="text-2xl font-bold text-center px-4">Feedback on Student-2 Project</h1>
+              </div>
+              <div className="flex flex-col  h-full">
+                <div className="overflow-auto h-fit">
+                  <div className="p-2 mb-1 text-lg  whitespace-pre-wrap overflow-y-scroll h-52">
+                    {/* Display previous comments */}
+                    {comments2.prevComments &&
+                      comments2.prevComments.map((comment, index) => (
+                        <div key={index} className="mb-2">
+                        <div className="flex flex-col ">
+                          <p className="flex justify-end text-xs">
+                          {comment.date}
+                          </p>
+                          <div className="flex justify-end">
+                          <p className="bg-slate-300 rounded-xl p-2">
+                          {comment.comment}
+                          </p>
+                          </div>
+                          
+                          </div>
+                          {/* <span className="font-bold">{comment.date}:</span> {comment.comment} */}
+                        </div>
+                      ))}
+                  </div>
+                </div>
+                <div className="flex flex-col items-center p-2">
+                  <textarea
+                    className="flex-grow w-full resize-none max-h-36 rounded-3xl pt-2  px-4 border-2 border-gray-300 outline-none bg-[#e2e8f0] "
+                    id="addComments2"
+                    name="addComments2"
+                    placeholder="Type a message..."
+                    value={comments2.addComments}
+                    onChange={(eve) => {
+                      handleAddComments2(eve);
+                      seteditedComments2(eve.target.value);
                     }}
                   />
                 </div>

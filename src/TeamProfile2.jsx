@@ -11,15 +11,16 @@ import axios from "axios";
 import LoadingScreen from "./shared/Loader";
 import Alert from "./shared/Alert";
 
-export function TeamProfile() {
+export function TeamProfile2() {
   const serverPath1 = "http://127.0.0.1:5000"
   // const serverPath1 = "https://gpaserver2.onrender.com";
-  // const serverPath1 = "https://guideselectionserver.onrender.com";
+//   const serverPath1 = "https://guideselectionserver.onrender.com";
 
 
   const [isLoading, setisLoading] = useState(false);
 
   const [type, setType] = useState(null)
+
 
 
   const [team, setTeam] = useState(true); // change this according to the team of 2 or not by backend logic
@@ -68,7 +69,7 @@ export function TeamProfile() {
     const fetchData = async () => {
       try {
         setisLoading(true);
-        const response = await axios.post(`${serverPath1}/staffLogin/getProfileData/profile_details/${teamId}`);
+        const response = await axios.post(`${serverPath1}/staffLogin/getProfileData/profile_details2/${teamId}`);
         setisLoading(false);
         // console.warn(response.data)
         // console.warn(response.data.studentDetailsOne)
@@ -78,6 +79,7 @@ export function TeamProfile() {
         setProjectDetails(response.data.projectdetails);
         setGuideDetails(response.data.guidedetails);
         setType(response.data.type);
+
         // console.warn(studentDetailsOne)
       } catch (error) {
         console.error('Error fetching team details:', error.message);
@@ -102,7 +104,7 @@ export function TeamProfile() {
     })
     try {
       setisLoading(true);
-      const response = await axios.post(`${serverPath1}/staffLogin/updateProjectDetails/${teamId}`, {
+      const response = await axios.post(`${serverPath1}/staffLogin/updateProjectDetails2/${teamId}`, {
         approvalStatus: "approved",
       }); 
       setisLoading(false); 
@@ -142,7 +144,7 @@ export function TeamProfile() {
     })
     try {
       setisLoading(true);
-      const response = await axios.post(`${serverPath1}/staffLogin/updateProjectDetails/${teamId}`, {
+      const response = await axios.post(`${serverPath1}/staffLogin/updateProjectDetails2/${teamId}`, {
         approvalStatus: "declined",
       });  
       setisLoading(false);
@@ -363,7 +365,7 @@ export function TeamProfile() {
               // onSubmit={handleProjectDetails}
               className="w-[98%] bg-slate-50 rounded-md flex flex-col justify-around items-center gap-2 "
             >
-              <div className="h-16 w-full bg-slate-200 flex items-center justify-center rounded-md border-[0.5px]">
+                <div className="h-16 w-full bg-slate-200 flex items-center justify-center rounded-md border-[0.5px]">
                 <label
                   htmlFor="title"
                   className="h-full w-[30%] pl-5 flex justify-start items-center text-lg md:text-xl font-medium"
