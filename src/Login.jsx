@@ -285,7 +285,7 @@ const Login = () => {
                   />
                   <input
                     className="border-2 border-solid border-black rounded-lg h-12 px-2 my-4 w-full"
-                    type="text"
+                    type="password"
                     placeholder="Password"
                     value={formData.password}
                     required
