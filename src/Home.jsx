@@ -19,7 +19,7 @@ export default function Home() {
         <br></br>
 
 
-        <p className="font-bold text-red-600 text-center text-4xl p-0">Vacancies Have Been Updated Please Complete Your Registration</p>
+        {/* <p className="font-bold text-red-600 text-center text-4xl p-0">Vacancies Have Been Updated Please Complete Your Registration</p> */}
 
           <p className="font-semibold text-center text-2xl p-0">Registration Process for Students</p>
           <br></br>
