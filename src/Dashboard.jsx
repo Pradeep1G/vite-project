@@ -21,9 +21,9 @@ const Dashboard = () => {
 
   // Function to handle input changes for guide comments
 
-  const serverPath1 = "http://127.0.0.1:5000"
+  // const serverPath1 = "http://127.0.0.1:5000"
   //  const serverPath1 = "https://gpaserver2.onrender.com";
-  // const serverPath1 = "https://guideselectionserver.onrender.com";
+  const serverPath1 = "https://guideselectionserver.onrender.com";
 
   const [isLoading, setisLoading] = useState(false);
   const [alert, setAlert]  = useState(false);
@@ -145,7 +145,7 @@ const Dashboard = () => {
           projectType: projectType
         };
 
-        const data = {updatedData:updatedData, "student":"p1"}
+        const data = {updatedData:updatedData, "student":"p1", "teamId":teamId}
 
         
         setisLoading(true);
@@ -246,7 +246,7 @@ const Dashboard = () => {
         p2projectType: projectType2
       };
 
-      const data = {updatedData:updatedData, "student":"p2"}
+      const data = {updatedData:updatedData, "student":"p2", "teamId":teamId}
 
       
       setisLoading(true);
