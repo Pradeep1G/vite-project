@@ -20,6 +20,10 @@ import AddProblemStatement from './AddProblemStatement';
 import StudentPasswordChange from './StudentPasswordChange';
 import Teambyguide from "./Teambyguide"
 import Practice from './practice';
+import Admin from './Admin';
+import AdminLogin from './AdminLogin';
+import AdminAddTeam from './AdminFunctions/AdminAddTeam';
+import AdminDeleteTeam from './AdminFunctions/AdminDeleteTeam';
 
 function App() {
   return (
@@ -54,9 +58,20 @@ function App() {
           <Route path='/login/select_team/2/:id' element={<DuoRegisterForm />} />
           <Route path='/login/select_team/1/:id/success' element={<Success />} />
           <Route path='/login/select_team/2/:id/success' element={<Success />} />
+
+
+          <Route path="/admin_login" element={<AdminLogin />} />
+          <Route path="/admin" element={<Admin />} />
+          <Route path="/admin/addteam" element={<AdminAddTeam />} />
+          <Route path="/admin/deleteteam" element={<AdminDeleteTeam />} />
+
+
+
+
         </Routes>
       </Router>
     </div>
+    
   );
 }
 

@@ -43,6 +43,9 @@ const LoginNavBar = () => {
           <a className="text-white" href="/">
             About
           </a>
+          <a className="text-white" href="/admin_login">
+            Admin
+          </a>
 
         </div>
         <div className="lg:hidden flex items-center">
