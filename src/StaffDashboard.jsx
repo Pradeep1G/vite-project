@@ -151,13 +151,13 @@ const [guideImg, setGuideImg] = useState();
           <h3 className="text-white">{userEmail}</h3>
           &nbsp;&nbsp;&nbsp;
           <span
-            className="rounded-full flex items-center justify-center"
+            className={`rounded-full flex items-center justify-center ${open ? "":"animate-bounce"}`}
             onClick={() => {
               setOpen(!open);
             }}
           >
             <svg
-              className="h-5 w-5 text-gray-100"
+              className="h-8 w-8 text-gray-100"
               viewBox="0 0 20 20"
               fill="currentColor"
             >
@@ -169,13 +169,13 @@ const [guideImg, setGuideImg] = useState();
             </svg>
           </span>
           {open && (
-            <div className="hidden absolute md:top-[3rem] md:right-[2px] h-[9rem] w-[10rem] bg-white text-black shadow-2xl  md:flex md:flex-col md:justify-center md:items-center md:gap-[3px] z-50">
+            <div className="hidden absolute md:top-[3rem] md:right-[2px] h-fit w-[10rem] bg-white text-black shadow-2xl  md:flex md:flex-col md:justify-center md:items-center md:gap-[3px] z-50">
               <div className=" w-full text-[0.8rem] text-[#6C757D] font-semibold h-1/5 bg-slate-100">
                 &nbsp;&nbsp;&nbsp; Welcome!
               </div>
               <div className="w-full flex items-center justify-center h-2/5 bg-slate-100 text-[#6C757D]  hover:bg-slate-200">
                 <a
-                  href={`/staff_dashboard/add_problem_statement`}
+                  href={`/staff_dashboard/change_password`}
                   className="w-full flex justify-start items-center gap-1 pl-2"
                 >
                   <img className="h-4 w-4" src={lock} alt="Lock" />
@@ -198,16 +198,15 @@ const [guideImg, setGuideImg] = useState();
 
 
               {/* Option to select Student */}
-              <div className="w-full flex items-center justify-center h-2/5 bg-slate-100 text-[#6C757D]  hover:bg-slate-200">
+              {/* <div className="w-full flex items-center justify-center h-2/5 bg-slate-100 text-[#6C757D]  hover:bg-slate-200">
                 <a
                   href={`/staff_dashboard/select_student`}
                   className="w-full flex justify-start items-center gap-1 pl-2"
                 >
-                  {/* <img className="h-4 w-4" src={lock} alt="Lock" /> */}
                   <FaUserPlus className='size-4 p-0' />
                   Select Student
                 </a>
-              </div>
+              </div> */}
               {/* Option to aSelect Student */}
 
 
@@ -260,16 +259,15 @@ const [guideImg, setGuideImg] = useState();
 
 
               {/* Option to select Student */}
-              <div className="w-full flex items-center justify-center h-2/5 bg-slate-100 text-[#6C757D]  hover:bg-slate-200">
+              {/* <div className="w-full flex items-center justify-center h-2/5 bg-slate-100 text-[#6C757D]  hover:bg-slate-200">
                 <a
                   href={`/staff_dashboard/select_student`}
                   className="w-full flex justify-start items-center gap-1 pl-2"
                 >
-                  {/* <img className="h-4 w-4" src={lock} alt="Lock" /> */}
                   <FaUserPlus className='size-4 p-0' />
                   Select Student
                 </a>
-              </div>
+              </div> */}
               {/* Option to aSelect Student */}
 
 
@@ -303,11 +301,14 @@ const [guideImg, setGuideImg] = useState();
           ))}
         </div>
       </div> */}
+
+      <div className='flex flex-col min-h-screen'>
+      <div className='flex-grow'>
     <main
-      className="w-[90%] h-fit mx-auto  place-items-center justify-center flex  flex-wrap gap-8 mb-5"
+      className="w-[90%] mx-auto flex-grow place-items-center justify-center flex  flex-wrap gap-8 mb-5"
       onClick={() => setOpen(false)}
     >
-      {studentsData.map((project) => (
+      {studentsData.length!=0 ? (studentsData.map((project) => (
         <ProjectCard
           key={project.projectId}
           team={project.team}
@@ -321,8 +322,12 @@ const [guideImg, setGuideImg] = useState();
           projectTitle={project.projectTitle}
           projectDomain={project.projectDomain}
         />
-      ))}
+      )))
+      :
+      (<p className='font-bold text-2xl'>*Students yet to be selected.</p>)
+      }
     </main>
+    </div>
 
     <footer
       className="w-full h-8 bg-slate-100 flex items-center justify-center text-black "
@@ -331,6 +336,7 @@ const [guideImg, setGuideImg] = useState();
       <b>&copy;</b>&nbsp;
       {new Date().getFullYear()} Sathyabama University. All rights reserved.
     </footer>
+    </div>
     {/* </div> */}
   </>
 

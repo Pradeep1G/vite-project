@@ -32,7 +32,7 @@ export default function SingleRegister() {
     setIsLoading(true);
     try {
       const response = await axios.get(serverPath1 + "/guide_list");
-      setGuideDict(response.data);
+      setGuideDict(response.data.sort((a, b) => a.SL - b.SL));
     } catch (err) {
       console.warn(err);
     }
@@ -105,6 +105,37 @@ export default function SingleRegister() {
 
   let guideSerialNumber = 1;
 
+
+  function capitalizeEachWord(str) {
+    return str.replace(/\w+/g, (word) => {
+      const firstLetter = word.charAt(0).toUpperCase();
+      const restOfWord = word.slice(1).toLowerCase();
+      return firstLetter + restOfWord;
+    });
+  }
+
+
+  function capitalizeNameOnly(name) {
+    const words = name.split(' ');
+
+    const capitalizedWords = words.map((word, index) => {
+      const titleMatch = word.match(/^(Mr\.|Mrs\.|Dr\.|Ms\.)(.*)/i);
+  
+      if (titleMatch) {
+        // If there is a title, keep it unchanged
+        const title = titleMatch[1];
+        const capitalizedRest = titleMatch[2] ? titleMatch[2][0].toUpperCase() + titleMatch[2].slice(1).toUpperCase() : '';
+        
+        return title + capitalizedRest;
+      } else {
+        // If no title, capitalize the entire word
+        return word.toUpperCase();
+      }
+    });
+  
+    return capitalizedWords.join(' ');
+  }
+
   return (
     <>
     {isLoading && <LoadingScreen />}
@@ -160,14 +191,14 @@ export default function SingleRegister() {
             key={item["id"]}
             serialNumber={guideSerialNumber++}
             empId={item["EMPID"]}
-            name={item["NAME"]}
+            name={capitalizeNameOnly(item['NAME'])}
             img={item["IMAGE"]}
             vacancies={item["VACANCIES"]}
-            designation={item["DESIGNATION"]}
+            designation={capitalizeEachWord(item['DESIGNATION'])}
             dm1={item["DOMAIN1"]}
             dm2={item["DOMAIN2"]}
             dm3={item["DOMAIN3"]}
-            mailId={item["UniversityEMAILID"]}
+            mailId={item["UniversityEMAILID"].toLowerCase()}
             im="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTb3m_AEpNzWsxMYF_W3DiheGuLfRH9hTb4SA&usqp=CAU"
           />
         );

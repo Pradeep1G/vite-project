@@ -88,12 +88,13 @@ const Login = () => {
     if (!verifyOTP) {
       // console.warn(serverPath1 + "/api/check/" + formData["email"]);
       try {
-        const response = await axios.get(
+        const response = await axios.post(
           serverPath1 +
             "/api/check/" +
             formData["email"] +
             "/" +
-            formData["password"]
+            "password",
+            {"passcode":formData["password"]}
         );
         // console.warn(response.data);
 
@@ -284,7 +285,7 @@ const Login = () => {
                   />
                   <input
                     className="border-2 border-solid border-black rounded-lg h-12 px-2 my-4 w-full"
-                    type="text"
+                    type="password"
                     placeholder="Password"
                     value={formData.password}
                     required

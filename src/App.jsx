@@ -15,6 +15,8 @@ import StaffLogin from "./Stafflogin";
 import StaffDashboard from './StaffDashboard';
 import { NewProfileDetails } from './NewProfileDetails';
 import { TeamProfile } from './TeamProfile';
+import { TeamProfile2 } from './TeamProfile2';
+
 import ChangePassword from './ChangePassword';
 import AddProblemStatement from './AddProblemStatement';
 import StudentPasswordChange from './StudentPasswordChange';
@@ -33,13 +35,16 @@ function App() {
           <Route path="/" element={<Home />} />
           {/* <Route path="/practice" element={<Practice />} /> */}
 
-          <Route path="/login" element={<Login />} />
+          <Route path="/login" element={<Login />} /> 
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/staff_login" element={<StaffLogin />} />
           <Route path="/staff_dashboard" element={<StaffDashboard />} />
 
           <Route path="/staff_dashboard/profile_details" element={<NewProfileDetails />} />
           <Route path="/staff_dashboard/profile_details/team_profile" element={<TeamProfile />} />
+          <Route path="/staff_dashboard/profile_details/team_profile2" element={<TeamProfile2 />} />
+
+
           <Route path="/staff_dashboard/change_password" element={<ChangePassword />} />
           <Route path="/staff_dashboard/add_problem_statement" element={<AddProblemStatement />} />
           <Route path="/staff_dashboard/select_student" element={<Teambyguide />} />

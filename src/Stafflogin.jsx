@@ -73,8 +73,8 @@ const StaffLogin = () => {
       try {
     setIsLoading(true);
 
-        const response = await axios.get(
-          `${serverPath1}/staffLogin/check/${formData.email}/${formData.password}`
+        const response = await axios.post(
+          `${serverPath1}/staffLogin/check/${formData.email}/password`, {"passcode":formData["password"]}
         );
         setIsLoading(false);
 
@@ -109,7 +109,7 @@ const StaffLogin = () => {
         <div className='lg:w-1/4 md:w-2/4 s:w-2/4 xs:w-3/4 border p-4 bg-white bg-opacity-40 backdrop-filter rounded-lg shadow-lg'>
           <div className={openLogin ? 'block' : 'hidden'}>
             <div className={openLogin ? ' flex justify-center' : 'hidden'}>
-              <h1 className='p-4 font-semibold text-2xl'>STAFF LOGIN</h1>
+              <h1 className='p-4 font-semibold text-2xl'>FACULTY LOGIN</h1>
             </div>
             <div className='justify-center'>
               <form onSubmit={handleStaffLogin}>

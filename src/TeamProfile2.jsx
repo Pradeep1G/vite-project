@@ -11,8 +11,8 @@ import axios from "axios";
 import LoadingScreen from "./shared/Loader";
 import Alert from "./shared/Alert";
 
-export function TeamProfile() {
-  // const serverPath1 = "http://127.0.0.1:5000"
+export function TeamProfile2() {
+//   const serverPath1 = "http://127.0.0.1:5000"
   // const serverPath1 = "https://gpaserver2.onrender.com";
   const serverPath1 = "https://guideselectionserver.onrender.com";
 
@@ -20,6 +20,7 @@ export function TeamProfile() {
   const [isLoading, setisLoading] = useState(false);
 
   const [type, setType] = useState(null)
+
 
 
   const [team, setTeam] = useState(true); // change this according to the team of 2 or not by backend logic
@@ -68,7 +69,7 @@ export function TeamProfile() {
     const fetchData = async () => {
       try {
         setisLoading(true);
-        const response = await axios.post(`${serverPath1}/staffLogin/getProfileData/profile_details/${teamId}`);
+        const response = await axios.post(`${serverPath1}/staffLogin/getProfileData/profile_details2/${teamId}`);
         setisLoading(false);
         // console.warn(response.data)
         // console.warn(response.data.studentDetailsOne)
@@ -78,6 +79,7 @@ export function TeamProfile() {
         setProjectDetails(response.data.projectdetails);
         setGuideDetails(response.data.guidedetails);
         setType(response.data.type);
+
         // console.warn(studentDetailsOne)
       } catch (error) {
         console.error('Error fetching team details:', error.message);
@@ -102,7 +104,7 @@ export function TeamProfile() {
     })
     try {
       setisLoading(true);
-      const response = await axios.post(`${serverPath1}/staffLogin/updateProjectDetails/${teamId}`, {
+      const response = await axios.post(`${serverPath1}/staffLogin/updateProjectDetails2/${teamId}`, {
         approvalStatus: "approved",
       }); 
       setisLoading(false); 
@@ -142,7 +144,7 @@ export function TeamProfile() {
     })
     try {
       setisLoading(true);
-      const response = await axios.post(`${serverPath1}/staffLogin/updateProjectDetails/${teamId}`, {
+      const response = await axios.post(`${serverPath1}/staffLogin/updateProjectDetails2/${teamId}`, {
         approvalStatus: "declined",
       });  
       setisLoading(false);
@@ -363,7 +365,7 @@ export function TeamProfile() {
               // onSubmit={handleProjectDetails}
               className="w-[98%] bg-slate-50 rounded-md flex flex-col justify-around items-center gap-2 "
             >
-              <div className="h-16 w-full bg-slate-200 flex items-center justify-center rounded-md border-[0.5px]">
+                <div className="h-16 w-full bg-slate-200 flex items-center justify-center rounded-md border-[0.5px]">
                 <label
                   htmlFor="title"
                   className="h-full w-[30%] pl-5 flex justify-start items-center text-lg md:text-xl font-medium"
@@ -479,7 +481,7 @@ export function TeamProfile() {
         <section className="w-full md:w-[97%] h-fit flex flex-col md:flex-row justify-center items-center gap-[0.1rem] md:gap-5">
         <form
     className={
-      `${"h-fit w-full flex flex-col gap-1 justify-center items-center rounded shadow-[0px_0px_10px_gray] mb-4"}${" "}${
+      `${"h-fit w-full hidden flex flex-col gap-1 justify-center items-center rounded shadow-[0px_0px_10px_gray] mb-4"}${" "}${
         !team ? "md:w-full" : "md:w-[49.5%]"
       }`
               // +
@@ -490,7 +492,7 @@ export function TeamProfile() {
             }
           >
             <div className="w-full h-[3.5rem] bg-[#9e1c3f] text-white text-2xl font-medium flex flex-col justify-center items-center ">
-              Student-1 Details
+              Student Details
             </div>
             <div className="w-full h-fit py-5 bg-slate-100 flex justify-center items-center">
               <img
@@ -600,13 +602,13 @@ export function TeamProfile() {
           {team && (
     <form
       className={
-        `${"h-fit w-full hidden flex flex-col gap-1 justify-center items-center rounded shadow-[0px_0px_10px_gray] mb-4"}${" "}${
+        `${"h-fit w-full flex flex-col gap-1 justify-center items-center rounded shadow-[0px_0px_10px_gray] mb-4"}${" "}${
           !team ? "md:w-full" : "md:w-[49.5%]"
         }`
       }
     >
               <div className="w-full h-[3.5rem] bg-[#9e1c3f] text-white text-2xl font-medium flex flex-col justify-center items-center ">
-                Student Details
+                Student-2 Details
               </div>
               <div className="w-full h-fit py-5 bg-slate-100 flex justify-center items-center">
                 <img

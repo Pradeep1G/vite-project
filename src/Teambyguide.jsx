@@ -4,6 +4,8 @@ import LoadingScreen from "./shared/Loader";
 import Alert from "./shared/Alert";
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import back_arrow from "./assets/svgs/back_arrow.svg";
+
 
 const Teambyguide = () => {
   // Retrieve the email from local storage
@@ -102,11 +104,14 @@ const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const min = 10000; // Minimum value for a 3-digit number
+    const max = 99999; // Maximum value for a 3-digit number
+    const randomNumber = Math.floor(Math.random() * (max - min + 1)) + min
 
     const data = {
       team: isTeam || isTeam2,
       regNo: registrationNumber || registrationNumber2,
-      password:password || password2,
+      password: randomNumber.toString(),
       ...(isTeam  && { p2regNo: partnerRegNumber }),
       ...(isTeam2  && { p2regNo: partnerRegNumber2 }),
 
@@ -131,7 +136,7 @@ const navigate = useNavigate();
             setAlertType("success")
         }
         else{
-            setAlertMessage("Failed to Submit!")
+            setAlertMessage("Failed to Submit! The Student may have been already selected or try again")
             setAlertType("fail")
         }
         alertDelay();
@@ -169,58 +174,106 @@ else if(teamcount==1){
             <div className={`flex items-center justify-center ${alert ? "":"hidden"} `}>
     <Alert type={alertType} message={alertMessage}/>
     </div>
+    <div className="hidden md:fixed md:w-fit md:h-full md:left-1 md:top-[5rem] md:flex md:items-center md:justify-center md:cursor-pointer">
+          <a href="/staff_dashboard/" className="w-fit h-fit">
+            <img
+              className="bg-slate-200 m-4 p-2 w-10 rounded-full hover:bg-slate-300 hover:shadow-md"
+              src={back_arrow}
+              alt="⬅️"
+              title="Go back"
+            ></img>
+          </a>
+        </div>
     <div className="container mx-auto p-8 border rounded-lg">
     <div className="flex flex-col items-center justify-center pt-10">
-    <p className='text-red-500 text-lg font-semibold'>Please click on the checkbox if you intend to have two members in your team.</p>
+    <p className=' text-2xl font-bold pb-10'>Select Your Teams</p>
 
-    <div className="py-10 px-20 border-2 border-black w-fit">
+    <div className='pb-8'>
+<ul>
+<li className='font-semibold text-xl pb-2'>Instructions : </li>
+    {/* <li>1. Faculties have the privilege to select the 1 or 2 teams under your guidance.</li> */}
+    <li>1.  Faculties are allowed to select  1 or 2 teams.</li>
+
+    {/* <li>2. Simply input the registered numbers of the team members, along with a password for their login access.</li> */}
+    <li>2. Enter student 1 and student 2 register numbers for registration. </li>
+    
+    {/* <li>3. If you're registering a team with multiple members, check the appropriate box to reveal additional fields for entering additional student details.</li> */}
+    <li>3. After registration student details will be displayed in the dashboard.</li>
+   
+    {/* <li>4. Once registered, the team members' information will be seamlessly integrated into your dashboard.</li> */}
+</ul>
+</div>
+
+    {/* <p className='text-red-500 text-lg font-semibold'>Please click on the checkbox if you intend to have two members in your team.</p> */}
+
+    <div className="py-5 px-20 border-2 border-black w-fit">
       <form onSubmit={handleSubmit} className="flex flex-col items-center">
-        <label className="mb-4">
-          Team:
+      <p  className='font-bold text-xl pb-8'>Team 1 Details</p>
+        {/* <label className="mb-4">
+          Team Size 2:
           <input
             type="checkbox"
             checked={isTeam}
             onChange={() => setIsTeam(!isTeam)}
             className="ml-2"
           />
-        </label>
+        </label> */}
+
 
         <label className="mb-4">
-        Person1 Registration Number:
+        Student 1 Register Number:
           <input
             type="text"
             name="registrationNumber"
             value={registrationNumber}
             onChange={(e) => setRegistrationNumber(e.target.value)}
             className="ml-2 p-2 border rounded"
+            autoComplete="off"
+          />
+        </label>
+        <p className='text-red-600 font-semibold flex flex-row'><p className='text-black'>{"( "}Note : </p>&nbsp;Please click on the below checkbox if you intend to have two members in your team.<p className='text-black'>{" )"}</p></p>
+
+        <label className="mb-4">
+          Team Size 2:
+          <input
+            type="checkbox"
+            checked={isTeam}
+            onChange={() => setIsTeam(!isTeam)}
+            className="ml-2"
+            size={5}
           />
         </label>
 
-        {isTeam && (
+        {/* {isTeam && ( */}
             
           <label className="mb-4 ">
-            Person2 Registration Number:
+            Student 2 Register Number:
             <input
               type="number"
-              name="partnerRegNumber"
+              name="ipartnerRegNumber"
               value={partnerRegNumber}
               onChange={(e) => setPartnerRegNumber(e.target.value)}
               className="ml-2 p-2 border rounded "
+              autoComplete="off"
+              readOnly={!isTeam}
+              // placeholder={`${isTeam} ? "Click on check box to enter" :"" `}
+              // contentEditable = 
             />
           </label>
           
-        )}
+        {/* )} */}
 
-        <label className="mb-4">
-          Password:
+        {/* <label className="mb-4">
+          <b>Password:</b>
           <input
             type="password"
             name="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             className="ml-2 p-2 border rounded"
+            autoComplete="off"
           />
-        </label>
+        </label> */}
 
         
         <button type="submit" className="bg-red-900 text-white p-2 rounded">
@@ -240,58 +293,106 @@ else if(teamcount==1){
                 <div className={`flex items-center justify-center ${alert ? "":"hidden"} `}>
         <Alert type={alertType} message={alertMessage}/>
         </div>
-        <div className="container mx-auto pt-8 px-8 rounded-lg">
+        <div className="hidden md:fixed md:w-fit md:h-full md:left-1 md:top-[5rem] md:flex md:items-center md:justify-center md:cursor-pointer">
+          <a href="/staff_dashboard/" className="w-fit h-fit">
+            <img
+              className="bg-slate-200 m-4 p-2 w-10 rounded-full hover:bg-slate-300 hover:shadow-md"
+              src={back_arrow}
+              alt="⬅️"
+              title="Go back"
+            ></img>
+          </a>
+        </div>
+        <div className="container mx-auto pt-2 px-8 rounded-lg">
         <div className="flex flex-col items-center justify-center pt-10">
-        <p className='text-red-500 text-lg font-semibold'>Please click on the checkbox if you intend to have two members in your team.</p>
+        <p className=' text-2xl font-bold'>Select Your Teams</p>
 
-        <div className="py-10 px-20 border-2 border-black w-fit">
+<div className='pb-8'>
+<ul>
+<li className='font-semibold'>Instructions : </li>
+    {/* <li>1. Faculties have the privilege to select the 1 or 2 teams under your guidance.</li> */}
+    <li>1.  Faculties are allowed to select  1 or 2 teams.</li>
+
+    {/* <li>2. Simply input the registered numbers of the team members, along with a password for their login access.</li> */}
+    <li>2. Enter register no and your own password for registration. check the team box for additional  register members. </li>
+    
+    {/* <li>3. If you're registering a team with multiple members, check the appropriate box to reveal additional fields for entering additional student details.</li> */}
+    <li>3. After registration student details will be displayed in the dashboard.</li>
+   
+    {/* <li>4. Once registered, the team members' information will be seamlessly integrated into your dashboard.</li> */}
+</ul>
+</div>
+
+        {/* <p className='text-red-500 text-lg font-semibold'>Please click on the checkbox if you intend to have two members in your team.</p> */}
+
+        <div className="py-5 p px-20 border-2 border-black w-fit">
           <form onSubmit={handleSubmit} className="flex flex-col items-center">
-            <label className="mb-4">
-              Team:
+
+      <p  className='font-bold text-xl pb-8'>Team 1 Details</p>
+
+            {/* <label className="mb-4">
+              Team Size 2:
               <input
                 type="checkbox"
                 checked={isTeam}
                 onChange={() => setIsTeam(!isTeam)}
                 className="ml-2"
               />
-            </label>
+            </label> */}
     
             <label className="mb-4">
-            Person1 Registration Number:
+            Student 1 Register Number:
               <input
                 type="text"
                 name="registrationNumber"
                 value={registrationNumber}
                 onChange={(e) => setRegistrationNumber(e.target.value)}
                 className="ml-2 p-2 border rounded"
+                autoComplete="off"
               />
             </label>
+            <p className='text-red-600 font-semibold flex flex-row'><p className='text-black'>{"( "}Note :
+            </p>&nbsp;Please click on the below checkbox if you intend to have two members in your team.
+            <p className='text-black'>{" )"}</p></p>
+            <label className="mb-4">
+          Team Size 2:
+          <input
+            type="checkbox"
+            checked={isTeam}
+            onChange={() => setIsTeam(!isTeam)}
+            className="ml-2"
+            size={5}
+          />
+        </label>
     
-            {isTeam && (
+            {/* {isTeam && ( */}
                 
               <label className="mb-4 ">
-                Person2 Registration Number:
+                Student 2 Register Number:
                 <input
                   type="number"
                   name="partnerRegNumber"
                   value={partnerRegNumber}
                   onChange={(e) => setPartnerRegNumber(e.target.value)}
                   className="ml-2 p-2 border rounded "
+                  autoComplete="off"
+                  readOnly={!isTeam}
                 />
               </label>
               
-            )}
+            {/* )} */}
     
-            <label className="mb-4">
-              Password:
+            {/* <label className="mb-4">
+            <b>Password:</b>
               <input
                 type="password"
                 name="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 className="ml-2 p-2 border rounded"
+                autoComplete="off"
               />
-            </label>
+            </label> */}
     
             
             <button type="submit" className="bg-red-900 text-white p-2 rounded">
@@ -305,10 +406,32 @@ else if(teamcount==1){
 
         <div className="container mx-auto p-8  rounded-lg">
         <div className="flex flex-row items-center justify-center pt-10">
-        <div className="py-10 px-20 border-2 border-black w-fit">
+        <div className="py-5 px-20 border-2 border-black w-fit">
           <form onSubmit={handleSubmit} className="flex flex-col items-center">
+      <p  className='font-bold text-xl pb-8'>Team 2 Details</p>
+
+           
+    
             <label className="mb-4">
-              Team:
+            Student 1 Register Number:
+              <input
+                type="text"
+                name="registrationNumber2"
+                value={registrationNumber2}
+                onChange={(e) => setRegistrationNumber2(e.target.value)}
+                className="ml-2 p-2 border rounded"
+                autoComplete="off"
+              />
+            </label>
+
+
+
+            <p className='text-red-600 font-semibold flex flex-row'><p className='text-black'>{"( "}Note : 
+            </p>&nbsp;Please click on the below checkbox if you intend to have two members in your team.
+            <p className='text-black'>{" )"}</p></p>
+
+            <label className="mb-4">
+              Team Size 2:
               <input
                 type="checkbox"
                 checked={isTeam2}
@@ -317,42 +440,38 @@ else if(teamcount==1){
               />
             </label>
     
-            <label className="mb-4">
-            Person1 Registration Number:
-              <input
-                type="text"
-                name="registrationNumber2"
-                value={registrationNumber2}
-                onChange={(e) => setRegistrationNumber2(e.target.value)}
-                className="ml-2 p-2 border rounded"
-              />
-            </label>
-    
-            {isTeam2 && (
+            {/* {isTeam2 && ( */}
                 
               <label className="mb-4 ">
-                Person2 Registration Number:
+                Student 2 Register Number:
                 <input
                   type="number"
                   name="partnerRegNumber2"
                   value={partnerRegNumber2}
                   onChange={(e) => setPartnerRegNumber2(e.target.value)}
                   className="ml-2 p-2 border rounded "
+                  autoComplete="off"
+                  readOnly={!isTeam2}
                 />
               </label>
+
+
+
+            
               
-            )}
+            {/* )} */}
     
-            <label className="mb-4">
-              Password:
+            {/* <label className="mb-4">
+            <b>Password:</b>
               <input
                 type="password"
                 name="password2"
                 value={password2}
                 onChange={(e) => setPassword2(e.target.value)}
                 className="ml-2 p-2 border rounded"
+                autoComplete="off"
               />
-            </label>
+            </label> */}
     
             
             <button type="submit" className="bg-red-900 text-white p-2 rounded">
