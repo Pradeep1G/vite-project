@@ -43,7 +43,7 @@ function App() {
 
           <Route path="/staff_dashboard/change_password" element={<ChangePassword />} />
           <Route path="/staff_dashboard/add_problem_statement" element={<AddProblemStatement />} />
-          {/* <Route path="/staff_dashboard/select_student" element={<Teambyguide />} /> */}
+          <Route path="/staff_dashboard/select_student" element={<Teambyguide />} />
 
           <Route path="/dashboard/student_Password_change" element={<StudentPasswordChange />} />
 
